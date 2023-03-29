@@ -1,0 +1,14 @@
+name: Continuous Integration
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Greeting
+        run: |
+          echo "Hello world!"
