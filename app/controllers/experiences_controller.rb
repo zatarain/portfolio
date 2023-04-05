@@ -28,7 +28,7 @@ class ExperiencesController < ApplicationController
 		if experiences
 			render json: {
 				status: "SUCCESS",
-				message: "Fetched all the experiences successfully",
+				message: "Work experiences successfully fetched.",
 				data: experiences,
 			}, status: :ok
 		else
