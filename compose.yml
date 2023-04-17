@@ -1,0 +1,13 @@
+services:
+  frontend:
+    image: zatarain/portfolio-web
+    build: web
+    ports:
+      - 5000:5000
+    depends_on:
+      - backend
+  backend:
+    image: zatarain/portfolio-api
+    build: api
+    ports:
+      - 3000:3000
