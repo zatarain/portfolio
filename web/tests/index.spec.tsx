@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import IndexPage from '.'
+import IndexPage from '#pages'
 
 describe('<IndexPage />', () => {
 	it('renders the home page', () => {

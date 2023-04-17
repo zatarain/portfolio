@@ -1,4 +1,4 @@
 FROM zatarain/next-web
 COPY . .
-RUN npm install && npm run lint
+RUN npm ci && npm run lint
 CMD ["npm", "run", "dev"]
