@@ -23,5 +23,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:latest
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ github.repository }}:latest
