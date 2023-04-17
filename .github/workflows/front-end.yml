@@ -59,7 +59,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
-          path: .next
+          path: web/.next
 
   unit-tests:
     needs: [lint, build]
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
-          path: .next
+          path: web/.next
       - name: Run unit tests
         run: cd web && npm ci --omit=optional && npm test
         
