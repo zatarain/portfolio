@@ -23,10 +23,7 @@ jobs:
         with:
           node-version: '19.9.0'
           cache: 'npm'
-      - name: Setup package manager
-        run: |
-          npm config set fund false
-          npm config set audit false
+          cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         run: npm ci --omit=optional
   
@@ -41,6 +38,7 @@ jobs:
         with:
           node-version: '19.9.0'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json
       - name: Lint source code
         run: npm ci --omit=optional && npm run lint
 
@@ -55,6 +53,7 @@ jobs:
         with:
           node-version: '19.9.0'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json
       - name: Build Next App
         run: npm ci --omit=optional && npm run build
       - uses: actions/upload-artifact@v3
@@ -73,6 +72,7 @@ jobs:
         with:
           node-version: '19.9.0'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json
       - uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
@@ -95,6 +95,6 @@ jobs:
       - uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: web/Dockerfile
           push: ${{ github.event_name == 'push' }}
           tags: ${{ github.repository }}:latest
