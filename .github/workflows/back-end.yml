@@ -52,7 +52,7 @@ jobs:
         with:
           bundler-cache: true
           working-directory: api
-      - name: Run linter
+      - name: Run specs
         run: bundle exec rspec spec
               
   deploy:
