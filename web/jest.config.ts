@@ -13,7 +13,7 @@ const config: JestConfigWithTsJest = {
       }
     ]
   },
-  testRegex: '(/src/.*\\.(test|spec))\\.[tj]sx?$',
+  testRegex: '(.*\\.(test|spec))\\.[tj]sx?$',
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
     '^#(.*)$': '<rootDir>/src/$1'
