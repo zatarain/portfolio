@@ -13,6 +13,47 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler: '3.2.1'
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler: '3.2.1'
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run linter
+        run: bundle exec rubocop
+              
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler: '3.2.1'
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run linter
+        run: bundle exec rspec spec
+              
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Show current directory
         run: pwd
       - name: Login to Docker Hub
