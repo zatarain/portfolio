@@ -28,6 +28,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: api/Dockerfile
           push: ${{ github.event_name == 'push' }}
           tags: ${{ github.repository }}:latest
