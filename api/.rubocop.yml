@@ -12,7 +12,8 @@ AllCops:
     - bin/bundle
     - vendor/bundle/**/*
     - gemfiles/vendor/bundle/**/*
-
+Lint/ScriptPermission:
+  Enabled: false
 Rails/HttpStatus:
   Enabled: true
 
