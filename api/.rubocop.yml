@@ -2,3 +2,7 @@ Style/Documentation:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
+AllCops:
+  NewCops: disable
+  Exclude:
+    - "bin/bundle"

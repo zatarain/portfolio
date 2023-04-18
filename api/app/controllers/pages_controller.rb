@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagesController < ApplicationController  
+class PagesController < ApplicationController
   def home
     response.set_header('Access-Control-Allow-Origin', 'https://ulises.zatara.in.dev')
     render json: {
