@@ -1,13 +1,35 @@
 services:
   frontend:
+    container_name: website
     image: zatarain/portfolio-web
     build: web
     ports:
       - 5000:5000
     depends_on:
       - backend
+    volumes:
+      - web-source:/web
   backend:
+    container_name: service
     image: zatarain/portfolio-api
     build: api
     ports:
       - 3000:3000
+    volumes:
+      - api-source:/api
+
+volumes:
+  api-source:
+    name: portfolio-api-source
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: api
+  web-source:
+    name: portfolio-web-source
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: web

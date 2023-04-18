@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class PagesController < ApplicationController
+class PagesController < ApplicationController  
   def home
+    response.set_header('Access-Control-Allow-Origin', 'https://ulises.zatara.in.dev')
     render json: {
       status: 'SUCCESS',
       message: 'Rendering CV',
@@ -12,8 +13,8 @@ class PagesController < ApplicationController
           'u*****o@cimat.mx'
         ],
         phones: [
-          '+44 07 (516) XXX XXX',
-          '+52 1 (669) XXX XXXX'
+          '+44 07 (XXX) XXX XXX',
+          '+52 1 (XXX) XXX XXXX'
         ],
         websites: [
           'https://github.com/zatarain'

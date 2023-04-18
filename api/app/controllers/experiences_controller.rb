@@ -26,7 +26,7 @@ class ExperiencesController < ApplicationController
         description: 'Hello world 2!'
       }
     ]
-
+    response.set_header('Access-Control-Allow-Origin', 'https://ulises.zatara.in.dev')
     if experiences
       render json: {
         status: 'SUCCESS',
