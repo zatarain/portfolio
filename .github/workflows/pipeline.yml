@@ -1,0 +1,19 @@
+name: Pipeline Example
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+  
+jobs:
+  action-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display action
+        run: echo ${{ git.action }} "pull request"
+    
+  actor-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display actor (pull request owner)
+        run: echo ${{ git.actor }}"'s pull request"
+      
