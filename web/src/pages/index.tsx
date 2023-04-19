@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import CurriculumVitae from '#components/cv'
 
 const IndexPage: NextPage = () => {
   return (
@@ -9,8 +10,8 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <h1>Hello World!</h1>
-        <p>It works!</p>
+        <div>test hot reload</div>
+        <CurriculumVitae />
       </header>
     </>
   )
