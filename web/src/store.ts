@@ -1,9 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import portfolioReducer from '#components/cv/slice'
+
+import counterReducer from '#features/counter/slice'
 
 export function makeStore() {
   return configureStore({
-    reducer: { portfolio: portfolioReducer },
+    reducer: { counter: counterReducer },
   })
 }
 

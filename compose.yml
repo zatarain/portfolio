@@ -9,6 +9,8 @@ services:
       - backend
     volumes:
       - web-source:/web
+    environment:
+      - NODE_ENV=production
   backend:
     container_name: service
     image: zatarain/portfolio-api
@@ -19,13 +21,6 @@ services:
       - api-source:/api
 
 volumes:
-  api-source:
-    name: portfolio-api-source
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: api
   web-source:
     name: portfolio-web-source
     driver: local
@@ -33,3 +28,10 @@ volumes:
       o: bind
       type: none
       device: web
+  api-source:
+    name: portfolio-api-source
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: api
