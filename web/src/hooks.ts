@@ -47,6 +47,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 
-export const fetcher = (...options) => fetch(...options).then(response => response.json())
+export const fetcher = (input: RequestInfo | URL, init?: RequestInit) =>
+  fetch(input, init).then(response => response.json())
 
 export const useCV = () => useSWR('https://api.zatara.in.dev/', fetcher)
