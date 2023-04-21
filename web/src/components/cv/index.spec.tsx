@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
-jest.mock('#services/portfolio', () => ({
-	getData: () =>
-		new Promise<{ data: object }>((resolve) => {
-			const data = {}
-			return setTimeout(() => resolve({ data }), 500)
-		}),
+jest.mock('#hooks', () => ({
+	useCV: () => ({
+		data: {
+			name: 'This is my name'
+		}
+	})
 }))
 
 import { makeStore } from '#store'
@@ -21,6 +21,6 @@ describe('<CurriculumVitae />', () => {
 			</Provider>
 		)
 
-		expect(screen.getByText('Ulises Tirado Zatarain')).toBeInTheDocument()
+		expect(screen.getByText('This is my name')).toBeInTheDocument()
 	})
 })

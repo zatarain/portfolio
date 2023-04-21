@@ -1,60 +1,21 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-import Counter from '#features/counter'
+import { useCV } from '#hooks'
 import styles from '#styles/Home.module.css'
 
 const IndexPage: NextPage = () => {
+  const { data } = useCV()
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Redux Toolkit</title>
+        <title>{data.name}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
         <img src="/logo.svg" className={styles.logo} alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/pages/_app.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className={styles.link}
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className={styles.link}
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
+        <h1>{data.name}</h1>
       </header>
     </div>
   )

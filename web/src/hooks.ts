@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef } from 'react'
+import useSWR from 'swr'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-
 import type { AppDispatch, AppState } from '#store'
 
 export const useForm =
@@ -46,3 +46,7 @@ export const useInterval = (callback: Function, delay: number) => {
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
+
+export const fetcher = (...options) => fetch(...options).then(response => response.json())
+
+export const useCV = () => useSWR('https://api.zatara.in.dev/', fetcher)

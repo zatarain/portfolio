@@ -2,3 +2,4 @@
 **/.next/
 **/api/tmp/
 **/api/log/
+Dockerfile
