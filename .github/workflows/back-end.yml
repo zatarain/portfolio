@@ -1,0 +1,80 @@
+name: Back-end Continuous Integration
+on:
+  push:
+    branches: [main]
+    paths: ['api/**']
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+    paths: ['api/**']
+  
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Installing ruby and dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: api
+      
+  lint:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Installing ruby and dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: api
+      - name: Run linter
+        run: cd api && bundle exec rubocop
+              
+  unit-tests:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Installing ruby and dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: api
+      - name: Run specs
+        run: cd api && bundle exec rspec spec
+              
+  deploy:
+    needs: [lint, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Show current directory
+        run: pwd
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: api/Dockerfile
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ github.repository }}:latest

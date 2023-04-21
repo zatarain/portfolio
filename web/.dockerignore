@@ -1,0 +1,5 @@
+**/node_modules/
+**/.next/
+**/api/tmp/
+**/api/log/
+Dockerfile

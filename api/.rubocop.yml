@@ -1,0 +1,41 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+Style/Documentation:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/bundle
+    - vendor/bundle/**/*
+    - gemfiles/vendor/bundle/**/*
+Lint/ScriptPermission:
+  Enabled: false
+Rails/HttpStatus:
+  Enabled: true
+
+RSpec/ContextMethod:
+  Enabled: true
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - unless
+    - for
+RSpec/DescribeClass:
+  Enabled: true
+RSpec/EmptyHook:
+  Enabled: true
+RSpec/EmptyLineAfterExample:
+  Enabled: true
+RSpec/EmptyLineAfterFinalLet:
+  Enabled: true
+RSpec/ExampleLength:
+  Enabled: true
+RSpec/ExampleWithoutDescription:
+  Enabled: true
