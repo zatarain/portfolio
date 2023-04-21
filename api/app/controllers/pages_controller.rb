@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  def home    
+  def home
     render json: {
       name: 'Ulises Tirado Zatarain',
       emails: [

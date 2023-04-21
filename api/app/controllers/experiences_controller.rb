@@ -26,7 +26,7 @@ class ExperiencesController < ApplicationController
         description: 'Hello world 2!'
       }
     ]
-    
+
     if experiences
       render json: {
         status: 'SUCCESS',
