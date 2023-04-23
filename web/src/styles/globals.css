@@ -14,3 +14,35 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.container {
+  max-width: 1110px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+header {
+  height: 500px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 50px;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 100vh;
+  height: 100vh;
+  border-radius: 50%;
+  transform-origin: bottom;
+  transform: translateX(-50%) scale(3);
+  background: #28B873;
+  box-shadow: 0 5px 5px 0 #28B873;
+}
+
+header h1 {
+  position: relative
+}
