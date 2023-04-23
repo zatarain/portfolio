@@ -10,6 +10,7 @@ services:
     volumes:
       - web-source:/web
     environment:
+      API_URL: http://service:3000
       NODE_ENV: development
   backend:
     container_name: service

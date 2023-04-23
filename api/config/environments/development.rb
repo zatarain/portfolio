@@ -67,4 +67,5 @@ Rails.application.configure do
   config.hosts << /(.+\.)?zatara\.in(\.dev)?/
   config.hosts << /(.+\.)?(ulises|zatarain)(\.co)?\.uk(\.dev)?/
   config.hosts << /(.+\.)?lattephp\.(com|net|info|org)(\.dev)?/
+  config.hosts << 'service' # Container name for development (docker compose)
 end

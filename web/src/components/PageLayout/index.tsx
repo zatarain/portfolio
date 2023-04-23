@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { ReactNode } from "react";
 
-interface Props {
+interface Properties {
 	children?: ReactNode
 	data: any
 	title?: string
 }
 
-export default function PageLayout({ children, title, data }: Props) {
+export default function PageLayout({ children, title, data }: Properties) {
 	const pageTitle = [data?.name, title].filter(part => !!part).join(' - ')
 	return (
 		<div className="container">
