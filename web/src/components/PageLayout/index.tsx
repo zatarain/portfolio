@@ -12,7 +12,7 @@ export default function PageLayout({ children, title, data }: Props) {
 	return (
 		<div className="container">
 			<Head>
-				<title>{data?.name} - {pageTitle}</title>
+				<title>{pageTitle}</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<header>

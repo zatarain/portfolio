@@ -10,7 +10,7 @@ const IndexPage: NextPage = () => {
   const { data } = useCV()
 
   return (
-    <PageLayout title="CV" data={data}>
+    <PageLayout data={data}>
       <p>This is the homepage</p>
     </PageLayout>
   )

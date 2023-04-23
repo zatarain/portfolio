@@ -20,7 +20,7 @@ a {
 }
 
 .container {
-  max-width: 1110px;
+  max-width: 1440px;
   margin: 0 auto;
   text-align: left;
   background: #FAFBFC;
@@ -65,13 +65,10 @@ footer ul {
   line-height: 1.5em;
 }
 
-footer>ul>li {
-  margin: 0 5%
-}
-
 footer>ul {
   display: flex;
   place-content: center;
+  gap: 80px;
 }
 
 footer a:link,
