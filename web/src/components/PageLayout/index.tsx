@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Inter } from 'next/font/google'
+import Image from 'next/image';
 
 interface Properties {
 	children?: ReactNode
@@ -20,8 +21,24 @@ export default function PageLayout({ children, title, data }: Properties) {
 			</Head>
 			<header>
 				<nav>
-					<h1>{data && data?.name}</h1>
-					<menu></menu>
+					<div>
+						<div className="pages">
+							<a href="/" className="logo">
+								<Image alt="logo" src="/logo.svg" width="48" height="48" />
+								{data?.name}
+							</a>
+							<div className="sections">
+								<a href="/">Home</a>
+								<a href="#">Our Producs</a>
+								<a href="#">Resources</a>
+								<a href="#">Contacts</a>
+							</div>
+						</div>
+						<div className="actions">
+							<a href="#">Log in</a>
+							<a href="#" className="call-to-action">Sign up</a>
+						</div>
+					</div>
 				</nav>
 			</header>
 			<main>
