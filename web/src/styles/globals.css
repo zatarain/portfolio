@@ -65,6 +65,7 @@ header>* {
 }
 
 footer {
+  font-size: 0.85em;
   min-height: 250px;
   background-color: var(--bg-secondary);
   color: var(--fg-secondary);
