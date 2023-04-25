@@ -2,11 +2,22 @@ import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Inter } from 'next/font/google'
 import Image from 'next/image';
+import Link from 'next/link'
+import HeroSlider from '#components/HeroSlider'
 
 interface Properties {
 	children?: ReactNode
 	data: any
 	title?: string
+}
+
+const images = {
+	England: 'england',
+	Liverpool: 'liverpool',
+	Germany: 'germany',
+	Netherlands: 'netherlands',
+	Norway: 'norway',
+	Scotland: 'scotland',
 }
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,28 +34,26 @@ export default function PageLayout({ children, title, data }: Properties) {
 				<nav>
 					<div>
 						<div className="pages">
-							<a href="/" className="logo">
+							<Link href="/" className="logo">
 								<Image alt="logo" src="/logo.svg" width="48" height="48" />
 								{data?.name}
-							</a>
+							</Link>
 							<div className="sections">
-								<a href="/">Home</a>
-								<a href="#">Experience</a>
-								<a href="#">Education</a>
-								<a href="#">Skills</a>
-								<a href="#">Projects</a>
-								<a href="#">Contact</a>
+								<Link href="/">Home</Link>
+								<Link href="#">Experience</Link>
+								<Link href="#">Education</Link>
+								<Link href="#">Skills</Link>
+								<Link href="#">Projects</Link>
+								<Link href="#">Contact</Link>
 							</div>
 						</div>
 						<div className="actions">
-							<a href="#">E-mail</a>
-							<a href="#" className="call-to-action">Download</a>
+							<Link href="#">E-mail</Link>
+							<Link href="#" className="call-to-action">Download</Link>
 						</div>
 					</div>
 				</nav>
-				<div className="hero">
-					<Image alt="me" src="/me/001.jpg" width="1440" height="1080" />
-				</div>
+				<HeroSlider images={images} />
 			</header>
 			<main>
 				{children}
