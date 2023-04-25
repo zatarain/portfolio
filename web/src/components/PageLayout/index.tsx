@@ -29,17 +29,22 @@ export default function PageLayout({ children, title, data }: Properties) {
 							</a>
 							<div className="sections">
 								<a href="/">Home</a>
-								<a href="#">Our Producs</a>
-								<a href="#">Resources</a>
-								<a href="#">Contacts</a>
+								<a href="#">Experience</a>
+								<a href="#">Education</a>
+								<a href="#">Skills</a>
+								<a href="#">Projects</a>
+								<a href="#">Contact</a>
 							</div>
 						</div>
 						<div className="actions">
-							<a href="#">Log in</a>
-							<a href="#" className="call-to-action">Sign up</a>
+							<a href="#">E-mail</a>
+							<a href="#" className="call-to-action">Download</a>
 						</div>
 					</div>
 				</nav>
+				<div className="hero">
+					<Image alt="me" src="/me/001.jpg" width="1440" height="1080" />
+				</div>
 			</header>
 			<main>
 				{children}
