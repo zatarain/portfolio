@@ -1,5 +1,6 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
+import Image from 'next/image';
 
 interface Properties {
 	images: object
@@ -7,13 +8,23 @@ interface Properties {
 
 const HeroSlider = ({ images }: Properties) => {
 	return (
-		<div>
-			<Carousel>
+		<div className="hero">
+			<Carousel
+				animationHandler="fade"
+				autoPlay={true}
+				showThumbs={false}
+				showStatus={false}
+				transitionTime={1000}
+				interval={4000}
+				showArrows={false}
+				infiniteLoop={true}
+				stopOnHover={true}
+				swipeable={false}
+			>
 				{
 					Object.entries(images).map(([key, value]) => (
 						<div>
-							<img src={`/me/${value}.jpg`} alt={key} />
-							<p className="legend">{key}</p>
+							<Image src={`/me/${value}.jpg`} alt={key} width={1440} height={1080} />
 						</div>
 					))
 				}

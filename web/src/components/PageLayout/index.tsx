@@ -12,12 +12,11 @@ interface Properties {
 }
 
 const images = {
-	England: 'england',
-	Liverpool: 'liverpool',
-	Germany: 'germany',
-	Netherlands: 'netherlands',
-	Norway: 'norway',
-	Scotland: 'scotland',
+	Liverpool: '002',
+	Germany: '003',
+	Netherlands: '004',
+	Norway: '005',
+	Scotland: '006',
 }
 
 const inter = Inter({ subsets: ['latin'] })

@@ -171,6 +171,8 @@ nav .actions {
   position: relative;
   overflow: hidden;
   top: -24px;
+  max-width: 1440px;
+  max-height: 1080px;
 }
 
 .hero::before {
@@ -182,12 +184,22 @@ nav .actions {
   left: 0;
   right: 0;
   box-shadow: 0 -96px 96px 96px var(--bg-primary) inset;
-  clip-path: ellipse(100% 50% at center 42.5%);
+  clip-path: ellipse(100% 50% at center 42.6%);
 }
 
 .hero img {
   display: inline-block;
-  border-radius: 24px;
   position: relative;
   clip-path: ellipse(100% 50% at center 42.5%);
+}
+
+
+main {
+  padding: 0 48px;
+  margin: -48px 0 48px 0;
+}
+
+.carousel .control-dots {
+  bottom: 64px;
+  z-index: 3;
 }
