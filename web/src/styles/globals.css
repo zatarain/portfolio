@@ -1,9 +1,23 @@
+:root {
+  --bg-page: #FAFBFC;
+  --bg-primary: #28B873;
+  --bg-secondary: #151B28;
+  --bg-action: #FF4400;
+  --link-secondary: #A5ACBA;
+  --highlight-secondary: #5CDEAC;
+  --fg-secondary: #fff;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  text-align: center;
+  font-family: Inter, Cascadia Code;
+  /**
+  -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  **/
 }
 
 a {
@@ -13,4 +27,180 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  text-align: left;
+  background: var(--bg-page);
+  overflow: hidden;
+}
+
+header {
+  min-height: 500px;
+  color: var(--fg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 120vh;
+  height: 100vh;
+  border-radius: 50%;
+  transform-origin: bottom;
+  transform: translateX(-50%) scale(3);
+  background: var(--bg-primary);
+  box-shadow: 0 5px 5px 0 var(--bg-primary);
+  z-index: 1;
+}
+
+header>* {
+  z-index: 2;
+  position: relative;
+}
+
+footer {
+  font-size: 0.85em;
+  min-height: 250px;
+  background-color: var(--bg-secondary);
+  color: var(--fg-secondary);
+  text-align: left;
+  box-shadow: 0 -5px 15px 0 var(--bg-secondary);
+  margin-top: 3em;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.5em;
+}
+
+footer>ul {
+  display: flex;
+  place-content: center;
+  gap: 80px;
+}
+
+footer a:link,
+footer a:visited {
+  color: var(--link-secondary);
+}
+
+footer a:hover,
+footer a:active {
+  color: var(--highlight-secondary);
+}
+
+nav {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 86px;
+  border-bottom: 1px solid var(--highlight-secondary);
+}
+
+nav>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 32px;
+  gap: 579px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+nav a.logo:link,
+nav a.logo:visited {
+  display: inline-flex;
+  line-height: 2em;
+  font-size: 1.5em;
+  font-weight: 600;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+nav .pages {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 64px;
+  width: 635px;
+}
+
+nav .sections {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+nav .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+}
+
+.call-to-action {
+  display: inline-flex;
+  padding: 12px 18px;
+  background: var(--bg-action);
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.04);
+  border-radius: 6px;
+}
+
+.hero {
+  margin: 24px auto;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  top: -24px;
+  max-width: 1440px;
+  max-height: 1080px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 -96px 96px 96px var(--bg-primary) inset;
+  clip-path: ellipse(100% 50% at center 42.6%);
+}
+
+.hero img {
+  display: inline-block;
+  position: relative;
+  clip-path: ellipse(100% 50% at center 42.5%);
+}
+
+
+main {
+  padding: 0 48px;
+  margin: -48px 0 48px 0;
+}
+
+.carousel .control-dots {
+  bottom: 64px;
+  z-index: 3;
 }

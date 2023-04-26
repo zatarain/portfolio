@@ -144,3 +144,6 @@ pids
 
 # TernJS port file
 /web/.tern-port
+
+# Temporary Public Content
+/web/public/me/*

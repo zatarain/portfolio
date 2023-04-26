@@ -1,25 +1,27 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { CurriculumVitaeProperties } from '#components/cv'
+import PageLayout from '#components/PageLayout'
 
-import { useCV } from '#hooks'
-import styles from '#styles/Home.module.css'
+interface Properties {
+  data: CurriculumVitaeProperties
+}
 
-const IndexPage: NextPage = () => {
-  console.log(typeof (fetch))
-  const { data } = useCV()
+export async function getServerSideProps() {
+  const response = await fetch(process.env.API_URL || '')
+  const data = await response.json()
+  return {
+    props: {
+      data,
+    },
+  }
+}
 
+const HomePage: NextPage<Properties> = ({ data }) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>{data && data.name}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <header className={styles.header}>
-        <img src="/logo.svg" className={styles.logo} alt="logo" />
-        <h1>{data && data.name}</h1>
-      </header>
-    </div>
+    <PageLayout data={data}>
+      <p>This is the homepage</p>
+    </PageLayout>
   )
 }
 
-export default IndexPage
+export default HomePage
