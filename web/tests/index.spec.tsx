@@ -1,17 +1,20 @@
 import { render, screen } from '@testing-library/react'
 import IndexPage from '#pages'
 
-jest.mock('#hooks', () => ({
-	useCV: () => ({
-		data: {
-			name: 'My Name'
-		}
+jest.mock('react-responsive-carousel/lib/styles/carousel.min.css', () => ({}))
+
+jest.mock('next/font/google', () => ({
+	Inter: () => ({
+		className: 'inter-font-class'
 	})
 }))
 
 describe('<IndexPage />', () => {
 	it('renders the home page', () => {
-		render(<IndexPage />)
+		const data = {
+			name: 'My Name'
+		}
+		render(<IndexPage data={data} />)
 		expect(screen.getByText('My Name')).toBeInTheDocument()
 	})
 })
