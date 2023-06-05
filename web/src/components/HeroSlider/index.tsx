@@ -24,7 +24,7 @@ const HeroSlider = ({ images }: Properties) => {
 				{
 					Object.entries(images).map(([key, value]) => (
 						<div key={key}>
-							<Image src={`/me/${value}.jpg`} alt={key} width={1440} height={1080} />
+							<Image src={value} alt={key} width={1440} height={1080} />
 						</div>
 					))
 				}
