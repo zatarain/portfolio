@@ -87,7 +87,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ env.AWS_ROLE_TO_ASUME }}
-          role-session-name: github-${{ github.repository }}-front-end
+          role-session-name: github-${{ github.event.repository.name }}-front-end
           aws-region: ${{ env.AWS_REGION }}
       - name: Login to Amazon ECR
         id: aws-ecr
@@ -98,4 +98,4 @@ jobs:
           context: .
           file: web/Dockerfile
           push: ${{ github.event_name == 'push' }}
-          tags: ${{ steps.aws-ecr.outputs.registry }}/${{ github.repository }}:latest
+          tags: ${{ steps.aws-ecr.outputs.registry }}/${{ github.event.repository.name }}:latest
