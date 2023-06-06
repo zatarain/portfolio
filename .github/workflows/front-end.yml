@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-    paths: ['web/**']
+    paths: ['web/**', '.github/workflows/front-end.yml']
 
 jobs:
   setup:
