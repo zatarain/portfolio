@@ -70,7 +70,12 @@ jobs:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           path: web/.next
       - name: Run unit tests
-        run: cd web && npm ci --omit=optional && npm test
+        run: cd web && npm ci --omit=optional && npm test -- --coverage
+      - name: Upload coverage report to CodeCov 
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./web/coverage/
+          flags: front-end
         
   deploy:
     needs: [unit-tests]
