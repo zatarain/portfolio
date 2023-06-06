@@ -83,5 +83,5 @@ jobs:
         with:
           context: .
           file: api/Dockerfile
-          push: true # ${{ github.event_name == 'push' }}
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.aws-ecr.outputs.registry }}/curriculum-vitae:back-end

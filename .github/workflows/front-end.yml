@@ -103,5 +103,5 @@ jobs:
         with:
           context: .
           file: web/Dockerfile
-          push: true
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.aws-ecr.outputs.registry }}/curriculum-vitae:front-end
