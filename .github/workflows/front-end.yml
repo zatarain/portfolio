@@ -98,5 +98,5 @@ jobs:
         with:
           context: .
           file: web/Dockerfile
-          push: ${{ github.event_name == 'push' }}
+          push: true
           tags: ${{ steps.aws-ecr.outputs.registry }}/${{ github.event.repository.name }}:latest
