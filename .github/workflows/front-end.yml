@@ -86,9 +86,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
+          aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_TO_ASUME }}
           role-session-name: github-${{ github.event.repository.name }}-front-end
-          aws-region: ${{ env.AWS_REGION }}
+          role-duration-seconds: 1200
       - name: Login to Amazon ECR
         id: aws-ecr
         uses: aws-actions/amazon-ecr-login@v1
