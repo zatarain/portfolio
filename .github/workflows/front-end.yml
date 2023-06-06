@@ -1,12 +1,12 @@
 name: Front-end Continuous Integration
 on:
   push:
-    branches: [main]
-    paths: ['web/**']
+    branches: [main, staging, development]
+    paths: ['web/**', '.github/workflows/front-end.yml']
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-    paths: ['web/**']
+    paths: ['web/**', '.github/workflows/front-end.yml']
 
 jobs:
   setup:
@@ -17,8 +17,6 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '19.9.0'
@@ -32,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '19.9.0'
@@ -47,8 +43,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '19.9.0'
@@ -66,8 +60,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: '19.9.0'
@@ -78,23 +70,39 @@ jobs:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           path: web/.next
       - name: Run unit tests
-        run: cd web && npm ci --omit=optional && npm test
+        run: cd web && npm ci --omit=optional && npm test -- --coverage
+      - name: Upload coverage report to CodeCov 
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./web/coverage/
+          flags: front-end
         
   deploy:
     needs: [unit-tests]
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || contains(toJson('["staging", "development"]'), github.ref_name) && github.ref_name || null }}
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ROLE_TO_ASUME: arn:aws:iam::${{ secrets.AWS_ENV_ID }}:role/github
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: docker/login-action@v2
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: docker/setup-buildx-action@v2
-      - uses: docker/build-push-action@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASUME }}
+          role-session-name: github-${{ github.event.repository.name }}-front-end
+          role-duration-seconds: 1200
+      - name: Login to Amazon ECR
+        id: aws-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build docker image and push
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: web/Dockerfile
           push: ${{ github.event_name == 'push' }}
-          tags: ${{ github.repository }}:latest
+          tags: ${{ steps.aws-ecr.outputs.registry }}/curriculum-vitae:front-end
