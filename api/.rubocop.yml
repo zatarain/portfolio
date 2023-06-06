@@ -9,9 +9,11 @@ Metrics/MethodLength:
 AllCops:
   NewCops: enable
   Exclude:
+    - tmp/**/*
     - bin/bundle
     - vendor/bundle/**/*
     - gemfiles/vendor/bundle/**/*
+    - spec/rails_helper.rb
 Metrics/BlockLength:
   Exclude:
     - config/environments/*
@@ -42,3 +44,5 @@ RSpec/ExampleLength:
   Enabled: true
 RSpec/ExampleWithoutDescription:
   Enabled: true
+RSpec/MultipleExpectations:
+  Enabled: false
