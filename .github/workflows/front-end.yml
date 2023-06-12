@@ -110,4 +110,3 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           aws ecs update-service --force-new-deployment --service cv-web --cluster curriculum-vitae
-  
