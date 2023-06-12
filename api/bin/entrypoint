@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+echo "Check and update dependencies"
 bundle check || bundle install
 
 echo "Remove a potentially pre-existing server.pid for Rails."
