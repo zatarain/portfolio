@@ -13,8 +13,7 @@ class PagesController < ApplicationController
         '+52 1 (XXX) XXX XXXX'
       ],
       websites: [
-        'https://github.com/zatarain',
-        'https://gitlab.com/utzatarain'
+        'https://github.com/zatarain'
       ],
       statement: '',
       experiences: [],
