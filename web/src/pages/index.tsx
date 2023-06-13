@@ -19,7 +19,7 @@ export async function getServerSideProps() {
 const HomePage: NextPage<Properties> = ({ data }) => {
   return (
     <PageLayout data={data}>
-      <p>This is the homepage</p>
+      <p>This is the Home Page</p>
     </PageLayout>
   )
 }

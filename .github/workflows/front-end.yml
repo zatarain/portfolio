@@ -102,7 +102,11 @@ jobs:
       - name: Build docker image and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: web/Dockerfile
+          context: ./web
+          file: ./web/Dockerfile
           push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.aws-ecr.outputs.registry }}/curriculum-vitae:front-end
+      - name: Restart the service
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          aws ecs update-service --force-new-deployment --service cv-web --cluster curriculum-vitae
