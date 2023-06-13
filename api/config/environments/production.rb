@@ -87,7 +87,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Valid host name to access the API
-  config.hosts << /(.+\.)?amazonaws\.com/
-  config.hosts << /(.+\.)?zatara\.in/
-  config.hosts << /(.+\.)?(ulises|zatarain)(\.co)?\.uk/
+  # config.hosts << /(.+\.)?amazonaws\.com/
+  # config.hosts << /(.+\.)?zatara\.in/
+  # config.hosts << /(.+\.)?(ulises|zatarain)(\.co)?\.uk/
 end
