@@ -64,44 +64,11 @@ header>* {
   position: relative;
 }
 
-footer {
-  font-size: 0.85em;
-  min-height: 250px;
-  background-color: var(--bg-secondary);
-  color: var(--fg-secondary);
-  text-align: left;
-  box-shadow: 0 -5px 15px 0 var(--bg-secondary);
-  margin-top: 3rem;
-  padding: 0 3rem;
-}
-
-footer ul {
-  list-style: none;
-  padding: 0;
-  line-height: 1.5em;
-}
-
-footer>ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20ch, 4fr));
-  gap: 1rem;
-}
-
-footer a:link,
-footer a:visited {
-  color: var(--link-secondary);
-}
-
-footer a:hover,
-footer a:active {
-  color: var(--highlight-secondary);
-}
-
 nav {
   box-sizing: border-box;
   display: grid;
   grid-auto-flow: dense;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: clamp(8ch, 32ch, 22%) auto auto;
   justify-content: center;
   align-items: center;
   grid-auto-rows: 5rem;
@@ -114,7 +81,7 @@ nav {
 
 nav a {
   display: inline-block;
-  padding: 12px;
+  padding: 0.5rem;
 }
 
 nav a.logo:link,
@@ -122,7 +89,6 @@ nav a.logo:visited {
   line-height: 100%;
   font-size: 1.5rem;
   font-weight: 600;
-  width: 8ch;
   height: 3rem;
   padding: 0;
   text-overflow: ellipsis;
@@ -131,15 +97,6 @@ nav a.logo:visited {
 
 nav .logo img {
   vertical-align: middle;
-}
-
-nav .sections {
-  gap: 1rem;
-}
-
-nav .actions {
-  padding: 0;
-  gap: 0.5rem;
 }
 
 .call-to-action {
@@ -176,13 +133,45 @@ nav .actions {
   clip-path: ellipse(100% 50% at center 42.5%);
 }
 
+.carousel .control-dots {
+  bottom: 64px;
+  z-index: 3;
+}
 
 main {
   padding: 0 48px;
   margin: -48px 0 48px 0;
 }
 
-.carousel .control-dots {
-  bottom: 64px;
-  z-index: 3;
+footer {
+  font-size: 0.85em;
+  min-height: 250px;
+  background-color: var(--bg-secondary);
+  color: var(--fg-secondary);
+  text-align: left;
+  box-shadow: 0 -5px 15px 0 var(--bg-secondary);
+  margin-top: 3rem;
+  padding: 0 3rem;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.5em;
+}
+
+footer>ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20ch, 4fr));
+  gap: 1rem;
+}
+
+footer a:link,
+footer a:visited {
+  color: var(--link-secondary);
+}
+
+footer a:hover,
+footer a:active {
+  color: var(--highlight-secondary);
 }
