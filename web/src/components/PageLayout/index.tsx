@@ -29,26 +29,20 @@ export default function PageLayout({ children, title, data }: Properties) {
 			</Head>
 			<header>
 				<nav>
-					<div>
-						<div className="pages">
-							<Link href="/" className="logo">
-								<Image alt="logo" src="/logo.svg" width="48" height="48" />
-								{data?.name}
-							</Link>
-							<div className="sections">
-								<Link href="/">Home</Link>
-								<Link href="#">Experience</Link>
-								<Link href="#">Education</Link>
-								<Link href="#">Skills</Link>
-								<Link href="#">Projects</Link>
-								<Link href="#">Hobbies</Link>
-								<Link href="#">Contact</Link>
-							</div>
-						</div>
-						<div className="actions">
-							<Link href="#">E-mail</Link>
-							<Link href="#" className="call-to-action">Download</Link>
-						</div>
+					<Link href="/" className="logo">
+						<Image alt="logo" src="/logo.svg" width="48" height="48" />
+						{data?.name}
+					</Link>
+					<div className="sections">
+						<Link href="#">Experience</Link>
+						<Link href="#">Education</Link>
+						<Link href="#">Skills</Link>
+						<Link href="#">Projects</Link>
+						<Link href="#">Hobbies</Link>
+					</div>
+					<div className="actions">
+						<Link href="#">E-mail</Link>
+						<Link href="#" className="call-to-action">Download</Link>
 					</div>
 				</nav>
 				<HeroSlider images={images} />
@@ -79,7 +73,7 @@ export default function PageLayout({ children, title, data }: Properties) {
 							<li><a href="#">Software Engineering</a></li>
 							<li><a href="#">Web Development</a></li>
 							<li><a href="#">Continuous Integration</a></li>
-							<li><a href="#">Tech Agnosticity</a></li>
+							<li><a href="#">Tech Agnostic</a></li>
 							<li><a href="#">Proactivity</a></li>
 							<li><a href="#">Continuous Learning</a></li>
 						</ul>

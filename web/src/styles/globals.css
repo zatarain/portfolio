@@ -71,7 +71,8 @@ footer {
   color: var(--fg-secondary);
   text-align: left;
   box-shadow: 0 -5px 15px 0 var(--bg-secondary);
-  margin-top: 3em;
+  margin-top: 3rem;
+  padding: 0 3rem;
 }
 
 footer ul {
@@ -81,9 +82,9 @@ footer ul {
 }
 
 footer>ul {
-  display: flex;
-  place-content: center;
-  gap: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20ch, 4fr));
+  gap: 1rem;
 }
 
 footer a:link,
@@ -98,69 +99,50 @@ footer a:active {
 
 nav {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: auto auto auto;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  height: 86px;
+  grid-auto-rows: 5rem;
   border-bottom: 1px solid var(--highlight-secondary);
-}
-
-nav>div {
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 32px;
-  gap: 579px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+  padding: 0 16px;
+  gap: 0.05rem;
+}
+
+nav a {
+  display: inline-block;
+  padding: 12px;
 }
 
 nav a.logo:link,
 nav a.logo:visited {
-  display: inline-flex;
-  line-height: 2em;
-  font-size: 1.5em;
+  line-height: 100%;
+  font-size: 1.5rem;
   font-weight: 600;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+  width: 8ch;
+  height: 3rem;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-nav .pages {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 64px;
-  width: 635px;
+nav .logo img {
+  vertical-align: middle;
 }
 
 nav .sections {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 32px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+  gap: 1rem;
 }
 
 nav .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0px;
-  gap: 24px;
+  padding: 0;
+  gap: 0.5rem;
 }
 
 .call-to-action {
-  display: inline-flex;
-  padding: 12px 18px;
   background: var(--bg-action);
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.04);
   border-radius: 6px;
