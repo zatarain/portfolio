@@ -1,8 +1,7 @@
+import NavigationBar from '#components/NavigationBar';
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Inter } from 'next/font/google'
-import Image from 'next/image';
-import Link from 'next/link'
 import HeroSlider from '#components/HeroSlider'
 
 interface Properties {
@@ -28,23 +27,7 @@ export default function PageLayout({ children, title, data }: Properties) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<header>
-				<nav>
-					<Link href="/" className="logo">
-						<Image alt="logo" src="/logo.svg" width="48" height="48" />
-						{data?.name}
-					</Link>
-					<div className="sections">
-						<Link href="#">Experience</Link>
-						<Link href="#">Education</Link>
-						<Link href="#">Skills</Link>
-						<Link href="#">Projects</Link>
-						<Link href="#">Hobbies</Link>
-					</div>
-					<div className="actions">
-						<Link href="#">E-mail</Link>
-						<Link href="#" className="call-to-action">Download</Link>
-					</div>
-				</nav>
+				<NavigationBar name={data?.name} />
 				<HeroSlider images={images} />
 			</header>
 			<main>

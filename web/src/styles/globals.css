@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/cascadia-code');
+
 :root {
   --bg-page: #FAFBFC;
   --bg-primary: #28B873;
@@ -13,7 +15,7 @@ body {
   padding: 0;
   margin: 0;
   text-align: center;
-  font-family: Inter, Cascadia Code;
+  font-family: 'Cascadia Code', Inter;
   /**
   -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
