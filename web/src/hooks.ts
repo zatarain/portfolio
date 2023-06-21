@@ -50,4 +50,4 @@ export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 export const fetcher = (input: RequestInfo | URL, init?: RequestInit) =>
   fetch(input, init).then(response => response.json())
 
-export const useCV = () => useSWR('https://api.zatara.in.dev/', fetcher)
+export const useCV = () => useSWR(process.env.API_URL || '', fetcher)
