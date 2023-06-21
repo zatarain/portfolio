@@ -80,7 +80,9 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
           Download
         </a>
       </li>
-      <li>
+      <li
+        class="dropdown"
+      >
         <a
           href="#"
           role="menuitemcheckbox"

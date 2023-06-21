@@ -20,7 +20,7 @@ describe('<NavigationBar />', () => {
 		expect(asFragment()).toMatchSnapshot()
 	})
 
-	it('adds class name "responsive" when user clicks menu icon', async () => {
+	it('adds/removes class name "responsive" when user clicks on dropdown menu', async () => {
 		const store = makeStore()
 		const user = userEvent.setup()
 
@@ -29,9 +29,16 @@ describe('<NavigationBar />', () => {
 				<NavigationBar name="Test Name" />
 			</Provider>
 		)
-		const dropdown = getByRole('menuitemcheckbox')
+
 		const bar = getByRole('menubar')
+		const dropdown = getByRole('menuitemcheckbox')
+
+		expect(bar).not.toHaveClass(styles.responsive)
+
 		await user.click(dropdown)
 		expect(bar).toHaveClass(styles.responsive)
+
+		await user.click(dropdown)
+		expect(bar).not.toHaveClass(styles.responsive)
 	})
 })
