@@ -1,4 +1,5 @@
-import Image from 'next/image';
+import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './index.module.css'
 
@@ -6,14 +7,16 @@ interface Properties {
 	name: string
 }
 
-function toggleResponsive(event: any) {
-	console.log('Yay! Click!')
-	console.dir(event)
-}
-
 const NavigationBar = ({ name }: Properties) => {
+	const [isResponsive, setResponsive] = useState(false)
+	const responsive = isResponsive ? styles.responsive : ''
+	const toggleResponsive = (event: any) => {
+		event.preventDefault()
+		setResponsive(!isResponsive)
+	}
+
 	return (
-		<nav className={styles['navigation-bar']}>
+		<nav id="navigation-bar" className={`${styles['navigation-bar']} ${responsive}`}>
 			<Link href="/" className={styles.logo}>
 				<Image alt="logo" src="/logo.svg" width="48" height="48" />
 				{name}
@@ -26,10 +29,10 @@ const NavigationBar = ({ name }: Properties) => {
 				<li><Link href="#">Hobbies</Link></li>
 				<li className={styles.action}><Link href="#">E-mail</Link></li>
 				<li className={styles.action}>
-					<Link href="#" onClick={toggleResponsive} className={styles['call-to-action']}>Download</Link>
+					<Link href="#" className={styles['call-to-action']}>Download</Link>
 				</li>
 				<li className={styles.icon}>
-					<Link href="#">
+					<Link href="#" onClick={toggleResponsive}>
 						<i className="fa fa-bars"></i>
 					</Link>
 				</li>

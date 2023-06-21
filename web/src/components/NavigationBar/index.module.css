@@ -1,16 +1,10 @@
 .navigation-bar {
 	box-sizing: border-box;
-	display: grid;
-	grid-auto-flow: dense;
-	grid-template-columns: clamp(12ch, 32ch, calc(100% - 2rem)) auto;
-	justify-content: center;
+	display: flex;
 	align-items: center;
-	grid-auto-rows: 5rem;
 	border-bottom: 1px solid var(--highlight-secondary);
 	justify-content: space-between;
-	align-items: center;
-	padding: 0 1rem;
-	gap: 0.05rem;
+	padding: 0 .5rem;
 }
 
 .navigation-bar a {
@@ -24,8 +18,6 @@
 	font-weight: 600;
 	height: 3.4rem;
 	padding: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 .logo img {
@@ -37,7 +29,7 @@
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	gap: 0.5rem;
+	gap: 1rem;
 }
 
 .sections li {
@@ -48,7 +40,7 @@
 	color: aquamarine;
 }
 
-.sections .icon {
+.icon {
 	display: none;
 }
 
@@ -66,8 +58,8 @@
 
 @media screen and (max-width: 784px) {
 	.navigation-bar {
-		position: relative;
-		padding-right: 1.5rem;
+		display: block;
+		z-index: 3;
 	}
 
 	.sections li {
@@ -75,24 +67,39 @@
 	}
 
 	.sections .icon {
-		display: inline-block;
+		display: block;
 		font-size: 2.5rem;
 		position: absolute;
-		right: 1rem;
-		top: 25%;
+		right: 0;
+		top: 0;
+		padding: .5rem .75rem;
 	}
 
-	.icon :hover {
-		color: aquamarine;
+	.responsive .sections {
+		display: block;
+		position: absolute;
+		width: 100%;
+		right: 0;
+		top: 0;
 	}
 
-	.action {
-		display: none;
+	.responsive .sections li:not(.icon, .action) {
+		background: var(--bg-secondary);
+		display: block;
+		padding: 1rem;
+		position: relative;
+		top: 3.5rem;
 	}
 }
 
 @media screen and (max-width: 340px) {
 	.navigation-bar {
 		grid-template-columns: 14ch auto;
+	}
+
+	.logo {
+		max-width: 12ch;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 }
