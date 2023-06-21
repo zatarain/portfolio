@@ -24,14 +24,13 @@ describe('<NavigationBar />', () => {
 		const store = makeStore()
 		const user = userEvent.setup()
 
-		const { container } = render(
+		const { getByRole } = render(
 			<Provider store={store}>
 				<NavigationBar name="Test Name" />
 			</Provider>
 		)
-		const dropdown = container.querySelector(`li.${styles.icon} a`)
-		expect(dropdown).not.toBeNull()
-		const bar = container.querySelector('nav')
+		const dropdown = getByRole('menuitemcheckbox')
+		const bar = getByRole('menubar')
 		await user.click(dropdown)
 		expect(bar).toHaveClass(styles.responsive)
 	})

@@ -5,6 +5,7 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
   <nav
     class="navigation-bar "
     id="navigation-bar"
+    role="menubar"
   >
     <a
       class="logo"
@@ -79,11 +80,10 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
           Download
         </a>
       </li>
-      <li
-        class="icon"
-      >
+      <li>
         <a
           href="#"
+          role="menuitemcheckbox"
         >
           <i
             class="fa fa-bars"

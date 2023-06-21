@@ -16,7 +16,7 @@ const NavigationBar = ({ name }: Properties) => {
 	}
 
 	return (
-		<nav id="navigation-bar" className={`${styles['navigation-bar']} ${responsive}`}>
+		<nav id="navigation-bar" className={`${styles['navigation-bar']} ${responsive}`} role="menubar">
 			<Link href="/" className={styles.logo}>
 				<Image alt="logo" src="/logo.svg" width="48" height="48" />
 				{name}
@@ -31,8 +31,8 @@ const NavigationBar = ({ name }: Properties) => {
 				<li className={styles.action}>
 					<Link href="#" className={styles['call-to-action']}>Download</Link>
 				</li>
-				<li className={styles.icon}>
-					<Link href="#" onClick={toggleResponsive}>
+				<li className={styles.dropdown}>
+					<Link href="#" onClick={toggleResponsive} role="menuitemcheckbox">
 						<i className="fa fa-bars"></i>
 					</Link>
 				</li>
