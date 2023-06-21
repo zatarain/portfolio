@@ -1,19 +1,19 @@
-import { render, screen } from '@testing-library/react'
+import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
 import { makeStore } from '#store'
 import Footer from '.'
 
 describe('<Footer />', () => {
-	it('renders the component', () => {
+	it('renders the component correctly', () => {
 		const store = makeStore()
 
-		render(
+		const tree = renderer.create(
 			<Provider store={store}>
 				<Footer />
 			</Provider>
-		)
+		).toJSON()
 
-		expect(screen.getByText('Tech Stuff')).toBeInTheDocument()
+		expect(tree).toMatchSnapshot()
 	})
 })
