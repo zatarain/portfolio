@@ -56,7 +56,7 @@
 	background: var(--bg-action-hover);
 }
 
-@media screen and (max-width: 784px) {
+@media screen and (max-width: 800px) {
 	.navigation-bar {
 		display: block;
 		z-index: 3;

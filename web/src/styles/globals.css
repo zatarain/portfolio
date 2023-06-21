@@ -105,36 +105,3 @@ main {
   padding: 0 48px;
   margin: -48px 0 48px 0;
 }
-
-footer {
-  font-size: 0.85em;
-  min-height: 250px;
-  background-color: var(--bg-secondary);
-  color: var(--fg-secondary);
-  text-align: left;
-  box-shadow: 0 -5px 15px 0 var(--bg-secondary);
-  margin-top: 3rem;
-  padding: 0 3rem;
-}
-
-footer ul {
-  list-style: none;
-  padding: 0;
-  line-height: 1.5em;
-}
-
-footer>ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20ch, 4fr));
-  gap: 1rem;
-}
-
-footer a:link,
-footer a:visited {
-  color: var(--link-secondary);
-}
-
-footer a:hover,
-footer a:active {
-  color: var(--highlight-secondary);
-}
