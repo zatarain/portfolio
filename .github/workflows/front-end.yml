@@ -24,7 +24,7 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         run: cd web && npm ci --omit=optional
-  
+
   lint:
     needs: setup
     runs-on: ubuntu-latest
@@ -70,13 +70,13 @@ jobs:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           path: web/.next
       - name: Run unit tests
-        run: cd web && npm ci --omit=optional && npm test -- --coverage
-      - name: Upload coverage report to CodeCov 
+        run: cd web && npm ci --omit=optional && npm test -- --coverage --coveragePathIgnorePatterns='.*\.css'
+      - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
         with:
           directory: ./web/coverage/
           flags: front-end
-        
+
   deploy:
     needs: [unit-tests]
     runs-on: ubuntu-latest
