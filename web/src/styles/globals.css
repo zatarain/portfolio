@@ -1,11 +1,15 @@
+@import url('https://fonts.cdnfonts.com/css/cascadia-code');
+
 :root {
-  --bg-page: #FAFBFC;
-  --bg-primary: #28B873;
-  --bg-secondary: #151B28;
-  --bg-action: #FF4400;
-  --link-secondary: #A5ACBA;
-  --highlight-secondary: #5CDEAC;
+  --bg-page: #fafbfc;
+  --bg-primary: #28b873;
+  --bg-secondary: #151b28;
+  --bg-action: #f40;
+  --bg-action-hover: #f60;
+  --link-secondary: #a5acba;
+  --highlight-secondary: #5cdeac;
   --fg-secondary: #fff;
+  --fg-menuitem-hover: #7fffd4;
 }
 
 html,
@@ -13,11 +17,12 @@ body {
   padding: 0;
   margin: 0;
   text-align: center;
-  font-family: Inter, Cascadia Code;
+  font-family: 'Cascadia Code', Inter;
   /**
   -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   **/
+  font-size: 14px;
 }
 
 a {
@@ -64,108 +69,6 @@ header>* {
   position: relative;
 }
 
-footer {
-  font-size: 0.85em;
-  min-height: 250px;
-  background-color: var(--bg-secondary);
-  color: var(--fg-secondary);
-  text-align: left;
-  box-shadow: 0 -5px 15px 0 var(--bg-secondary);
-  margin-top: 3em;
-}
-
-footer ul {
-  list-style: none;
-  padding: 0;
-  line-height: 1.5em;
-}
-
-footer>ul {
-  display: flex;
-  place-content: center;
-  gap: 80px;
-}
-
-footer a:link,
-footer a:visited {
-  color: var(--link-secondary);
-}
-
-footer a:hover,
-footer a:active {
-  color: var(--highlight-secondary);
-}
-
-nav {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  height: 86px;
-  border-bottom: 1px solid var(--highlight-secondary);
-}
-
-nav>div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 32px;
-  gap: 579px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-nav a.logo:link,
-nav a.logo:visited {
-  display: inline-flex;
-  line-height: 2em;
-  font-size: 1.5em;
-  font-weight: 600;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-nav .pages {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 64px;
-  width: 635px;
-}
-
-nav .sections {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 32px;
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-}
-
-nav .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0px;
-  gap: 24px;
-}
-
-.call-to-action {
-  display: inline-flex;
-  padding: 12px 18px;
-  background: var(--bg-action);
-  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.04);
-  border-radius: 6px;
-}
-
 .hero {
   margin: 24px auto;
   text-align: center;
@@ -194,13 +97,12 @@ nav .actions {
   clip-path: ellipse(100% 50% at center 42.5%);
 }
 
+.carousel .control-dots {
+  bottom: 64px;
+  z-index: 3;
+}
 
 main {
   padding: 0 48px;
   margin: -48px 0 48px 0;
-}
-
-.carousel .control-dots {
-  bottom: 64px;
-  z-index: 3;
 }
