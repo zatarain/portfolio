@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './index.module.css'
@@ -10,7 +10,7 @@ interface Properties {
 const NavigationBar = ({ name }: Properties) => {
 	const [isResponsive, setResponsive] = useState(false)
 	const responsive = isResponsive ? styles.responsive : ''
-	const toggleResponsive = (event: any) => {
+	const toggleResponsive = (event: SyntheticEvent) => {
 		event.preventDefault()
 		setResponsive(!isResponsive)
 	}
