@@ -37,7 +37,7 @@
 }
 
 .sections :hover {
-	color: aquamarine;
+	color: var(--fg-menuitem-hover);
 }
 
 .dropdown {
