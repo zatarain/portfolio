@@ -40,7 +40,7 @@
 	color: aquamarine;
 }
 
-.icon {
+.dropdown {
 	display: none;
 }
 
@@ -66,7 +66,7 @@
 		display: none;
 	}
 
-	.sections .icon {
+	.sections .dropdown {
 		display: block;
 		font-size: 2.5rem;
 		position: absolute;
@@ -83,7 +83,7 @@
 		top: 0;
 	}
 
-	.responsive .sections li:not(.icon, .action) {
+	.responsive .sections li:not(.dropdown, .action) {
 		background: var(--bg-secondary);
 		display: block;
 		padding: 1rem;
