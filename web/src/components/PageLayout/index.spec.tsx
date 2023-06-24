@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { makeStore } from '#store'
 import PageLayout from '.'
+import Head from 'next/head'
 
 jest.mock('next/font/google', () => {
 	return {
@@ -15,30 +16,25 @@ jest.mock('next/font/google', () => {
 	}
 })
 
-/**
-jest.mock('next/head', () => {
-	return {
-		__esModule: true,
-		default: ({ children }: { children: Array<React.ReactElement> }) => {
-			return <>{children}</>;
-		},
-	};
-});
-/**/
+jest.mock('next/head');
 
 describe('<PageLayout ...>...</PageLayout>', () => {
 	it('renders the component correctly with passed name', async () => {
 		const store = makeStore()
+		const head = jest.mocked(Head)
 
 		const { asFragment, getByText } = render(
 			<Provider store={store}>
-				<PageLayout title='This is the title' data={{ name: 'My Name' }}>
+				<PageLayout title="Test title" data={{ name: 'My Name' }}>
 					<p>Hello World</p>
 				</PageLayout>
 			</Provider>
 		)
 
-		// await waitFor(() => expect(document.title).toBe('This is the title'))
+		expect(head).toBeCalled()
+		head.mock.lastCall?.map((tag) => tag.children && render(tag.children, { container: document.head }))
+
+		expect(document.title).toBe('My Name - Test title')
 		expect(getByText('My Name')).toBeInTheDocument()
 		expect(getByText('Hello World')).toBeInTheDocument()
 		expect(asFragment()).toMatchSnapshot()

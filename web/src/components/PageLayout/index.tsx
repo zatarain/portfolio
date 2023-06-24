@@ -14,8 +14,9 @@ interface Properties {
 	title?: string
 }
 
+const inter = Inter({ subsets: ['latin'] })
+
 export default function PageLayout({ children, title, data }: Properties) {
-	const inter = Inter({ subsets: ['latin'] })
 	const pageTitle = [data?.name, title].filter(part => !!part).join(' - ')
 	return (
 		<div className={`${inter.className} ${styles.container}`}>
