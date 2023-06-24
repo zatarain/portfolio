@@ -38,14 +38,19 @@ There will be two main mandatory non-functional requirements in the development 
 Other functional and non-functional requirements are detailed on following subsections.
 
 #### 📃 Show my curriculum
+The homepage of the website should show my curriculum vitae including my professional and academic career. The most relevant projects should be highlighted and have a link to provide further information.
 
 #### 🤓 Show my personal life
+The homepage should also show details about some of my personal life activities. The website should contain subsections with further information and more activities I do and enjoy.
 
 #### 📧 Contact me by e-mail
+The website should provide a way to contact me via e-mail and have some mechanism to control potential spam coming from bots. Neither my email addresses nor my phone numbers should not be shown directly on the website.
 
 #### ⬇️ Download my curriculum
+The visitors should have a way to download a printable version of my curriculum vitae as a PDF. The PDF should continue being *user interactive* even if is printed. This means, some of the links should continue working when the user physically print the document (e. g. the document includes QR codes).
 
 #### 📱 Responsive website
+All the sections of website should be readable either if the visitor is using a computer or a mobile device like a phone or tablet. This should be tested at least on de default devices listed on chromium-based browsers.
 
 ### 🤔 Assumptions
 
