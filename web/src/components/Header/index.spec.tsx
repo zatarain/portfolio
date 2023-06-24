@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { makeStore } from '#store'
 import Header from '.'
 
-describe('<NavigationBar />', () => {
+describe('<Header />', () => {
 	it('renders the component correctly with passed name', () => {
 		const store = makeStore()
 

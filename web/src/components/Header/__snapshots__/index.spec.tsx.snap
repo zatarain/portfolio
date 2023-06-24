@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<NavigationBar /> renders the component correctly with passed name 1`] = `
+exports[`<Header /> renders the component correctly with passed name 1`] = `
 <DocumentFragment>
   <header
     class="header"
