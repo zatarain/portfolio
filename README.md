@@ -7,7 +7,7 @@ This project aims to be my personal website and also an interactive portfolio th
 
 * 🔭 [Overview](#📹-overview)
   - ☑️ [Requirements](#-requirements)
-  - 🤔 [Assumptions](#-assumptions)
+  - 🤔 [Assumptions and disclaimers](#🤔-assumptions-and-disclaimers)
 * 📐 [Design](#-design)
   - 🔀 [Workflows](#-workflows)
   - 📊 [Data model](#-data-model)
@@ -52,7 +52,12 @@ The visitors should have a way to download a printable version of my curriculum 
 #### 📱 Responsive website
 All the sections of website should be readable either if the visitor is using a computer or a mobile device like a phone or tablet. This should be tested at least on de default devices listed on chromium-based browsers.
 
-### 🤔 Assumptions
+### 🤔 Assumptions and disclaimers
+Following are some of the assumptions taken before and during the development of this project:
+
+ * Initially this project will be under a single domain name `zatara.in`, but the actual website on the subdomain `ulises.zatara.in`. So, all the sections will be under an URL of that hostname or another subdomain of it (e. g. `api.ulises.zatara.in`). However, it could be possible this change in the near or mid future, so we try to have the infrastructure prepared for that possibility (e. g. multi-region or multi-language websites).
+ * In order to fulfill the second requirement there could be some over-engineering work for didactical purposes, but that needs to be carefully taken to avoid increase the costs or find a way to mitigate them (e.g. multiple cloud accounts and stages).
+
 
 ## 📚 References
   * [Ruby On Rails][ror-docs]
