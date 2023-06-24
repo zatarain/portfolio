@@ -1,4 +1,4 @@
-import NavigationBar from '#components/NavigationBar';
+import Header from '#components/Header';
 import Head from 'next/head';
 import { ReactNode } from 'react';
 import { Inter } from 'next/font/google'
@@ -19,9 +19,7 @@ export default function PageLayout({ children, title, data }: Properties) {
 			<Head>
 				<title>{pageTitle}</title>
 			</Head>
-			<header>
-				<NavigationBar name={data?.name} />
-			</header>
+			<Header data={data} />
 			<main>
 				{children}
 			</main>
