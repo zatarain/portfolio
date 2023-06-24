@@ -1,7 +1,5 @@
 import { render } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
-import styles from './index.module.css'
 
 import { makeStore } from '#store'
 import Header from '.'
