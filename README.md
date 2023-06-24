@@ -46,10 +46,10 @@ The homepage should also show details about some of my personal life activities.
 The website should provide a way to contact me via e-mail and have some mechanism to control potential spam coming from bots. Neither my email addresses nor my phone numbers should not be shown directly on the website. So, the user needs to provide their name and a way to contact them back.
 
 #### ⬇️ Download my curriculum
-The visitors should have a way to download a printable version of my curriculum vitae as a PDF. The PDF should continue being *user interactive* even if is printed. This means, some of the links should continue working when the user physically print the document (e. g. the document includes QR codes).
+The guest users should have a way to download a printable version of my curriculum vitae as a PDF. The PDF should continue being *user interactive* even if is printed. This means, some of the links should continue working when the user physically print the document (e. g. the document includes QR codes).
 
 #### 📱 Responsive website
-All the sections of website should be readable either if the visitor is using a computer or a mobile device like a phone or tablet. This should be tested at least on de default devices listed on the development tools of chromium-based browsers.
+All the sections of website should be readable either if the guest is using a computer or a mobile device like a phone or tablet. This should be tested at least on de default devices listed on the development tools of chromium-based browsers.
 
 ### 🔒 Secure connection
 The whole web application should be under secure connection using safe protocols and layers (e. g. HTTPS, TLS, SSL certificates). When the user use an insecure connection, they should be redirected to a secure version of the application.
@@ -61,7 +61,16 @@ Following are some of the assumptions taken before and during the development of
  * In order to fulfill the second requirement there could be some over-engineering work for didactical purposes, but that needs to be carefully taken to avoid increase the costs or find a way to mitigate them (e.g. multiple cloud accounts and stages).
 
 ## 📐 Design
-This section aims to provide an overview of the architecture of the web application and needs to be updated over the time when the requirements change and/or new features are implemented or removed.
+This section aims to provide an overview of the architecture of the web application and its infrastructure. This needs to be updated over the time when the requirements change and/or new features are implemented or removed.
+
+I am using Terraform to provision the infrastructure on my AWS account. Following diagram shows the current architecture:
+
+```mermaid
+flowchart LR
+s3[(S3 Bucket)]
+guest[fa:fa-user Guest]
+guest --> s3
+```
 
 ### 🔀 Workflows
 
