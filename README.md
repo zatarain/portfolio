@@ -70,10 +70,13 @@ I am using Terraform to provision the infrastructure on my AWS account. Followin
 ### 🔀 Workflows
 
 ## 📚 References
-  * [Ruby On Rails][ror-docs]
+
+* [Ruby On Rails][ror-docs]
+* [Next JS][next-docs]
 
 ---
 
 [ulises-zatarain]: https://ulises.zatara.in
 [lorentz]: https://github.com/zatarain/lorentz
 [ror-docs]: https://api.rubyonrails.org
+[next-docs]: https://nextjs.org/docs
