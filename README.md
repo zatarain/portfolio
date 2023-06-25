@@ -1,5 +1,5 @@
 # 👨🏽‍💻 Project: `Portfolio`
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Front-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml) [![Back-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml) [![codecov](https://codecov.io/gh/zatarain/portfolio/branch/main/graph/badge.svg?token=bufQuVyLCi)](https://codecov.io/gh/zatarain/portfolio)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Front-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml) [![Back-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml) [![codecov](https://codecov.io/gh/zatarain/portfolio/branch/main/graph/badge.svg?token=CKLB4JPO9T)](https://codecov.io/gh/zatarain/portfolio)
 
 This project aims to be [my personal website][ulises-zatarain] and also an interactive portfolio that shows my Curriculum Vitae and comprehensive details about relevant projects I have been working on my academic and professional career in order to have a proof of my knowledge and skills.
 
@@ -67,7 +67,23 @@ I am using Terraform to provision the infrastructure on my AWS account. Followin
 
 [![Architecture Overview](docs/diagrams/overview.svg)](docs/diagrams/overview.svg)
 
-### 🔀 Workflows
+## ✅ Testing
+
+This project is able to be tested in manual way and with automated unit testing. This section will explain how can you play around with the API and the website locally after the set up.
+
+### ♻️ Automated
+Automated unit testing has been implemented and they run on each push and pull requests within the GitHub Actions Pipelines and when the Docker image is build. Following is how they are shown in [GitHub website][portfolio-actions]:
+
+![image](https://github.com/zatarain/portfolio/assets/539783/c443fe8f-1c7e-4481-a5e7-a9b7b3a9130c)
+
+Some of those unit testing use [DDT (Data Driven Testing) approach][data-driven-testing] in order to test different inputs for similar scenarios or expected behaviours.
+
+### 💯 Coverage
+You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
+
+![Sun Burst][codecov-sunburst]
+
+**IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions section](#-assumptions-and-disclaimers) there are many chances to improve and for sure it may have even more.
 
 ## 📚 References
 
@@ -80,3 +96,15 @@ I am using Terraform to provision the infrastructure on my AWS account. Followin
 [lorentz]: https://github.com/zatarain/lorentz
 [ror-docs]: https://api.rubyonrails.org
 [next-docs]: https://nextjs.org/docs
+[github-actions]: https://github.com/features/actions
+[github-actions-docs]: https://docs.github.com/en/actions
+[codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
+[codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
+[codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T
+[codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.svg?token=CKLB4JPO9T
+[portfolio-actions]: https://github.com/zatarain/portfolio/actions
+[back-end-pipeline]: https://github.com/zatarain/portfolio/blob/main/.github/workflows/back-end.yml
+[front-end-pipeline]: https://github.com/zatarain/portfolio/blob/main/.github/workflows/front-end.yml
+[compose-yml]: https://github.com/zatarain/portfolio/blob/main/compose.yml
+[postman-website]: https://www.postman.com
+[data-driven-testing]: https://en.wikipedia.org/wiki/Data-driven_testing
