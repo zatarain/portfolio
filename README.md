@@ -5,7 +5,7 @@ This project aims to be [my personal website][ulises-zatarain] and also an inter
 
 ## 🗂️ Table of content
 
-* 🔭 [Overview](#📹-overview)
+* 🔭 [Overview](#-overview)
   - ☑️ [Requirements](#-requirements)
 	  * 📃 [Show my curriculum](#-show-my-curriculum)
 		* 🤓 [Show my personal life](#-show-my-personal-life)
