@@ -87,9 +87,9 @@ You can follow the test coverage reports of this project in the [CodeCov website
 
 ## 📚 References
 
-* [Ruby On Rails][ror-docs]
-* [Next JS][next-docs]
-
+* [Ruby On Rails Documentation][ror-docs]
+* [Next JS Documentation][next-docs]
+* [GitHub Actions Documentation][github-actions-docs]
 ---
 
 [ulises-zatarain]: https://ulises.zatara.in
