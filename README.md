@@ -16,7 +16,7 @@ This project aims to be [my personal website][ulises-zatarain] and also an inter
   - 🤔 [Assumptions and disclaimers](#-assumptions-and-disclaimers)
 * 📐 [Design](#-design)
 * ✅ [Testing](#-testing)
-  - ♻️ [Automated](#-automated)
+  - ♻️ [Automated Unit Tests](#-automated-unit-tests)
   - 💯 [Coverage](#-coverage)
 * 📚 [References](#-references)
 
@@ -68,7 +68,7 @@ I am using Terraform to provision the infrastructure on my AWS account. Followin
 
 This project is able to be tested in manual way and with automated unit testing. This section will explain how can you play around with the API and the website locally after the set up.
 
-### ♻️ Automated
+### ♻️ Automated Unit Tests
 Automated unit testing has been implemented and they run on each push and pull requests within the GitHub Actions Pipelines and when the Docker image is build. Following is how they are shown in [GitHub website][portfolio-actions]:
 
 ![Pipelines in GitHub Actions](https://github.com/zatarain/portfolio/assets/539783/5b27564e-8af8-4bde-b89b-3e3cdcec97b1)
