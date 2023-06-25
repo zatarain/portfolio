@@ -1,0 +1,40 @@
+.container {
+	max-width: 1440px;
+	margin: 0 auto;
+	text-align: left;
+	background: var(--bg-page);
+	overflow: hidden;
+}
+
+.hero {
+	margin: 2rem auto;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	top: -2rem;
+	max-width: 1440px;
+	max-height: 1080px;
+}
+
+.hero::before {
+	content: '';
+	position: absolute;
+	z-index: 2;
+	height: 100%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-shadow: 0 -7rem 7rem 7rem var(--bg-primary) inset;
+	clip-path: ellipse(100% 50% at center 42.6%);
+}
+
+.hero img {
+	display: inline-block;
+	position: relative;
+	clip-path: ellipse(100% 50% at center 42.5%);
+}
+
+.carousel .control-dots {
+	bottom: 4rem;
+	z-index: 3;
+}
