@@ -7,7 +7,7 @@ This project aims to be [my personal website][ulises-zatarain] and also an inter
 
 * 🔭 [Overview](#📹-overview)
   - ☑️ [Requirements](#-requirements)
-  - 🤔 [Assumptions and disclaimers](#🤔-assumptions-and-disclaimers)
+  - 🤔 [Assumptions and disclaimers](#-assumptions-and-disclaimers)
 * 📐 [Design](#-design)
   - 🔀 [Workflows](#-workflows)
   - 📊 [Data model](#-data-model)
@@ -66,10 +66,54 @@ This section aims to provide an overview of the architecture of the web applicat
 I am using Terraform to provision the infrastructure on my AWS account. Following diagram shows the current architecture:
 
 ```mermaid
-flowchart LR
-s3[(S3 Bucket)]
-guest[fa:fa-user Guest]
-guest --> s3
+flowchart
+subgraph FE["Front End"]
+	fe-alb(("ALB"))
+	fe-worker-01["Worker 01"]
+	fe-worker-02["Worker 02"]
+	xf{" "}
+end
+
+subgraph BE["Back End"]
+	be-alb(("ALB"))
+	be-worker-01["Worker 01"]
+	be-worker-02["Worker 02"]
+	xb{" "}
+end
+
+subgraph S3["AWS S3"]
+	cv-bucket[("`S3 Bucket for Curriculum Vitae`")]
+end
+
+subgraph User["User Space"]
+	guest("👤 Guest")
+	web-browser["Web Browser"]
+end
+
+subgraph Internet["Internet"]
+	dns((DNS))
+end
+
+guest -- "`1 - wants to visit **ulises.zatara.in**`" --> web-browser -- "`2 - asks for **ulises.zatara.in**`" --> dns -- "3 - IP Address (e. g. 3.42.7.17)" --> web-browser
+
+fe-alb -- "5 - forwards request" --o xf
+xf <--> fe-worker-01
+xf <--> fe-worker-02
+xf  -- "6 - HTTPS Response" --> web-browser
+
+FE -- "HTTP Request" --> be-alb
+
+BE -- "9 - `asks for **cv.yml**`" --> cv-bucket -- "10 - YAML 📄" --> BE -. "process" .- BE
+web-browser -- "4 - HTTPS Request"  --> fe-alb
+
+
+
+be-alb -- "8 - forwards request" --o xb
+xb <--> be-worker-01
+xb <--> be-worker-02
+xb -- "100 - HTTPS Response" --> FE
+
+FE -- "`6 - asks **api.ulises.zatara.in**`" --> dns -- "7 - IP Address (e. g. 3.42.7.19)" --> FE
 ```
 
 ### 🔀 Workflows
