@@ -10,7 +10,7 @@ beforeEach(() => {
 	fetch.mockClear()
 });
 
-describe('API async fetch', () => {
+describe('', () => {
 	it('fetches the counter properly', async () => {
 		const counter = await fetchCount(4)
 
