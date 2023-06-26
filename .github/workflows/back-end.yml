@@ -7,7 +7,7 @@ on:
     branches: [main]
     types: [opened, synchronize]
     paths: ['api/**', '.github/workflows/back-end.yml']
-  
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
         with:
           bundler-cache: true
           working-directory: api
-      
+
   lint:
     needs: [setup]
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           working-directory: api
       - name: Run linter
         run: cd api && bundle exec rubocop
-              
+
   unit-tests:
     needs: [setup]
     runs-on: ubuntu-latest
@@ -47,15 +47,16 @@ jobs:
           working-directory: api
       - name: Run specs
         run: cd api && bundle exec rspec
-      - name: Upload coverage report to CodeCov 
+      - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
         with:
           directory: ./api/coverage/
           flags: back-end
-              
+
   deploy:
     needs: [lint, unit-tests]
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot' }}
     environment: ${{ github.ref_name == 'main' && 'production' || contains(toJson('["staging", "development"]'), github.ref_name) && github.ref_name || null }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
