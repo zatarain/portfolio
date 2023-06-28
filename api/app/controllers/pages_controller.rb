@@ -5,16 +5,16 @@ require 'safe_yaml'
 
 class PagesController < ApplicationController
   def home
-    if ENV['AWS_ASSUME_ROLE'].present?
-      downloader = Aws::AssumeRoleCredentials.new(
-        client: Aws::STS::Client.new,
-        role_arn: Rails.configuration.aws[:assume_role],
-        role_session_name: Rails.configuration.aws[:session_name],
-      )
-      s3 = Aws::S3::Client.new(credentials: downloader)
-    else
-      s3 = Aws::S3::Client.new
-    end
+    downloader = if ENV['AWS_ASSUME_ROLE'].present?
+                   Aws::AssumeRoleCredentials.new(
+                     client: Aws::STS::Client.new,
+                     role_arn: Rails.configuration.aws[:assume_role],
+                     role_session_name: Rails.configuration.aws[:session_name],
+                   )
+                 else
+                   Aws::ECSCredentials.new(retries: 3)
+                 end
+    s3 = Aws::S3::Client.new(credentials: downloader)
     File.open(Rails.configuration.curriculum, 'wb') do |file|
       s3.get_object(
         {
