@@ -17,17 +17,23 @@ class Curriculum
   end
 
   def find(sensitive: false)
-    File.open(Rails.configuration.curriculum, 'wb') do |file|
-      @s3.get_object(
-        {
-          bucket: Rails.configuration.aws[:s3_bucket],
-          key: Rails.configuration.aws[:s3_object],
-        },
-        target: file,
-      )
-      file.close
+    path = Rails.configuration.curriculum
+    if !File.exist?(path) || File.mtime(path) < 1.day.ago
+      File.open(Rails.configuration.curriculum, 'wb') do |file|
+        @s3.get_object(
+          {
+            bucket: Rails.configuration.aws[:s3_bucket],
+            key: Rails.configuration.aws[:s3_object],
+          },
+          target: file,
+        )
+        file.close
+      end
+    else
+      Rails.logger.debug 'Using cached file!'
     end
-    cv = YAML.load(File.read(Rails.configuration.curriculum), safe: true)
+
+    cv = YAML.load(File.read(path), safe: true)
     unless sensitive
       cv.delete('phone')
       cv['social'] = cv['social'].reject { |contact| contact['sensitive'] }
