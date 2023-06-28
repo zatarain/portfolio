@@ -18,6 +18,9 @@
 /api/db/*.sqlite3
 /api/db/*.sqlite3-*
 
+# Ignore YAML "database".
+/api/db/*.yml
+
 # Ignore all logfiles and tempfiles.
 /api/log/*
 /api/tmp/*

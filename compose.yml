@@ -20,7 +20,13 @@ services:
       - 3000:3000
     volumes:
       - api-source:/api
-
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_ENVIRONMENT: development
+      AWS_ASSUME_ROLE: ${AWS_ASSUME_ROLE}
+      AWS_SESSION_NAME: api-download-yaml-cv
 volumes:
   web-source:
     name: portfolio-web-source

@@ -25,5 +25,16 @@ module Api
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Amazon Web Services Environment Variables
+    config.aws = {
+      environment: ENV.fetch('AWS_ENVIRONMENT', nil),
+      assume_role: ENV.fetch('AWS_ASSUME_ROLE', nil),
+      session_name: ENV.fetch('AWS_SESSION_NAME', nil),
+      s3_bucket: "#{ENV.fetch('AWS_ENVIRONMENT', nil)}-cv",
+      s3_object: 'index.yml',
+    }
+
+    config.curriculum = 'db/cv.yml'
   end
 end

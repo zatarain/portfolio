@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
+require 'aws-sdk-s3'
+require 'safe_yaml'
+
 class PagesController < ApplicationController
   def home
-    render json: {
-      name: 'Ulises Tirado Zatarain',
-      emails: [
-        'u*****o@gmail.com',
-        'u*****o@cimat.mx'
-      ],
-      phones: [
-        '+44 07 (XXX) XXX XXX',
-        '+52 1 (XXX) XXX XXXX'
-      ],
-      websites: [
-        'https://github.com/zatarain'
-      ],
-      statement: '',
-      experiences: [],
-      qualifications: [],
-      projects: [],
-      skills: [],
-      awards: [],
-      volunteering: []
-    }, status: :ok
+    downloader = Aws::AssumeRoleCredentials.new(
+      client: Aws::STS::Client.new,
+      role_arn: Rails.configuration.aws[:assume_role],
+      role_session_name: Rails.configuration.aws[:session_name],
+    )
+    s3 = Aws::S3::Client.new(credentials: downloader)
+    File.open(Rails.configuration.curriculum, 'wb') do |file|
+      response = s3.get_object(
+        {
+          bucket: Rails.configuration.aws[:s3_bucket],
+          key: Rails.configuration.aws[:s3_object],
+        },
+        target: file,
+      )
+      Rails.logger.debug 'File content: ', response.body
+      file.close
+    end
+    cv = YAML.load(File.read(Rails.configuration.curriculum), safe: true)
+    Rails.logger.debug 'File hash: ', cv
+    render json: cv, status: :ok
   end
 end

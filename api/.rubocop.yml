@@ -4,8 +4,20 @@ require:
 
 Style/Documentation:
   Enabled: false
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
 Metrics/MethodLength:
+  Enabled: true
+  Max: 30
+  CountAsOne: ['array', 'heredoc', 'method_call']
+Metrics/AbcSize:
   Enabled: false
+
 AllCops:
   NewCops: enable
   Exclude:
