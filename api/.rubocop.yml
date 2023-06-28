@@ -2,6 +2,8 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
+Style/RedundantReturn:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/TrailingCommaInArguments:

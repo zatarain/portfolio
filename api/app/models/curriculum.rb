@@ -33,11 +33,11 @@ class Curriculum
       Rails.logger.debug 'Using cached file!'
     end
 
-    cv = YAML.load(File.read(path), safe: true)
+    cv = YAML.load_file(path, safe: true)
     unless sensitive
       cv.delete('phone')
       cv['social'] = cv['social'].reject { |contact| contact['sensitive'] }
     end
-    cv
+    return cv
   end
 end
