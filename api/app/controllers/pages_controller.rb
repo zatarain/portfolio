@@ -4,11 +4,8 @@ require 'aws-sdk-s3'
 require 'safe_yaml'
 
 class PagesController < ApplicationController
-  def initialize
-    @curriculum = Curriculum.new
-  end
-
   def home
+    @curriculum = Curriculum.new
     cv = @curriculum.find
     render json: cv, status: :ok
   end
