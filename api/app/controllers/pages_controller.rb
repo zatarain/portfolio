@@ -2,26 +2,8 @@
 
 class PagesController < ApplicationController
   def home
-    render json: {
-      name: 'Ulises Tirado Zatarain',
-      emails: [
-        'u*****o@gmail.com',
-        'u*****o@cimat.mx'
-      ],
-      phones: [
-        '+44 07 (XXX) XXX XXX',
-        '+52 1 (XXX) XXX XXXX'
-      ],
-      websites: [
-        'https://github.com/zatarain'
-      ],
-      statement: '',
-      experiences: [],
-      qualifications: [],
-      projects: [],
-      skills: [],
-      awards: [],
-      volunteering: []
-    }, status: :ok
+    @curriculum = Curriculum.new
+    cv = @curriculum.find
+    render json: cv, status: :ok
   end
 end

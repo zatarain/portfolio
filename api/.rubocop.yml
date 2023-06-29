@@ -2,10 +2,28 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
+Style/RedundantReturn:
+  Enabled: false
 Style/Documentation:
   Enabled: false
-Metrics/MethodLength:
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/AbcSize:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 30
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
 AllCops:
   NewCops: enable
   Exclude:
@@ -14,9 +32,6 @@ AllCops:
     - vendor/bundle/**/*
     - gemfiles/vendor/bundle/**/*
     - spec/rails_helper.rb
-Metrics/BlockLength:
-  Exclude:
-    - config/environments/*
 Lint/ScriptPermission:
   Enabled: false
 Rails/HttpStatus:
@@ -42,7 +57,10 @@ RSpec/EmptyLineAfterFinalLet:
   Enabled: true
 RSpec/ExampleLength:
   Enabled: true
+  Max: 15
 RSpec/ExampleWithoutDescription:
   Enabled: true
 RSpec/MultipleExpectations:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
