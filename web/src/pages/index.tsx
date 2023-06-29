@@ -10,16 +10,20 @@ interface Properties {
 export async function getServerSideProps() {
   const response = await fetch(process.env.API_URL || '')
   const data = await response.json()
+  const experience = data['work-experience'] || []
+  delete data['work-experience']
   return {
     props: {
       data: {
         ...data,
         social: data.social || [],
-        experience: data['work-experience'] || [],
+        experience,
         education: (data.education || []).map((education: any) => {
+          const subjects = education['relevant-subjects'] || []
+          delete education['relevant-subjects']
           return {
             ...education,
-            subjects: education['relevant-subjects'] || [],
+            subjects,
           }
         }),
         projects: data['academic-projects'] || [],

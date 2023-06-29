@@ -1,5 +1,3 @@
-import { useCV } from '#hooks'
-
 export interface Job {
 	role: string
 	type: string
@@ -12,38 +10,38 @@ export interface Job {
 }
 
 export interface Education {
-	school: string,
-	grade: string,
-	thesis?: string,
-	start: number,
-	end: number,
-	gpa: number,
-	subjects?: string[],
+	school: string
+	grade: string
+	thesis?: string
+	start: number
+	end: number
+	gpa: number
+	subjects?: string[]
 }
 
 export interface AcademicProject {
-	title: string,
-	type: string,
-	start?: string,
-	end?: string,
-	duration?: string,
-	description: string,
+	title: string
+	type: string
+	start?: string
+	end?: string
+	duration?: string
+	description: string
 }
 
 export interface CurriculumVitaeProperties {
-	name: string,
-	email?: string[],
-	phone?: string[],
-	social?: object[],
-	website?: string,
-	statement?: string,
-	experience?: Job[],
-	education?: Education[],
-	projects?: AcademicProject[],
-	skills?: object[],
-	awards?: string[],
-	leadership?: string,
-	volunteering?: string,
+	name: string
+	email?: string[]
+	phone?: string[]
+	social?: object[]
+	website?: string
+	statement?: string
+	experience?: Job[]
+	education?: Education[]
+	projects?: AcademicProject[]
+	skills?: object[]
+	awards?: string[]
+	leadership?: string
+	volunteering?: string
 }
 
 interface Properties {
