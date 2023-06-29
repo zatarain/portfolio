@@ -60,8 +60,8 @@ const CurriculumVitae = ({ data }: Properties) => {
 			<div>
 				<h2>Work Experience</h2>
 				<ul>
-					{data.experience?.map((job) =>
-						<li>
+					{data.experience?.map((job: Job, index: number) =>
+						<li key={index}>
 							<h3>{`${job.role} @ ${job.company} - ${job.city}, ${job.country}`}</h3>
 							<dl>
 								<dt>Type:</dt><dd>{job.type}</dd>
@@ -75,15 +75,15 @@ const CurriculumVitae = ({ data }: Properties) => {
 			<div>
 				<h2>Education</h2>
 				<ul>
-					{data.education?.map((education: Education) =>
-						<li>
+					{data.education?.map((education: Education, index: number) =>
+						<li key={index}>
 							<h3>{`${education.school}`}</h3>
 							<p>{`${education.grade}  (${education.start} - ${education.end})`}</p>
 							<dl>
 								{education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
 								<dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
 								<dt>Most relevant subjects and courses:</dt>
-								<dd><ul>{education.subjects?.map((subject) => <li>{subject}</li>)}</ul></dd>
+								<dd><ul>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
 							</dl>
 						</li>
 					)}
@@ -92,8 +92,8 @@ const CurriculumVitae = ({ data }: Properties) => {
 			<div>
 				<h2>Major Academic Projects</h2>
 				<ul>
-					{data.projects?.map((project) =>
-						<li>
+					{data.projects?.map((project: AcademicProject, index: number) =>
+						<li key={index}>
 							<h3>{project.title}</h3>
 							<dl>
 								<dt>Type:</dt><dd>{project.type}</dd>
@@ -107,7 +107,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 			<div>
 				<h2>Awards</h2>
 				<ul>
-					{data.awards?.map((award) => <li>{award}</li>)}
+					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
 			</div>
 			<div>

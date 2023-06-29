@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 jest.mock('#hooks', () => ({
 	useCV: () => ({
@@ -14,13 +14,37 @@ import CurriculumVitae from '.'
 describe('<CurriculumVitae />', () => {
 	it('renders the component', () => {
 		const store = makeStore()
+		const data = {
+			name: 'My Test Name',
+			statement: 'Test statement paragraph',
+			experience: [
+				{
 
-		render(
+				},
+			],
+			education: [
+				{
+
+				},
+			],
+			projects: [
+				{
+
+				},
+			],
+			awards: [
+
+			],
+			leadership: 'Test leadership paragraph',
+			volunteering: 'Test volunteering paragraph',
+		}
+		const { asFragment, getByText } = render(
 			<Provider store={store}>
-				<CurriculumVitae />
+				<CurriculumVitae data={data} />
 			</Provider>
 		)
 
-		expect(screen.getByText('This is my name')).toBeInTheDocument()
+		expect(getByText('Test statement paragraph')).toBeInTheDocument()
+		expect(asFragment()).toMatchSnapshot()
 	})
 })
