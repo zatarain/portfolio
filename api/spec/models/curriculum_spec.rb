@@ -179,18 +179,20 @@ describe Curriculum, type: :model do
 
     context 'when sensitive argument is false' do
       let(:curriculum) { described_class.new }
-      let(:not_sensitive) {[
-        {
-          network: 'LinkedIn',
-          alias: 'dummy',
-          sensitive: false,
-        }.stringify_keys,
-        {
-          network: 'GitHub',
-          alias: 'dummy',
-          sensitive: false,
-        }.stringify_keys,
-      ]}
+      let(:not_sensitive) do
+        [
+          {
+            network: 'LinkedIn',
+            alias: 'dummy',
+            sensitive: false,
+          }.stringify_keys,
+          {
+            network: 'GitHub',
+            alias: 'dummy',
+            sensitive: false,
+          }.stringify_keys,
+        ]
+      end
 
       before do
         allow(curriculum).to receive(:download).and_return(data)
