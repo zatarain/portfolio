@@ -13,16 +13,16 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
-  Exclude:
-    - config/environments/*
-  Max: 30
-  CountAsOne: ['array', 'heredoc', 'method_call']
+  Enabled: false
 Metrics/MethodLength:
   Max: 30
-  CountAsOne: ['array', 'heredoc', 'method_call']
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
 
 AllCops:
   NewCops: enable
@@ -57,7 +57,10 @@ RSpec/EmptyLineAfterFinalLet:
   Enabled: true
 RSpec/ExampleLength:
   Enabled: true
+  Max: 15
 RSpec/ExampleWithoutDescription:
   Enabled: true
 RSpec/MultipleExpectations:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
