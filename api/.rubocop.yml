@@ -13,12 +13,16 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
-Metrics/MethodLength:
-  Enabled: true
-  Max: 30
-  CountAsOne: ['array', 'heredoc', 'method_call']
 Metrics/AbcSize:
   Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/*
+  Max: 30
+  CountAsOne: ['array', 'heredoc', 'method_call']
+Metrics/MethodLength:
+  Max: 30
+  CountAsOne: ['array', 'heredoc', 'method_call']
 
 AllCops:
   NewCops: enable
@@ -28,9 +32,6 @@ AllCops:
     - vendor/bundle/**/*
     - gemfiles/vendor/bundle/**/*
     - spec/rails_helper.rb
-Metrics/BlockLength:
-  Exclude:
-    - config/environments/*
 Lint/ScriptPermission:
   Enabled: false
 Rails/HttpStatus:
