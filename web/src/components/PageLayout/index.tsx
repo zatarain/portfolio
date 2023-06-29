@@ -1,16 +1,15 @@
-import Header from '#components/Header';
-import Head from 'next/head';
-import { ReactNode } from 'react';
-import { Inter } from 'next/font/google'
+import type { CurriculumVitaeProperties } from '#components/cv'
 import Footer from '#components/Footer';
+import Head from 'next/head';
+import Header from '#components/Header';
+import { Inter } from 'next/font/google'
+import { ReactNode } from 'react';
 
 import styles from './index.module.css'
 
 interface Properties {
 	children?: ReactNode
-	data: {
-		name: string
-	}
+	data: CurriculumVitaeProperties,
 	title?: string
 }
 

@@ -11,7 +11,19 @@ export async function getServerSideProps() {
   const data = await response.json()
   return {
     props: {
-      data,
+      data: {
+        name: data.name || '',
+        social: data.social || [],
+        website: data.website || '',
+        statement: data.statement || '',
+        experience: data['work-experience'] || [],
+        education: data.education || [],
+        projects: data['academic-projects'] || [],
+        skills: data['technical-skills'] || [],
+        awards: data.awards || [],
+        leadership: data.leadership || '',
+        volunteering: data.volunteering || '',
+      },
     },
   }
 }
@@ -19,7 +31,39 @@ export async function getServerSideProps() {
 const HomePage: NextPage<Properties> = ({ data }) => {
   return (
     <PageLayout data={data}>
-      <p>This is the Home Page</p>
+      <div>
+        <h2>Who am I?</h2>
+        <p>{data.statement}</p>
+      </div>
+      <div>
+        <h2>Major Academic Projects</h2>
+        <ul>
+          {data.projects?.map((project) =>
+            <li>
+              <h3>{project.title}</h3>
+              <dl>
+                <dt>Type:</dt><dd>{project.type}</dd>
+                <dt>Duration:</dt><dd>{project.duration && project.duration || `${project.start} - ${project.end}`}</dd>
+              </dl>
+              <p>{project.description}</p>
+            </li>
+          )}
+        </ul>
+      </div>
+      <div>
+        <h2>Awards</h2>
+        <ul>
+          {data.awards?.map((award) => <li>{award}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>Leadership</h2>
+        {data.leadership}
+      </div>
+      <div>
+        <h2>Volunteering Activities</h2>
+        {data.volunteering}
+      </div>
     </PageLayout>
   )
 }

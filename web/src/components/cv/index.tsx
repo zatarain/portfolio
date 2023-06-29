@@ -1,17 +1,28 @@
 import { useCV } from '#hooks'
 
+export interface AcademicProject {
+	title: string,
+	type: string,
+	start?: Date,
+	end?: Date,
+	duration?: string,
+	description: string,
+}
+
 export interface CurriculumVitaeProperties {
-	name: string
-	emails?: string[],
-	phones?: string[],
-	websites?: string[],
+	name: string,
+	email?: string[],
+	phone?: string[],
+	social?: object[],
+	website?: string,
 	statement?: string,
-	experiences?: string[],
-	qualifications?: string[],
-	projects?: string[],
-	skills?: string[],
+	experience?: object[],
+	education?: object[],
+	projects?: AcademicProject[],
+	skills?: object[],
 	awards?: string[],
-	volunteering?: string[]
+	leadership?: string,
+	volunteering?: string,
 }
 
 function CurriculumVitae() {
