@@ -51,7 +51,7 @@ describe Curriculum, type: :model do
         'dummy award one',
         'dummy award two',
       ],
-    }
+    }.deep_stringify_keys
   end
 
   describe 'initialize' do
@@ -153,7 +153,6 @@ describe Curriculum, type: :model do
 
     context 'when file exists, but file is enough recent' do
       before do
-        allow(dummy_file).to receive(:close)
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(14.hours.ago)
         allow(s3_client).to receive(:get_object)
@@ -165,6 +164,61 @@ describe Curriculum, type: :model do
         expect(File).to have_received(:exist?)
         expect(s3_client).not_to have_received(:get_object)
         expect(cv).to be(data)
+      end
+    end
+  end
+
+  describe 'find' do
+    before do
+      ENV['AWS_ASSUME_ROLE'] = nil
+      allow(Rails.configuration).to receive(:curriculum).and_return('db/dummy.yml')
+      allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
+      allow(File).to receive(:exist?).and_return(true)
+      allow(File).to receive(:mtime).and_return(1.hour.ago)
+    end
+
+    context 'when sensitive argument is false' do
+      let(:curriculum) { described_class.new }
+      let(:not_sensitive) {[
+        {
+          network: 'LinkedIn',
+          alias: 'dummy',
+          sensitive: false,
+        }.stringify_keys,
+        {
+          network: 'GitHub',
+          alias: 'dummy',
+          sensitive: false,
+        }.stringify_keys,
+      ]}
+
+      before do
+        allow(curriculum).to receive(:download).and_return(data)
+      end
+
+      it 'filters sensitive data by default' do
+        cv = curriculum.find
+        expect(cv).not_to have_key('phone')
+        expect(cv['social']).to eq(not_sensitive)
+      end
+
+      it 'filters sensitive data when sensitive argument is explicitly passed ' do
+        cv = curriculum.find(sensitive: false)
+        expect(cv).not_to have_key('phone')
+        expect(cv['social']).to eq(not_sensitive)
+      end
+    end
+
+    context 'when sensitive argument is true' do
+      let(:curriculum) { described_class.new }
+
+      before do
+        allow(curriculum).to receive(:download).and_return(data)
+      end
+
+      it 'filters sensitive data by default' do
+        cv = curriculum.find(sensitive: true)
+        expect(cv).to eq(data)
       end
     end
   end
