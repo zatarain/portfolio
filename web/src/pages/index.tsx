@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { CurriculumVitaeProperties, Education } from '#components/cv'
+import type { CurriculumVitaeProperties, Education, Job } from '#components/cv'
 import PageLayout from '#components/PageLayout'
 
 interface Properties {
@@ -36,9 +36,24 @@ const HomePage: NextPage<Properties> = ({ data }) => {
         <p>{data.statement}</p>
       </div>
       <div>
+        <h2>Work Experience</h2>
+        <ul>
+          {data.experience?.map((job) =>
+            <li>
+              <h3>{`${job.role} @ ${job.company} - ${job.city}, ${job.country}`}</h3>
+              <dl>
+                <dt>Type:</dt><dd>{job.type}</dd>
+                <dt>Duration:</dt><dd>{`${job.start} - ${job.end}`}</dd>
+              </dl>
+              <p>{job.achievements}</p>
+            </li>
+          )}
+        </ul>
+      </div>
+      <div>
         <h2>Education</h2>
         <ul>
-          {data.education?.map((education) =>
+          {data.education?.map((education: Education) =>
             <li>
               <h3>{`${education.school}`}</h3>
               <p>{`${education.grade}  (${education.start} - ${education.end})`}</p>
