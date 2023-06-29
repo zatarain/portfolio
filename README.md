@@ -7,18 +7,18 @@ This project aims to be [my personal website][ulises-zatarain] and also an inter
 ## 🗂️ Table of content
 
 * 🔭 [Overview](#-overview)
-  - ☑️ [Requirements](#-requirements)
-    * 📃 [Show my curriculum](#-show-my-curriculum)
+  * 🎫 [Requirements](#-requirements)
+    * 💻 [Show my curriculum](#-show-my-curriculum)
     * 🤓 [Show my personal life](#-show-my-personal-life)
     * 📧 [Contact me by e-mail](#-contact-me-by-e-mail)
-    * ⬇️ [Download my curriculum](#-download-my-curriculum)
+    * 💾 [Download my curriculum](#-download-my-curriculum)
     * 📱 [Responsive website](#-responsive-website)
     * 🔒 [Secure connection](#-secure-connection)
-  - 🤔 [Assumptions and disclaimers](#-assumptions-and-disclaimers)
+  * 🤔 [Assumptions and disclaimers](#-assumptions-and-disclaimers)
 * 📐 [Design](#-design)
 * ✅ [Testing](#-testing)
-  - ♻️ [Automated Unit Tests](#-automated-unit-tests)
-  - 💯 [Coverage](#-coverage)
+  * 🤖 [Automated Unit Tests](#-automated-unit-tests)
+  * 💯 [Coverage](#-coverage)
 * 📚 [References](#-references)
 
 ## 🔭 Overview
@@ -27,7 +27,7 @@ This web application not only will show general information about myself and my 
 
 The whole project is broken down in three parts: front-end (a website), back-end (an API) and infrastructure. This repository will contain the front-end and back-end together, while the infrastructure will be managed using Terraform in my other personal project repository [Lorentz][lorentz].
 
-### ☑️ Requirements
+### 🎫 Requirements
 
 There will be two main mandatory non-functional requirements in the development of this project:
 
@@ -36,7 +36,7 @@ There will be two main mandatory non-functional requirements in the development 
 
 Other functional and non-functional requirements are detailed on following subsections.
 
-#### 📃 Show my curriculum
+#### 💻 Show my curriculum
 
 The homepage of the website should show my curriculum vitae including my professional and academic career. The most relevant projects should be highlighted and have a link to provide further information. The data should be dynamic and retrieved from the back-end API.
 
@@ -48,7 +48,7 @@ The homepage should also show details about some of my personal life activities.
 
 The website should provide a way to contact me via e-mail and have some mechanism to control potential spam coming from bots. Neither my email addresses nor my phone numbers should not be shown directly on the website. So, the user needs to provide their name and a way to contact them back.
 
-#### ⬇️ Download my curriculum
+#### 💾 Download my curriculum
 
 The guest users should have a way to download a printable version of my curriculum vitae as a PDF. The PDF should continue being *user interactive* even if is printed. This means, some of the links should continue working when the user physically print the document (e. g. the document includes QR codes).
 
@@ -79,7 +79,7 @@ I am using Terraform to provision the infrastructure on my AWS account. Followin
 
 This project is able to be tested in manual way and with automated unit testing. This section will explain how can you play around with the API and the website locally after the set up.
 
-### ♻️ Automated Unit Tests
+### 🤖 Automated Unit Tests
 
 Automated unit testing has been implemented and they run on each push and pull requests within the GitHub Actions Pipelines and when the Docker image is build. Following is how they are shown in [GitHub website][portfolio-actions]:
 
@@ -91,7 +91,9 @@ Some of those unit testing use [DDT (Data Driven Testing) approach][data-driven-
 
 You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
 
-![Sun Burst][codecov-sunburst]
+| Sun Burst                      | iCicle                    | Grid                  |
+| :----------------------------: | :-----------------------: | :-------------------: |
+| ![Sun Burst][codecov-sunburst] | ![iCicle][codecov-icicle] | ![Grid][codecov-grid] |
 
 **IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions section](#-assumptions-and-disclaimers) there are many chances to improve and for sure it may have even more.
 
@@ -107,15 +109,10 @@ You can follow the test coverage reports of this project in the [CodeCov website
 [lorentz]: https://github.com/zatarain/lorentz
 [ror-docs]: https://api.rubyonrails.org
 [next-docs]: https://nextjs.org/docs
-[github-actions]: https://github.com/features/actions
 [github-actions-docs]: https://docs.github.com/en/actions
 [codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
 [codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
 [codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T
 [codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.svg?token=CKLB4JPO9T
 [portfolio-actions]: https://github.com/zatarain/portfolio/actions
-[back-end-pipeline]: https://github.com/zatarain/portfolio/blob/main/.github/workflows/back-end.yml
-[front-end-pipeline]: https://github.com/zatarain/portfolio/blob/main/.github/workflows/front-end.yml
-[compose-yml]: https://github.com/zatarain/portfolio/blob/main/compose.yml
-[postman-website]: https://www.postman.com
 [data-driven-testing]: https://en.wikipedia.org/wiki/Data-driven_testing
