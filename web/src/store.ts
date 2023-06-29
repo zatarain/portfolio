@@ -1,10 +1,19 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-
-import counterReducer from '#features/counter/slice'
+import { configureStore, ThunkAction, Action, createSlice } from '@reduxjs/toolkit'
 
 export function makeStore() {
+  const responsiveFlipper = createSlice({
+    name: 'flipper',
+    initialState: {
+      responsive: false,
+    },
+    reducers: {
+      flipResponsive: (state) => {
+        state.responsive = !state.responsive
+      }
+    }
+  })
   return configureStore({
-    reducer: { counter: counterReducer },
+    reducer: { flipper: responsiveFlipper.reducer },
   })
 }
 

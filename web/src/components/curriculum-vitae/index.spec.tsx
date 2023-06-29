@@ -1,13 +1,5 @@
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
-jest.mock('#hooks', () => ({
-	useCV: () => ({
-		data: {
-			name: 'This is my name'
-		}
-	})
-}))
-
 import { makeStore } from '#store'
 import CurriculumVitae from '.'
 
