@@ -1,10 +1,20 @@
 import { useCV } from '#hooks'
 
+export interface Education {
+	school: string,
+	grade: string,
+	thesis?: string,
+	start: number,
+	end: number,
+	gpa: number,
+	subjects?: string[],
+}
+
 export interface AcademicProject {
 	title: string,
 	type: string,
-	start?: Date,
-	end?: Date,
+	start?: string,
+	end?: string,
 	duration?: string,
 	description: string,
 }
@@ -17,7 +27,7 @@ export interface CurriculumVitaeProperties {
 	website?: string,
 	statement?: string,
 	experience?: object[],
-	education?: object[],
+	education?: Education[],
 	projects?: AcademicProject[],
 	skills?: object[],
 	awards?: string[],

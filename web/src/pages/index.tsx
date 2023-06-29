@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { CurriculumVitaeProperties } from '#components/cv'
+import type { CurriculumVitaeProperties, Education } from '#components/cv'
 import PageLayout from '#components/PageLayout'
 
 interface Properties {
@@ -12,17 +12,17 @@ export async function getServerSideProps() {
   return {
     props: {
       data: {
-        name: data.name || '',
+        ...data,
         social: data.social || [],
-        website: data.website || '',
-        statement: data.statement || '',
         experience: data['work-experience'] || [],
-        education: data.education || [],
+        education: (data.education || []).map((education: any) => {
+          return {
+            ...education,
+            subjects: education['relevant-subjects'] || [],
+          }
+        }),
         projects: data['academic-projects'] || [],
         skills: data['technical-skills'] || [],
-        awards: data.awards || [],
-        leadership: data.leadership || '',
-        volunteering: data.volunteering || '',
       },
     },
   }
@@ -34,6 +34,23 @@ const HomePage: NextPage<Properties> = ({ data }) => {
       <div>
         <h2>Who am I?</h2>
         <p>{data.statement}</p>
+      </div>
+      <div>
+        <h2>Education</h2>
+        <ul>
+          {data.education?.map((education) =>
+            <li>
+              <h3>{`${education.school}`}</h3>
+              <p>{`${education.grade}  (${education.start} - ${education.end})`}</p>
+              <dl>
+                {education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
+                <dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
+                <dt>Most relevant subjects and courses:</dt>
+                <dd><ul>{education.subjects?.map((subject) => <li>{subject}</li>)}</ul></dd>
+              </dl>
+            </li>
+          )}
+        </ul>
       </div>
       <div>
         <h2>Major Academic Projects</h2>
