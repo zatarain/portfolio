@@ -1,11 +1,10 @@
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { makeStore } from '#store'
+import store from '#store'
 import CurriculumVitae from '.'
 
 describe('<CurriculumVitae />', () => {
 	it('renders the component', () => {
-		const store = makeStore()
 		const data = {
 			name: 'My Test Name',
 			statement: 'Test statement paragraph',

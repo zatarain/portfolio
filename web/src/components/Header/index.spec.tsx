@@ -1,12 +1,11 @@
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 
-import { makeStore } from '#store'
+import store from '#store'
 import Header from '.'
 
 describe('<Header />', () => {
 	it('renders the component correctly with passed name', () => {
-		const store = makeStore()
 
 		const { asFragment, getByText } = render(
 			<Provider store={store}>

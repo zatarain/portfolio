@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { makeStore } from '#store'
+import store from '#store'
 import PageLayout from '.'
 import Head from 'next/head'
 
@@ -20,7 +20,6 @@ jest.mock('next/head');
 
 describe('<PageLayout ...>...</PageLayout>', () => {
 	it('renders the component correctly with passed name', async () => {
-		const store = makeStore()
 		const head = jest.mocked(Head)
 
 		const { asFragment, getByText } = render(

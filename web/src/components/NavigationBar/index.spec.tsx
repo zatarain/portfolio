@@ -3,12 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import styles from './index.module.css'
 
-import { makeStore } from '#store'
+import store from '#store'
 import NavigationBar from '.'
 
 describe('<NavigationBar />', () => {
 	it('renders the component correctly with passed name', () => {
-		const store = makeStore()
 
 		const { asFragment, getByText } = render(
 			<Provider store={store}>
@@ -21,7 +20,6 @@ describe('<NavigationBar />', () => {
 	})
 
 	it('adds/removes class name "responsive" when user clicks on dropdown menu', async () => {
-		const store = makeStore()
 		const user = userEvent.setup()
 
 		const { getByRole } = render(
