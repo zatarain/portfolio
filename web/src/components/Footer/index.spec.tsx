@@ -1,19 +1,10 @@
-import renderer from 'react-test-renderer'
-import { Provider } from 'react-redux'
-
-import { makeStore } from '#store'
+import { render } from '@testing-library/react'
 import Footer from '.'
 
 describe('<Footer />', () => {
 	it('renders the component correctly', () => {
-		const store = makeStore()
+		const { asFragment } = render(<Footer />)
 
-		const tree = renderer.create(
-			<Provider store={store}>
-				<Footer />
-			</Provider>
-		).toJSON()
-
-		expect(tree).toMatchSnapshot()
+		expect(asFragment()).toMatchSnapshot()
 	})
 })

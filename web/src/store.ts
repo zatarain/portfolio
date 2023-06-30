@@ -1,10 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-
-import counterReducer from '#features/counter/slice'
+import responsive from '#components/NavigationBar/slice'
 
 export function makeStore() {
   return configureStore({
-    reducer: { counter: counterReducer },
+    reducer: { responsive },
   })
 }
 
