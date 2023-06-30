@@ -1,6 +1,4 @@
 import { render } from '@testing-library/react'
-import { Provider } from 'react-redux'
-import store from '#store'
 import CurriculumVitae from '.'
 
 describe('<CurriculumVitae />', () => {
@@ -29,11 +27,7 @@ describe('<CurriculumVitae />', () => {
 			leadership: 'Test leadership paragraph',
 			volunteering: 'Test volunteering paragraph',
 		}
-		const { asFragment, getByText } = render(
-			<Provider store={store}>
-				<CurriculumVitae data={data} />
-			</Provider>
-		)
+		const { asFragment, getByText } = render(<CurriculumVitae data={data} />)
 
 		expect(getByText('Test statement paragraph')).toBeInTheDocument()
 		expect(asFragment()).toMatchSnapshot()
