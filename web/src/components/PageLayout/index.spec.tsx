@@ -1,3 +1,5 @@
+import { Provider } from 'react-redux'
+import store from '#store'
 import { jest } from '@jest/globals';
 import { render } from '@testing-library/react'
 import PageLayout from '.'
@@ -21,9 +23,11 @@ describe('<PageLayout ...>...</PageLayout>', () => {
 		const head = jest.mocked(Head)
 
 		const { asFragment, getByText } = render(
-			<PageLayout title="Test title" data={{ name: 'My Name' }}>
-				<p>Hello World</p>
-			</PageLayout>
+			<Provider store={store}>
+				<PageLayout title="Test title" data={{ name: 'My Name' }}>
+					<p>Hello World</p>
+				</PageLayout>
+			</Provider>
 		)
 
 		expect(head).toBeCalled()
