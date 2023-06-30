@@ -1,3 +1,4 @@
+import styles from './index.module.css'
 export interface Job {
 	role: string
 	type: string
@@ -50,12 +51,12 @@ interface Properties {
 
 const CurriculumVitae = ({ data }: Properties) => {
 	return (
-		<div>
-			<div>
+		<div className={styles.curriculum}>
+			<section className={styles.statement}>
 				<h2>Who am I?</h2>
 				<p>{data.statement}</p>
-			</div>
-			<div>
+			</section>
+			<section className={styles['work-experience']}>
 				<h2>Work Experience</h2>
 				<ul>
 					{data.experience?.map((job: Job, index: number) =>
@@ -69,7 +70,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 						</li>
 					)}
 				</ul>
-			</div>
+			</section>
 			<div>
 				<h2>Education</h2>
 				<ul>

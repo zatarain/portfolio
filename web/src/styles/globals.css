@@ -14,6 +14,8 @@
   --ldn-lighter: #aaffec;
   --ldn-light: #79ffe1;
   --ldn: #50e3c2;
+  --heading-2: var(--ldn-dark);
+  --heading-3: var(--ldn-dark);
 }
 
 html,

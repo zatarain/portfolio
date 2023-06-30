@@ -1,0 +1,59 @@
+.curriculum {
+	font-size: 1rem;
+}
+
+.curriculum h2 {
+	font-size: 1.75rem;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	color: var(--heading-2);
+	margin: 0;
+}
+
+.curriculum h3 {
+	font-size: 1.2rem;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	color: var(--heading-3);
+}
+
+.curriculum ::selection {
+	color: black;
+	background-color: var(--ldn-lighter);
+}
+
+.curriculum dd {
+	padding: 0;
+	margin: 0;
+}
+
+.work-experience ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.work-experience li {
+	display: grid;
+	grid-gap: 0 2rem;
+	grid-template-areas:
+		'header header'
+		'fields contributions';
+	margin: 1rem 0;
+}
+
+.work-experience h3 {
+	grid-area: header;
+	margin: 0;
+}
+
+.work-experience dl {
+	grid-area: fields;
+	text-align: center;
+}
+
+.work-experience p {
+	grid-area: contributions;
+}
+
+.work-experience dt {
+	display: none;
+}
