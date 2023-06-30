@@ -148,14 +148,33 @@ describe Curriculum, type: :model do
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(14.hours.ago)
         allow(s3_client).to receive(:get_object)
+        allow(Rails.logger).to receive(:info)
       end
 
-      it 'does NOT download the file from S3 and uses the cached one' do
+      it 'does NOT download the file from S3 and uses the cached one instead' do
         curriculum = described_class.new
         cv = curriculum.download
         expect(File).to have_received(:exist?)
         expect(s3_client).not_to have_received(:get_object)
         expect(cv).to be(data)
+        expect(Rails.logger).to have_received(:info)
+          .with('Using cached file: db/dummy.yml')
+      end
+    end
+
+    context 'when there is an error raised from AWS SDK' do
+      before do
+        allow(File).to receive(:exist?).and_return(false)
+        allow(Rails.logger).to receive(:error)
+        allow(s3_client).to receive(:get_object)
+          .and_raise(StandardError.new('Unable to download the file from AWS S3'))
+      end
+
+      it 'logs the error message' do
+        curriculum = described_class.new
+        curriculum.download
+        expect(Rails.logger).to have_received(:error)
+          .with(/Unable to download the file from AWS S3/)
       end
     end
   end

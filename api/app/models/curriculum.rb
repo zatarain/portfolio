@@ -23,7 +23,7 @@ class Curriculum
     end
     return YAML.load_file(path, safe: true)
   rescue StandardError => exception
-    Rails.logger.error "Error downloading file: #{exception.message}"
+    Rails.logger.error "Failed to download file: #{exception.message}"
   end
 
   def find(sensitive: false)
