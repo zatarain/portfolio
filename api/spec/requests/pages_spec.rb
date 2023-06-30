@@ -36,5 +36,17 @@ describe 'Pages', type: :request do
       expect(response.status).to eq(200)
       expect(response.body).to eq(data.to_json)
     end
+
+    it 'logs error message and responses with HTTP 500 on error finding the data' do
+      curriculum = instance_double(Curriculum)
+      allow(curriculum).to receive(:find)
+        .and_raise(StandardError.new('Unable to find curriculum data'))
+      allow(Curriculum).to receive(:new).and_return(curriculum)
+      allow(Rails.logger).to receive(:error)
+      get '/'
+      expect(response.status).to eq(500)
+      expect(Rails.logger).to have_received(:error)
+        .with(/Unable to find curriculum data/)
+    end
   end
 end
