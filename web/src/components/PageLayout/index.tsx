@@ -1,4 +1,4 @@
-import type { CurriculumVitaeProperties } from '#components/curriculum-vitae'
+import type { CurriculumVitaeProperties } from '#components/CurriculumVitae'
 import Footer from '#components/Footer';
 import Head from 'next/head';
 import Header from '#components/Header';

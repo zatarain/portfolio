@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import type { CurriculumVitaeProperties } from '#components/curriculum-vitae'
-import CurriculumVitae from '#components/curriculum-vitae'
+import type { CurriculumVitaeProperties } from '#components/CurriculumVitae'
+import CurriculumVitae from '#components/CurriculumVitae'
 import PageLayout from '#components/PageLayout'
 
 interface Properties {

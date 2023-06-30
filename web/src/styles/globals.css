@@ -10,6 +10,10 @@
   --highlight-secondary: #5cdeac;
   --fg-secondary: #fff;
   --fg-menuitem-hover: #7fffd4;
+  --ldn-dark: #29bc9b;
+  --ldn-lighter: #aaffec;
+  --ldn-light: #79ffe1;
+  --ldn: #50e3c2;
 }
 
 html,
@@ -17,11 +21,8 @@ body {
   padding: 0;
   margin: 0;
   text-align: center;
-  font-family: 'Cascadia Code', Inter;
-  /**
-  -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  **/
+  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 14px;
 }
 
@@ -36,5 +37,7 @@ a {
 
 main {
   padding: 0 3rem;
-    margin: 3rem 0;
+  margin: 3rem 0;
+  font-size: 1.2rem;
+  line-height: 1.75rem;
 }
