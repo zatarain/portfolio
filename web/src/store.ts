@@ -1,19 +1,9 @@
-import { configureStore, ThunkAction, Action, createSlice } from '@reduxjs/toolkit'
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import responsive from '#components/NavigationBar/slice'
 
 export function makeStore() {
-  const responsiveFlipper = createSlice({
-    name: 'flipper',
-    initialState: {
-      responsive: false,
-    },
-    reducers: {
-      flipResponsive: (state) => {
-        state.responsive = !state.responsive
-      }
-    }
-  })
   return configureStore({
-    reducer: { flipper: responsiveFlipper.reducer },
+    reducer: { responsive },
   })
 }
 
