@@ -98,8 +98,6 @@ describe Curriculum, type: :model do
   end
 
   describe 'download' do
-    let(:dummy_file) { instance_double(File) }
-
     before do
       ENV['AWS_ASSUME_ROLE'] = nil
       allow(Rails.configuration).to receive(:curriculum).and_return('db/dummy.yml')
@@ -109,13 +107,11 @@ describe Curriculum, type: :model do
       })
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
-      allow(File).to receive(:open).with('db/dummy.yml', 'wb').and_return(dummy_file)
       allow(YAML).to receive(:load_file).with('db/dummy.yml', safe: true).and_return(data)
     end
 
     context 'when file does NOT exist' do
       before do
-        allow(dummy_file).to receive(:close)
         allow(File).to receive(:exist?).and_return(false)
         allow(s3_client).to receive(:get_object)
       end
@@ -124,17 +120,14 @@ describe Curriculum, type: :model do
         curriculum = described_class.new
         cv = curriculum.download
         expect(File).to have_received(:exist?)
-        expect(File).to have_received(:open).with('db/dummy.yml', 'wb')
         expect(s3_client).to have_received(:get_object)
-          .with({ bucket: 'test-cv', key: 'dummy.yml' }, target: dummy_file)
-        expect(dummy_file).to have_received(:close)
+          .with(bucket: 'test-cv', key: 'dummy.yml', response_target: 'db/dummy.yml')
         expect(cv).to be(data)
       end
     end
 
     context 'when file exists, but file is too old' do
       before do
-        allow(dummy_file).to receive(:close)
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(2.days.ago)
         allow(s3_client).to receive(:get_object)
@@ -145,8 +138,7 @@ describe Curriculum, type: :model do
         cv = curriculum.download
         expect(File).to have_received(:exist?)
         expect(s3_client).to have_received(:get_object)
-          .with({ bucket: 'test-cv', key: 'dummy.yml' }, target: dummy_file)
-        expect(dummy_file).to have_received(:close)
+          .with(bucket: 'test-cv', key: 'dummy.yml', response_target: 'db/dummy.yml')
         expect(cv).to be(data)
       end
     end

@@ -13,19 +13,17 @@ class Curriculum
   def download
     path = Rails.configuration.curriculum
     if !File.exist?(path) || File.mtime(path) < 1.day.ago
-      file = File.open(Rails.configuration.curriculum, 'wb')
       @s3.get_object(
-        {
-          bucket: Rails.configuration.aws[:s3_bucket],
-          key: Rails.configuration.aws[:s3_object],
-        },
-        target: file,
+        bucket: Rails.configuration.aws[:s3_bucket],
+        key: Rails.configuration.aws[:s3_object],
+        response_target: path,
       )
-      file.close
     else
-      Rails.logger.debug 'Using cached file!'
+      Rails.logger.info "Using cached file: #{path}"
     end
-    YAML.load_file(path, safe: true)
+    return YAML.load_file(path, safe: true)
+  rescue StandardError => exception
+    Rails.logger.error "Error downloading file: #{exception.message}"
   end
 
   def find(sensitive: false)
