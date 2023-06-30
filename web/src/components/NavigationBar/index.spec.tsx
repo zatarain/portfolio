@@ -1,19 +1,11 @@
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
-import styles from './index.module.css'
-
-import store from '#store'
 import NavigationBar from '.'
+import styles from './index.module.css'
 
 describe('<NavigationBar />', () => {
 	it('renders the component correctly with passed name', () => {
-
-		const { asFragment, getByText } = render(
-			<Provider store={store}>
-				<NavigationBar name="My Name" />
-			</Provider>
-		)
+		const { asFragment, getByText } = render(<NavigationBar name="My Name" />)
 
 		expect(getByText('My Name')).toBeInTheDocument()
 		expect(asFragment()).toMatchSnapshot()
@@ -22,11 +14,7 @@ describe('<NavigationBar />', () => {
 	it('adds/removes class name "responsive" when user clicks on dropdown menu', async () => {
 		const user = userEvent.setup()
 
-		const { getByRole } = render(
-			<Provider store={store}>
-				<NavigationBar name="Test Name" />
-			</Provider>
-		)
+		const { getByRole } = render(<NavigationBar name="Test Name" />)
 
 		const bar = getByRole('menubar')
 		const dropdown = getByRole('menuitemcheckbox')
