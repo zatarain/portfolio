@@ -1,4 +1,7 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.cdnfonts.com/css/cascadia-code');
+@import url('https://fonts.cdnfonts.com/css/neo-euler');
+@import url('https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css');
 
 :root {
   --bg-page: #fafbfc;
@@ -42,4 +45,17 @@ main {
   margin: 3rem 0;
   font-size: 1.2rem;
   line-height: 1.75rem;
+}
+
+a:link, a:visited {
+  color: var(--ldn-dark);
+  text-decoration: none;
+}
+
+a:hover, a:hover:visited {
+  color: var(--bg-action);
+}
+
+.katex {
+  font-family: 'Neo Euler';
 }

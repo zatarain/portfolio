@@ -7,8 +7,9 @@
 	padding: 0 .5rem;
 }
 
-.navigation-bar a {
+.navigation-bar a:link, .navigation-bar a:visited {
 	display: inline-block;
+	color: white;
 }
 
 .logo:link,
@@ -36,7 +37,7 @@
 	line-height: 2.25rem;
 }
 
-.sections :hover {
+.sections :hover, .sections :hover:visited {
 	color: var(--fg-menuitem-hover);
 }
 
@@ -51,7 +52,7 @@
 	padding: 0 1rem;
 }
 
-.call-to-action:hover {
+.call-to-action:hover, .call-to-action:hover:visited {
 	color: white;
 	background: var(--bg-action-hover);
 }

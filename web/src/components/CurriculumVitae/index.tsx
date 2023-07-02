@@ -1,3 +1,4 @@
+import Markdown from '#components/Markdown'
 import styles from './index.module.css'
 export interface Job {
 	role: string
@@ -7,7 +8,7 @@ export interface Job {
 	country: string
 	start: string
 	end: string
-	achievements: string
+	contributions: string
 }
 
 export interface Education {
@@ -43,6 +44,7 @@ export interface CurriculumVitaeProperties {
 	awards?: string[]
 	leadership?: string
 	volunteering?: string
+	markdown: string
 }
 
 interface Properties {
@@ -66,7 +68,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 								<dt>Type:</dt><dd>{job.type}</dd>
 								<dt>Duration:</dt><dd>{`${job.start} - ${job.end}`}</dd>
 							</dl>
-							<p>{job.achievements}</p>
+							<Markdown content={job.contributions} />
 						</li>
 					)}
 				</ul>
@@ -98,7 +100,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 								<dt>Type:</dt><dd>{project.type}</dd>
 								<dt>Duration:</dt><dd>{project.duration && project.duration || `${project.start} - ${project.end}`}</dd>
 							</dl>
-							<p>{project.description}</p>
+							<Markdown content={project.description} />
 						</li>
 					)}
 				</ul>
