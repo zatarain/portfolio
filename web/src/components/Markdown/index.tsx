@@ -1,4 +1,5 @@
 import Async from 'react-async'
+import type { AsyncProps } from 'react-async'
 import { remark } from 'remark'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
@@ -10,13 +11,13 @@ import rehypeKatex from 'rehype-katex'
 import styles from './index.module.css'
 import React from 'react'
 
-interface Properties {
+interface Properties extends AsyncProps<string> {
 	content?: string
 }
 
-const render = async ({ input }: { input: string }, { signal }: { signal: never }) => {
-	console.log('input:', input)
-	const content = await remark()
+const render = async ({ content }: Properties) => {
+	console.log('input:', content)
+	const output = await remark()
 		.use(remarkParse)
 		.use(remarkGfm)
 		.use(remarkMath)
@@ -27,15 +28,15 @@ const render = async ({ input }: { input: string }, { signal }: { signal: never 
 			}
 		})
 		.use(rehypeStringify)
-		.process(input)
+		.process(content || '')
 
-	console.log('render:', String(content))
-	return content
+	console.log('render:', String(output))
+	return new Promise<string>((resolve) => resolve(String(output)))
 }
 
 const Markdown = ({ content }: Properties) => {
 	return (
-		<Async promiseFn={render} input={content}>
+		<Async promiseFn={render} content={content}>
 			<Async.Pending>Loading...</Async.Pending>
 			<Async.Rejected>{error => <p>Something went wrong: {error.message}</p>}</Async.Rejected>
 			<Async.Fulfilled>{data => <div className={styles.markdown} dangerouslySetInnerHTML={{ __html: String(data) }}></div>}</Async.Fulfilled>
