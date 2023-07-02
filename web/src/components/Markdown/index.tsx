@@ -1,5 +1,5 @@
 import Async from 'react-async'
-import { unified } from 'unified'
+import { remark } from 'remark'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
@@ -16,7 +16,7 @@ interface Properties {
 
 const render = async ({ input }: { input: string }, { signal }: { signal: never }) => {
 	console.log('input:', input)
-	const content = await unified()
+	const content = await remark()
 		.use(remarkParse)
 		.use(remarkGfm)
 		.use(remarkMath)

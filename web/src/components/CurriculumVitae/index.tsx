@@ -58,7 +58,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 				<h2>Who am I?</h2>
 				<p>{data.statement}</p>
 			</section>
-			<section className={styles['work-experience']}>
+			<section className={styles.experiences}>
 				<h2>Work Experience</h2>
 				<ul>
 					{data.experience?.map((job: Job, index: number) =>
@@ -73,24 +73,24 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<div>
+			<section className={styles.education}>
 				<h2>Education</h2>
 				<ul>
 					{data.education?.map((education: Education, index: number) =>
 						<li key={index}>
 							<h3>{`${education.school}`}</h3>
-							<p>{`${education.grade}  (${education.start} - ${education.end})`}</p>
+							<p>{`${education.grade} (${education.start} - ${education.end})`}</p>
 							<dl>
 								{education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
 								<dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
-								<dt>Most relevant subjects and courses:</dt>
+								<dt className={styles.subjects}>Most relevant subjects and courses:</dt>
 								<dd><ul>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
 							</dl>
 						</li>
 					)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section className={styles.experiences}>
 				<h2>Major Academic Projects</h2>
 				<ul>
 					{data.projects?.map((project: AcademicProject, index: number) =>
@@ -104,7 +104,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 						</li>
 					)}
 				</ul>
-			</div>
+			</section>
 			<div>
 				<h2>Awards</h2>
 				<ul>

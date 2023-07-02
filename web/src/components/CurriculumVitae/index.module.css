@@ -25,13 +25,13 @@
 	margin: 0;
 }
 
-.work-experience ul {
+.experiences ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-.work-experience li {
+.experiences li {
 	display: grid;
 	grid-gap: 0 2rem;
 	grid-template-areas:
@@ -40,20 +40,54 @@
 	margin: 1rem 0;
 }
 
-.work-experience h3 {
+.experiences h3 {
 	grid-area: header;
 	margin: 0;
 }
 
-.work-experience dl {
+.experiences dl {
 	grid-area: fields;
 	text-align: center;
+	width: 10rem;
 }
 
-.work-experience p {
+.experiences p {
 	grid-area: contributions;
 }
 
-.work-experience dt {
+.experiences dt {
 	display: none;
+}
+
+.education > ul {
+	list-style-type: none;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.education h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.education p {
+	margin: 0;
+}
+
+.education dl {
+	margin: 0;
+}
+
+.education dt {
+	display: inline-block;
+}
+
+.education dd {
+	display: inline-block;
+	margin-left: 1ch;
+}
+
+.education .subjects {
+	display: block;
 }
