@@ -27,12 +27,12 @@
 /* Math fonts. */
 .katex .mathnormal {
   font-family: Euler, KaTeX_Math;
-  font-style: italic;
+  font-style: normal;
 }
 
 .katex .mathit {
   font-family: Euler, KaTeX_Main;
-  font-style: italic;
+  font-style: normal;
 }
 
 .katex .mathrm {
@@ -47,7 +47,7 @@
 .katex .boldsymbol {
   font-family: Euler, KaTeX_Math;
   font-weight: bold;
-  font-style: italic;
+  font-style: normal;
 }
 
 .katex .amsrm {
@@ -91,7 +91,7 @@
 .katex .mathitsf,
 .katex .textitsf {
   font-family: KaTeX_SansSerif;
-  font-style: italic;
+  font-style: normal;
 }
 
 .katex .mainrm {
@@ -139,6 +139,6 @@
 .katex .op-symbol.large-op {
   font-family: Euler;
   font-size: 1.5em;
-  bottom: -0.2em!important;
+  bottom: -0.25em!important;
   margin-right: 0!important;
 }
