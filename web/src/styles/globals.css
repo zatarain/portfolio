@@ -17,6 +17,7 @@
   --ldn: #50e3c2;
   --heading-2: var(--ldn-dark);
   --heading-3: var(--ldn-dark);
+  --headings-font: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 html,

@@ -4,14 +4,14 @@
 
 .curriculum h2 {
 	font-size: 1.75rem;
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	font-family: var(--headings-font);
 	color: var(--heading-2);
 	margin: 1rem 0 0;
 }
 
 .curriculum h3 {
 	font-size: 1.2rem;
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	font-family: var(--headings-font);
 	color: var(--heading-3);
 }
 

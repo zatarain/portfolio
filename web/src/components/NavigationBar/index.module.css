@@ -7,6 +7,12 @@
 	padding: 0 .5rem;
 }
 
+header .navigation-bar {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+}
+
 .navigation-bar a:link, .navigation-bar a:visited {
 	display: inline-block;
 	color: white;
