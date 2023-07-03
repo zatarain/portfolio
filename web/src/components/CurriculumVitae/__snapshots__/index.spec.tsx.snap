@@ -2,92 +2,41 @@
 
 exports[`<CurriculumVitae /> renders the component 1`] = `
 <DocumentFragment>
-  <div>
-    <div>
+  <div
+    class="curriculum"
+  >
+    <section>
       <h2>
         Who am I?
       </h2>
       <p>
         Test statement paragraph
       </p>
-    </div>
-    <div>
+    </section>
+    <section
+      class="experiences"
+    >
       <h2>
         Work Experience
       </h2>
-      <ul>
-        <li>
-          <h3>
-            undefined @ undefined - undefined, undefined
-          </h3>
-          <dl>
-            <dt>
-              Type:
-            </dt>
-            <dd />
-            <dt>
-              Duration:
-            </dt>
-            <dd>
-              undefined - undefined
-            </dd>
-          </dl>
-          <p />
-        </li>
-      </ul>
-    </div>
-    <div>
+      <ul />
+    </section>
+    <section
+      class="education"
+    >
       <h2>
         Education
       </h2>
-      <ul>
-        <li>
-          <h3>
-            undefined
-          </h3>
-          <p>
-            undefined  (undefined - undefined)
-          </p>
-          <dl>
-            <dt>
-              Cumulative GPA:
-            </dt>
-            <dd>
-              /100
-            </dd>
-            <dt>
-              Most relevant subjects and courses:
-            </dt>
-            <dd>
-              <ul />
-            </dd>
-          </dl>
-        </li>
-      </ul>
-    </div>
-    <div>
+      <ul />
+    </section>
+    <section
+      class="experiences"
+    >
       <h2>
         Major Academic Projects
       </h2>
-      <ul>
-        <li>
-          <h3 />
-          <dl>
-            <dt>
-              Type:
-            </dt>
-            <dd />
-            <dt>
-              Duration:
-            </dt>
-            <dd>
-              undefined - undefined
-            </dd>
-          </dl>
-          <p />
-        </li>
-      </ul>
-    </div>
+      <ul />
+    </section>
     <div>
       <h2>
         Awards

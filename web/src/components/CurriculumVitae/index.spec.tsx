@@ -7,22 +7,12 @@ describe('<CurriculumVitae />', () => {
 			name: 'My Test Name',
 			statement: 'Test statement paragraph',
 			experience: [
-				{
-
-				},
 			],
 			education: [
-				{
-
-				},
 			],
 			projects: [
-				{
-
-				},
 			],
 			awards: [
-
 			],
 			leadership: 'Test leadership paragraph',
 			volunteering: 'Test volunteering paragraph',

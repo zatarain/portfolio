@@ -1,37 +1,16 @@
 import Async from 'react-async'
 import type { AsyncProps } from 'react-async'
-import { remark } from 'remark'
-import remarkParse from 'remark-parse'
-import remarkGfm from 'remark-gfm'
-import remarkRehype from 'remark-rehype'
-import rehypeStringify from 'rehype-stringify'
-import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
+import MarkdownIt from 'markdown-it'
 
 import styles from './index.module.css'
-import React from 'react'
 
 interface Properties extends AsyncProps<string> {
 	content?: string
 }
 
 const render = async ({ content }: Properties) => {
-	console.log('input:', content)
-	const output = await remark()
-		.use(remarkParse)
-		.use(remarkGfm)
-		.use(remarkMath)
-		.use(remarkRehype)
-		.use(rehypeKatex, {
-			macros: {
-				'\\diff': '\\mathrm{d}',
-			}
-		})
-		.use(rehypeStringify)
-		.process(content || '')
-
-	console.log('render:', String(output))
-	return new Promise<string>((resolve) => resolve(String(output)))
+	const markdown = MarkdownIt()
+	return markdown.render(content || '')
 }
 
 const Markdown = ({ content }: Properties) => {
