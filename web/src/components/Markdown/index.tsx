@@ -1,7 +1,6 @@
 import Async from 'react-async'
 import type { AsyncProps } from 'react-async'
 import MarkdownIt from 'markdown-it'
-
 import styles from './index.module.css'
 
 interface Properties extends AsyncProps<string> {
@@ -9,7 +8,15 @@ interface Properties extends AsyncProps<string> {
 }
 
 const render = async ({ content }: Properties) => {
+	const katex = require('@vscode/markdown-it-katex')
 	const markdown = MarkdownIt()
+	markdown.use(katex, {
+		throwOnError: false,
+		errorColor: '#cc0000',
+		macros: {
+			'\\diff': '\\mathrm{d}'
+		}
+	})
 	return markdown.render(content || '')
 }
 
