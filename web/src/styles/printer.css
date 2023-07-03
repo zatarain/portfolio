@@ -1,0 +1,13 @@
+@media print {
+	header {
+		display: none;
+	}
+
+	footer {
+		display: none;
+	}
+
+	main {
+		font-size: 10pt;
+	}
+}

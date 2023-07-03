@@ -54,11 +54,11 @@ interface Properties {
 const CurriculumVitae = ({ data }: Properties) => {
 	return (
 		<div className={styles.curriculum}>
-			<section className={styles.statement}>
+			<section id="personal-statement" className={styles.statement}>
 				<h2>Who am I?</h2>
 				<p>{data.statement}</p>
 			</section>
-			<section className={styles.experiences}>
+			<section id="work-experience" className={styles.experiences}>
 				<h2>Work Experience</h2>
 				<ul>
 					{data.experience?.map((job: Job, index: number) =>
@@ -73,7 +73,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<section className={styles.education}>
+			<section id="education" className={styles.education}>
 				<h2>Education</h2>
 				<ul>
 					{data.education?.map((education: Education, index: number) =>
@@ -90,7 +90,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<section className={styles.experiences}>
+			<section id="academic-projects" className={styles.experiences}>
 				<h2>Major Academic Projects</h2>
 				<ul>
 					{data.projects?.map((project: AcademicProject, index: number) =>
@@ -105,17 +105,17 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<section>
+			<section id="awards">
 				<h2>Awards</h2>
 				<ul>
 					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
 			</section>
-			<section>
+			<section id="leadership">
 				<h2>Leadership</h2>
 				<Markdown content={data.leadership} />
 			</section>
-			<section>
+			<section id="volunteering">
 				<h2>Volunteering Activities</h2>
 				<Markdown content={data.volunteering} />
 			</section>

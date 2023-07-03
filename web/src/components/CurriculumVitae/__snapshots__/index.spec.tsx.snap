@@ -5,7 +5,9 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
   <div
     class="curriculum"
   >
-    <section>
+    <section
+      id="personal-statement"
+    >
       <h2>
         Who am I?
       </h2>
@@ -15,6 +17,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
     </section>
     <section
       class="experiences"
+      id="work-experience"
     >
       <h2>
         Work Experience
@@ -80,6 +83,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
     </section>
     <section
       class="education"
+      id="education"
     >
       <h2>
         Education
@@ -157,19 +161,24 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
     </section>
     <section
       class="experiences"
+      id="academic-projects"
     >
       <h2>
         Major Academic Projects
       </h2>
       <ul />
     </section>
-    <section>
+    <section
+      id="awards"
+    >
       <h2>
         Awards
       </h2>
       <ul />
     </section>
-    <section>
+    <section
+      id="leadership"
+    >
       <h2>
         Leadership
       </h2>
@@ -183,7 +192,9 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
 
       </div>
     </section>
-    <section>
+    <section
+      id="volunteering"
+    >
       <h2>
         Volunteering Activities
       </h2>

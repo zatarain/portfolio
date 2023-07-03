@@ -34,14 +34,14 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
         >
           <li>
             <a
-              href="#"
+              href="#work-experience"
             >
               Experience
             </a>
           </li>
           <li>
             <a
-              href="#"
+              href="#education"
             >
               Education
             </a>
@@ -55,14 +55,14 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
           </li>
           <li>
             <a
-              href="#"
+              href="#academic-projects"
             >
               Projects
             </a>
           </li>
           <li>
             <a
-              href="#"
+              href="#volunteering"
             >
               Hobbies
             </a>

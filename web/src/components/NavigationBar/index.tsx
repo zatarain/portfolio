@@ -25,11 +25,11 @@ const NavigationBar = ({ name }: Properties) => {
 				{name}
 			</Link>
 			<ul className={styles.sections}>
-				<li><Link href="#">Experience</Link></li>
-				<li><Link href="#">Education</Link></li>
-				<li><Link href="#">Skills</Link></li>
-				<li><Link href="#">Projects</Link></li>
-				<li><Link href="#">Hobbies</Link></li>
+				<li><Link href="#work-experience" scroll={false}>Experience</Link></li>
+				<li><Link href="#education" scroll={false}>Education</Link></li>
+				<li><Link href="#" scroll={false}>Skills</Link></li>
+				<li><Link href="#academic-projects" scroll={false}>Projects</Link></li>
+				<li><Link href="#volunteering" scroll={false}>Hobbies</Link></li>
 				<li className={styles.action}><Link href="#">E-mail</Link></li>
 				<li className={styles.action}>
 					<Link href="#" className={styles['call-to-action']}>Download</Link>
