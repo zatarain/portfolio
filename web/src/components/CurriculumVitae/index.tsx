@@ -105,20 +105,20 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<div>
+			<section>
 				<h2>Awards</h2>
 				<ul>
 					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section>
 				<h2>Leadership</h2>
 				<Markdown content={data.leadership} />
-			</div>
-			<div>
+			</section>
+			<section>
 				<h2>Volunteering Activities</h2>
 				<Markdown content={data.volunteering} />
-			</div>
+			</section>
 			<section>
 				<h2>TeX</h2>
 				<Markdown content={data.tex} />

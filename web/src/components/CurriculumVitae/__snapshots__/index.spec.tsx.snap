@@ -163,24 +163,40 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       </h2>
       <ul />
     </section>
-    <div>
+    <section>
       <h2>
         Awards
       </h2>
       <ul />
-    </div>
-    <div>
+    </section>
+    <section>
       <h2>
         Leadership
       </h2>
-      Test leadership paragraph
-    </div>
-    <div>
+      <div
+        class="markdown"
+      >
+        <p>
+          Test leadership paragraph
+        </p>
+        
+
+      </div>
+    </section>
+    <section>
       <h2>
         Volunteering Activities
       </h2>
-      Test volunteering paragraph
-    </div>
+      <div
+        class="markdown"
+      >
+        <p>
+          Test volunteering paragraph
+        </p>
+        
+
+      </div>
+    </section>
     <section>
       <h2>
         TeX
