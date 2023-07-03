@@ -6,9 +6,9 @@ import styles from './index.module.css'
 interface Properties extends AsyncProps<string> {
 	content?: string
 }
+const katex = require('@vscode/markdown-it-katex')
 
-const render = async ({ content }: Properties) => {
-	const katex = require('@vscode/markdown-it-katex')
+const render = (content: string) => {
 	const markdown = MarkdownIt()
 	markdown.use(katex, {
 		throwOnError: false,
@@ -17,16 +17,12 @@ const render = async ({ content }: Properties) => {
 			'\\diff': '\\mathrm{d}'
 		}
 	})
-	return markdown.render(content || '')
+	return markdown.render(content)
 }
 
 const Markdown = ({ content }: Properties) => {
 	return (
-		<Async promiseFn={render} content={content}>
-			<Async.Pending>Loading...</Async.Pending>
-			<Async.Rejected>{error => <p>Something went wrong: {error.message}</p>}</Async.Rejected>
-			<Async.Fulfilled>{data => <div className={styles.markdown} dangerouslySetInnerHTML={{ __html: String(data) }}></div>}</Async.Fulfilled>
-		</Async>
+		<div className={styles.markdown} dangerouslySetInnerHTML={{ __html: render(content || '') }}></div>
 	)
 }
 

@@ -6,14 +6,55 @@ describe('<CurriculumVitae />', () => {
 		const data = {
 			name: 'My Test Name',
 			statement: 'Test statement paragraph',
-			experience: [
-			],
 			education: [
+				{
+					school: 'dummy school',
+					grade: 'BSc Dummy Career',
+					start: 2019,
+					end: 2021,
+					gpa: 90,
+					subjects: [
+						'hello',
+						'world',
+					],
+				},
+				{
+					school: 'dummy research centre',
+					grade: 'MSc Dummy Career',
+					thesis: 'Dummy Thesis Topic',
+					start: 2021,
+					end: 2023,
+					gpa: 95,
+					subjects: [
+						'hello master',
+						'world master',
+					],
+				},
 			],
-			projects: [
+			experience: [
+				{
+					role: 'dummy role',
+					type: 'full-time',
+					company: 'dummy company',
+					city: 'dummy city',
+					country: 'dummy country',
+					start: '10/2021',
+					end: '10/2022',
+					contributions: 'dummy contributions paragraph',
+				},
+				{
+					role: 'dummy role intern',
+					type: 'part-time',
+					company: 'same company',
+					city: 'another city',
+					country: 'same country',
+					start: '06/2021',
+					end: '09/2021',
+					contributions: 'dummy contributions paragraph as intern',
+				},
 			],
-			awards: [
-			],
+			projects: [],
+			awards: [],
 			leadership: 'Test leadership paragraph',
 			volunteering: 'Test volunteering paragraph',
 		}

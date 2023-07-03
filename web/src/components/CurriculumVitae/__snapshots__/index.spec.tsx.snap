@@ -19,7 +19,64 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Work Experience
       </h2>
-      <ul />
+      <ul>
+        <li>
+          <h3>
+            dummy role @ dummy company - dummy city, dummy country
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              full-time
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              10/2021 - 10/2022
+            </dd>
+          </dl>
+          <div
+            class="markdown"
+          >
+            <p>
+              dummy contributions paragraph
+            </p>
+            
+
+          </div>
+        </li>
+        <li>
+          <h3>
+            dummy role intern @ same company - another city, same country
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              part-time
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              06/2021 - 09/2021
+            </dd>
+          </dl>
+          <div
+            class="markdown"
+          >
+            <p>
+              dummy contributions paragraph as intern
+            </p>
+            
+
+          </div>
+        </li>
+      </ul>
     </section>
     <section
       class="education"
@@ -27,7 +84,76 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Education
       </h2>
-      <ul />
+      <ul>
+        <li>
+          <h3>
+            dummy school
+          </h3>
+          <p>
+            BSc Dummy Career (2019 - 2021)
+          </p>
+          <dl>
+            <dt>
+              Cumulative GPA:
+            </dt>
+            <dd>
+              90/100
+            </dd>
+            <dt
+              class="subjects"
+            >
+              Most relevant subjects and courses:
+            </dt>
+            <dd>
+              <ul>
+                <li>
+                  hello
+                </li>
+                <li>
+                  world
+                </li>
+              </ul>
+            </dd>
+          </dl>
+        </li>
+        <li>
+          <h3>
+            dummy research centre
+          </h3>
+          <p>
+            MSc Dummy Career (2021 - 2023)
+          </p>
+          <dl>
+            <dt>
+              Thesis:
+            </dt>
+            <dd>
+              Dummy Thesis Topic
+            </dd>
+            <dt>
+              Cumulative GPA:
+            </dt>
+            <dd>
+              95/100
+            </dd>
+            <dt
+              class="subjects"
+            >
+              Most relevant subjects and courses:
+            </dt>
+            <dd>
+              <ul>
+                <li>
+                  hello master
+                </li>
+                <li>
+                  world master
+                </li>
+              </ul>
+            </dd>
+          </dl>
+        </li>
+      </ul>
     </section>
     <section
       class="experiences"
