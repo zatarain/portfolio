@@ -44,7 +44,7 @@ export interface CurriculumVitaeProperties {
 	awards?: string[]
 	leadership?: string
 	volunteering?: string
-	markdown: string
+	tex?: string
 }
 
 interface Properties {
@@ -119,6 +119,10 @@ const CurriculumVitae = ({ data }: Properties) => {
 				<h2>Volunteering Activities</h2>
 				{data.volunteering}
 			</div>
+			<section>
+				<h2>TeX</h2>
+				<Markdown content={data.tex} />
+			</section>
 		</div>
 	)
 }
