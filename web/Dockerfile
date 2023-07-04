@@ -16,5 +16,4 @@ RUN npm config set fund false -g \
 COPY . .
 RUN npm ci --omit=optional && npm run build && npm test
 ENTRYPOINT ["bin/entrypoint"]
-RUN npm ci && npm run build
 CMD ["npm", "run", "start"]

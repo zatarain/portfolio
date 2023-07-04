@@ -1,0 +1,199 @@
+.curriculum {
+	font-size: 1rem;
+}
+
+.curriculum h2 {
+	font-size: 1.75rem;
+	font-family: var(--headings-font);
+	color: var(--heading-2);
+	margin: 1rem 0 0.5rem;
+}
+
+.curriculum h3 {
+	font-size: 1.2rem;
+	font-family: var(--headings-font);
+	color: var(--heading-3);
+	margin: 0;
+}
+
+.curriculum ::selection {
+	color: black;
+	background-color: var(--ldn-lighter);
+}
+
+.curriculum dd {
+	padding: 0;
+	margin: 0;
+}
+
+.experiences ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.experiences li {
+	display: grid;
+	grid-gap: 0 2rem;
+	grid-template-areas:
+		'header header'
+		'fields contributions';
+	margin: 1rem 0;
+}
+
+.experiences h3 {
+	grid-area: header;
+}
+
+.experiences dl {
+	grid-area: fields;
+	text-align: center;
+	width: 10rem;
+}
+
+.experiences p {
+	grid-area: contributions;
+}
+
+.experiences dt {
+	display: none;
+}
+
+.education > ul {
+	list-style-type: none;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.7rem;
+	margin: 0;
+	padding: 0;
+}
+
+.education p {
+	margin: 0;
+}
+
+.education dl {
+	margin: 0;
+}
+
+.education dt {
+	display: inline-block;
+}
+
+.education dd {
+	display: inline-block;
+	margin-left: 1ch;
+}
+
+.education .subjects {
+	display: block;
+}
+
+.ticks {
+	padding-left: 0;
+}
+
+@media screen {
+	.ticks li::before {
+		content: '';
+		display: inline-block;
+		background: url('/tick.svg') no-repeat;
+		background-position: 0 .15rem;
+		width: 1rem;
+		height: 1rem;
+		background-size: 1rem;
+		margin-right: 0.25rem;
+	}
+}
+
+.ticks li {
+	list-style: none;
+}
+
+@media screen and (max-width: 800px) {
+	.experiences dl {
+		display: inline;
+		grid-area: unset;
+		width: auto;
+		text-align: left;
+		margin: 0;
+	}
+
+	.experiences dl::before {
+		content: '(';
+	}
+
+	.experiences dl::after {
+		content: ')';
+	}
+
+	.experiences dt {
+		display: inline-block;
+		margin: 0 0.25rch;
+		font-weight: 500;
+	}
+
+	.experiences dd {
+		display: inline-block;
+		margin: 0 0.25rch;
+		font-style: italic;
+	}
+
+	.experiences li {
+		display: block;
+		grid-template-areas: none;
+	}
+
+	.education > ul {
+		display: block;
+	}
+}
+
+@media print {
+	.curriculum {
+		font-size: 10pt;
+	}
+
+	.curriculum h2 {
+		font-size: 1.2em;
+		font-family: var(--headings-font);
+		color: var(--heading-2);
+		margin: 0.5em 0 0.05em;
+	}
+
+	.curriculum h3 {
+		font-size: 1em;
+		font-family: var(--headings-font);
+		color: var(--heading-3);
+		margin: 0.2em 0 0;
+	}
+
+	.curriculum p {
+		margin: 0.1em 0;
+	}
+
+	.curriculum dl {
+		margin: 0.1em 0;
+	}
+
+	.curriculum li {
+		margin: 0.1em 0;
+	}
+
+	.ticks {
+		padding-left: 1.2em;
+	}
+
+	.ticks li {
+		list-style-type:disc;
+	}
+
+	.experiences dl {
+		font-size: 0.8em;
+		width: 9em;
+	}
+
+	.education > ul {
+		gap: 0;
+	}
+}

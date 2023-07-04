@@ -47,7 +47,7 @@ const testData = {
 			country: 'dummy country',
 			start: '10/2021',
 			end: '10/2022',
-			achievements: 'dummy contributions paragraph',
+			contributions: 'dummy contributions paragraph',
 		},
 		{
 			role: 'dummy role intern',
@@ -57,7 +57,7 @@ const testData = {
 			country: 'same country',
 			start: '06/2021',
 			end: '09/2021',
-			achievements: 'dummy contributions paragraph as intern',
+			contributions: 'dummy contributions paragraph as intern',
 		},
 	],
 }
@@ -126,7 +126,7 @@ describe('getServerSideProps', () => {
 							country: 'dummy country',
 							start: '10/2021',
 							end: '10/2022',
-							achievements: 'dummy contributions paragraph',
+							contributions: 'dummy contributions paragraph',
 						},
 						{
 							role: 'dummy role intern',
@@ -136,7 +136,7 @@ describe('getServerSideProps', () => {
 							country: 'same country',
 							start: '06/2021',
 							end: '09/2021',
-							achievements: 'dummy contributions paragraph as intern',
+							contributions: 'dummy contributions paragraph as intern',
 						},
 					],
 					projects: [],

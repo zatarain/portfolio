@@ -1,3 +1,5 @@
+import Markdown from '#components/Markdown'
+import styles from './index.module.css'
 export interface Job {
 	role: string
 	type: string
@@ -6,7 +8,7 @@ export interface Job {
 	country: string
 	start: string
 	end: string
-	achievements: string
+	contributions: string
 }
 
 export interface Education {
@@ -42,6 +44,7 @@ export interface CurriculumVitaeProperties {
 	awards?: string[]
 	leadership?: string
 	volunteering?: string
+	tex?: string
 }
 
 interface Properties {
@@ -50,12 +53,12 @@ interface Properties {
 
 const CurriculumVitae = ({ data }: Properties) => {
 	return (
-		<div>
-			<div>
+		<div className={styles.curriculum}>
+			<section id="personal-statement" className={styles.statement}>
 				<h2>Who am I?</h2>
 				<p>{data.statement}</p>
-			</div>
-			<div>
+			</section>
+			<section id="work-experience" className={styles.experiences}>
 				<h2>Work Experience</h2>
 				<ul>
 					{data.experience?.map((job: Job, index: number) =>
@@ -65,29 +68,29 @@ const CurriculumVitae = ({ data }: Properties) => {
 								<dt>Type:</dt><dd>{job.type}</dd>
 								<dt>Duration:</dt><dd>{`${job.start} - ${job.end}`}</dd>
 							</dl>
-							<p>{job.achievements}</p>
+							<Markdown content={job.contributions} />
 						</li>
 					)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section id="education" className={styles.education}>
 				<h2>Education</h2>
 				<ul>
 					{data.education?.map((education: Education, index: number) =>
 						<li key={index}>
 							<h3>{`${education.school}`}</h3>
-							<p>{`${education.grade}  (${education.start} - ${education.end})`}</p>
+							<p>{`${education.grade} (${education.start} - ${education.end})`}</p>
 							<dl>
 								{education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
 								<dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
-								<dt>Most relevant subjects and courses:</dt>
-								<dd><ul>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
+								<dt className={styles.subjects}>Most relevant subjects and courses:</dt>
+								<dd><ul className={styles.ticks}>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
 							</dl>
 						</li>
 					)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section id="academic-projects" className={styles.experiences}>
 				<h2>Major Academic Projects</h2>
 				<ul>
 					{data.projects?.map((project: AcademicProject, index: number) =>
@@ -97,25 +100,25 @@ const CurriculumVitae = ({ data }: Properties) => {
 								<dt>Type:</dt><dd>{project.type}</dd>
 								<dt>Duration:</dt><dd>{project.duration && project.duration || `${project.start} - ${project.end}`}</dd>
 							</dl>
-							<p>{project.description}</p>
+							<Markdown content={project.description} />
 						</li>
 					)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section id="awards" className={styles.awards}>
 				<h2>Awards</h2>
-				<ul>
+				<ul className={styles.ticks}>
 					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
-			</div>
-			<div>
+			</section>
+			<section id="leadership">
 				<h2>Leadership</h2>
-				{data.leadership}
-			</div>
-			<div>
+				<Markdown content={data.leadership} />
+			</section>
+			<section id="volunteering">
 				<h2>Volunteering Activities</h2>
-				{data.volunteering}
-			</div>
+				<Markdown content={data.volunteering} />
+			</section>
 		</div>
 	)
 }

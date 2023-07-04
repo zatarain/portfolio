@@ -1,7 +1,8 @@
-import type { CurriculumVitaeProperties } from '#components/curriculum-vitae'
+import type { CurriculumVitaeProperties } from '#components/CurriculumVitae'
 import Footer from '#components/Footer';
 import Head from 'next/head';
 import Header from '#components/Header';
+import NavigationBar from '#components/NavigationBar';
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react';
 
@@ -22,6 +23,7 @@ export default function PageLayout({ children, title, data }: Properties) {
 			<Head>
 				<title>{pageTitle}</title>
 			</Head>
+			<NavigationBar name={data?.name} />
 			<Header data={data} />
 			<main>
 				{children}

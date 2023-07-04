@@ -28,14 +28,14 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
     >
       <li>
         <a
-          href="#"
+          href="#work-experience"
         >
           Experience
         </a>
       </li>
       <li>
         <a
-          href="#"
+          href="#education"
         >
           Education
         </a>
@@ -49,14 +49,14 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
       </li>
       <li>
         <a
-          href="#"
+          href="#academic-projects"
         >
           Projects
         </a>
       </li>
       <li>
         <a
-          href="#"
+          href="#volunteering"
         >
           Hobbies
         </a>
