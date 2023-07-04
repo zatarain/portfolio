@@ -9,7 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@reduxjs/toolkit": "^1.9.3",
+		"@reduxjs/toolkit": "^1.9.5",
 		"@types/markdown-it": "^12.2.3",
 		"@vscode/markdown-it-katex": "^1.0.0",
 		"katex": "^0.16.8",
