@@ -84,7 +84,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 								{education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
 								<dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
 								<dt className={styles.subjects}>Most relevant subjects and courses:</dt>
-								<dd><ul>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
+								<dd><ul className={styles.ticks}>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
 							</dl>
 						</li>
 					)}
@@ -105,9 +105,9 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
-			<section id="awards">
+			<section id="awards" className={styles.awards}>
 				<h2>Awards</h2>
-				<ul>
+				<ul className={styles.ticks}>
 					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
 			</section>

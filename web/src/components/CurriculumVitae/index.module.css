@@ -94,6 +94,25 @@
 	display: block;
 }
 
+.ticks {
+	padding-left: 0;
+}
+
+.ticks li::before {
+	content: '';
+	display: inline-block;
+	background: url('/tick.svg') no-repeat;
+	background-position: 0 .15rem;
+	width: 1rem;
+	height: 1rem;
+	background-size: 1rem;
+	margin-right: 0.25rem;
+}
+
+.ticks li {
+	list-style: none;
+}
+
 @media screen and (max-width: 800px) {
 	.experiences dl {
 		display: inline;

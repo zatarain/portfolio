@@ -4,14 +4,14 @@
 	}
 
 	nav {
-		display: none;
+		display: none!important;
 	}
 
 	footer {
 		display: none;
 	}
 
-	main {
-		font-size: 9pt;
+	body {
+		font-size: 10pt!important;
 	}
 }
