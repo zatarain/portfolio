@@ -53,8 +53,25 @@ describe('<CurriculumVitae />', () => {
 					contributions: 'dummy contributions paragraph as intern',
 				},
 			],
-			projects: [],
-			awards: [],
+			projects: [
+				{
+					title: 'Dummy Project 01',
+					type: 'thesis',
+					start: '08/2013',
+					end: '11/2014',
+					description: 'Dummy description paragraph 01',
+				},
+				{
+					title: 'Dummy Project 02',
+					type: 'personal',
+					duration: 'Spring 2023',
+					description: 'Dummy description paragraph 02',
+				},
+			],
+			awards: [
+				'Dummy Award 01',
+				'Dummy Award 02',
+			],
 			leadership: 'Test leadership paragraph',
 			volunteering: 'Test volunteering paragraph',
 		}

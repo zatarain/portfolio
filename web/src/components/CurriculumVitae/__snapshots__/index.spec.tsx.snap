@@ -166,7 +166,64 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Major Academic Projects
       </h2>
-      <ul />
+      <ul>
+        <li>
+          <h3>
+            Dummy Project 01
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              thesis
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              08/2013 - 11/2014
+            </dd>
+          </dl>
+          <div
+            class="markdown"
+          >
+            <p>
+              Dummy description paragraph 01
+            </p>
+            
+
+          </div>
+        </li>
+        <li>
+          <h3>
+            Dummy Project 02
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              personal
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              Spring 2023
+            </dd>
+          </dl>
+          <div
+            class="markdown"
+          >
+            <p>
+              Dummy description paragraph 02
+            </p>
+            
+
+          </div>
+        </li>
+      </ul>
     </section>
     <section
       id="awards"
@@ -174,7 +231,14 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Awards
       </h2>
-      <ul />
+      <ul>
+        <li>
+          Dummy Award 01
+        </li>
+        <li>
+          Dummy Award 02
+        </li>
+      </ul>
     </section>
     <section
       id="leadership"
