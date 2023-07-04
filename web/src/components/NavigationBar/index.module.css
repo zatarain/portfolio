@@ -9,7 +9,7 @@
 	padding: 0 .5rem;
 	position: sticky;
 	top: 0;
-	z-index: 5;
+	z-index: 3;
 }
 
 .navigation-bar a:link, .navigation-bar a:visited {
@@ -60,6 +60,12 @@
 .call-to-action:hover, .call-to-action:hover:visited {
 	color: white;
 	background: var(--bg-action-hover);
+}
+
+@media print {
+	.navigation-bar {
+		display: none;
+	}
 }
 
 @media screen and (max-width: 800px) {

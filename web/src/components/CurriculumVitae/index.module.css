@@ -6,13 +6,14 @@
 	font-size: 1.75rem;
 	font-family: var(--headings-font);
 	color: var(--heading-2);
-	margin: 1rem 0 0;
+	margin: 1rem 0 0.5rem;
 }
 
 .curriculum h3 {
 	font-size: 1.2rem;
 	font-family: var(--headings-font);
 	color: var(--heading-3);
+	margin: 0;
 }
 
 .curriculum ::selection {
@@ -42,7 +43,6 @@
 
 .experiences h3 {
 	grid-area: header;
-	margin: 0;
 }
 
 .experiences dl {
@@ -63,12 +63,7 @@
 	list-style-type: none;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 1rem;
-	margin: 0;
-	padding: 0;
-}
-
-.education h3 {
+	gap: 0.7rem;
 	margin: 0;
 	padding: 0;
 }
@@ -98,15 +93,17 @@
 	padding-left: 0;
 }
 
-.ticks li::before {
-	content: '';
-	display: inline-block;
-	background: url('/tick.svg') no-repeat;
-	background-position: 0 .15rem;
-	width: 1rem;
-	height: 1rem;
-	background-size: 1rem;
-	margin-right: 0.25rem;
+@media screen {
+	.ticks li::before {
+		content: '';
+		display: inline-block;
+		background: url('/tick.svg') no-repeat;
+		background-position: 0 .15rem;
+		width: 1rem;
+		height: 1rem;
+		background-size: 1rem;
+		margin-right: 0.25rem;
+	}
 }
 
 .ticks li {
@@ -149,5 +146,54 @@
 
 	.education > ul {
 		display: block;
+	}
+}
+
+@media print {
+	.curriculum {
+		font-size: 10pt;
+	}
+
+	.curriculum h2 {
+		font-size: 1.2em;
+		font-family: var(--headings-font);
+		color: var(--heading-2);
+		margin: 0.5em 0 0.05em;
+	}
+
+	.curriculum h3 {
+		font-size: 1em;
+		font-family: var(--headings-font);
+		color: var(--heading-3);
+		margin: 0.2em 0 0;
+	}
+
+	.curriculum p {
+		margin: 0.1em 0;
+	}
+
+	.curriculum dl {
+		margin: 0.1em 0;
+	}
+
+	.curriculum li {
+		margin: 0.1em 0;
+	}
+
+	.ticks {
+		padding-left: 1rem;
+	}
+
+	.ticks li {
+		list-style-type:disc;
+	}
+
+	.experiences dl {
+		font-size: 0.8em;
+		width: 9em;
+	}
+
+	.education > ul {
+		gap: 0;
 	}
 }

@@ -109,7 +109,9 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
               Most relevant subjects and courses:
             </dt>
             <dd>
-              <ul>
+              <ul
+                class="ticks"
+              >
                 <li>
                   hello
                 </li>
@@ -146,7 +148,9 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
               Most relevant subjects and courses:
             </dt>
             <dd>
-              <ul>
+              <ul
+                class="ticks"
+              >
                 <li>
                   hello master
                 </li>
@@ -231,7 +235,9 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Awards
       </h2>
-      <ul>
+      <ul
+        class="ticks"
+      >
         <li>
           Dummy Award 01
         </li>

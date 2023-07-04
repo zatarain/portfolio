@@ -20,30 +20,26 @@
   --headings-font: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-size: 14px;
-}
+@media screen {
+  html, body {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-size: 14px;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
+  main {
+    padding: 0 3rem;
+    margin: 3rem 0;
+    font-size: 1.2rem;
+    line-height: 1.75rem;
+  }
 }
 
 * {
   box-sizing: border-box;
-}
-
-main {
-  padding: 0 3rem;
-  margin: 3rem 0;
-  font-size: 1.2rem;
-  line-height: 1.75rem;
 }
 
 a:link, a:visited {
