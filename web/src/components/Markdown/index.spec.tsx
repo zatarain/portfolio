@@ -1,5 +1,3 @@
-import { Provider } from 'react-redux'
-import store from '#store'
 import { render } from '@testing-library/react'
 import Markdown from '.'
 
@@ -31,6 +29,7 @@ describe('<Header />', () => {
 			\\iiint\\limits_{\\scriptstyle{V}}{\\nabla \\cdot \\mathbf{F} \\diff V} = \\oiint\\limits_{\\scriptstyle{S}}{\\mathbf{F} \\cdot \\mathbf{\\hat{n}} \\diff S}
 		$$
 		`
+
 		const { asFragment } = render(
 			<Markdown content={text} />
 		)
