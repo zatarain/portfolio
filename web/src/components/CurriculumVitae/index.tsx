@@ -119,10 +119,6 @@ const CurriculumVitae = ({ data }: Properties) => {
 				<h2>Volunteering Activities</h2>
 				<Markdown content={data.volunteering} />
 			</section>
-			<section>
-				<h2>TeX</h2>
-				<Markdown content={data.tex} />
-			</section>
 		</div>
 	)
 }
