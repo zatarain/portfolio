@@ -3,7 +3,6 @@
 	margin: 0 auto;
 	text-align: left;
 	background: var(--bg-page);
-	overflow: hidden;
 }
 
 .hero {

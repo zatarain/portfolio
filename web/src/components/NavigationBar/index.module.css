@@ -1,13 +1,12 @@
 .navigation-bar {
+	background: var(--bg-primary);
+	color: var(--fg-secondary);
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid var(--highlight-secondary);
 	justify-content: space-between;
 	padding: 0 .5rem;
-}
-
-header .navigation-bar {
 	position: sticky;
 	top: 0;
 	z-index: 5;

@@ -3,11 +3,15 @@
 		display: none;
 	}
 
+	nav {
+		display: none;
+	}
+
 	footer {
 		display: none;
 	}
 
 	main {
-		font-size: 10pt;
+		font-size: 9pt;
 	}
 }
