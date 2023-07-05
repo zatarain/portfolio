@@ -27,6 +27,10 @@ services:
       AWS_ENVIRONMENT: development
       AWS_ASSUME_ROLE: ${AWS_ASSUME_ROLE}
       AWS_SESSION_NAME: api-download-yaml-cv
+      INSTAGRAM_CLIENT_ID: ${INSTAGRAM_CLIENT_ID}
+      INSTAGRAM_CLIENT_SECRET: ${INSTAGRAM_CLIENT_SECRET}
+      INSTAGRAM_REDIRECT_URI: ${INSTAGRAM_REDIRECT_URI}
+      INSTAGRAM_ACCESS_TOKEN: ${INSTAGRAM_ACCESS_TOKEN}
 volumes:
   web-source:
     name: portfolio-web-source

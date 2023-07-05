@@ -26,12 +26,28 @@ class Curriculum
     Rails.logger.error "Failed to download file: #{exception.message}"
   end
 
+  def pictures
+    filename = 'db/instagram.json'
+    if !File.exist?(filename) || File.mtime(filename) < 1.day.ago
+      client = InstagramBasicDisplay::Client.new(
+        auth_token: Rails.configuration.instagram[:access_token],
+      )
+      response = client.media_feed
+      media = response.payload.data
+      File.write(filename, media.to_json)
+    end
+
+    images = JSON.parse(File.read(filename))
+    return images.take(5)
+  end
+
   def find(sensitive: false)
     cv = download
     unless sensitive
       cv.delete('phone')
       cv['social'] = cv['social'].reject { |contact| contact['sensitive'] }
     end
+    cv['pictures'] = pictures
     return cv
   end
 

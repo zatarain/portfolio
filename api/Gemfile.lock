@@ -99,6 +99,7 @@ GEM
       activesupport (>= 5.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    instagram_basic_display (0.2.0)
     io-console (0.6.0)
     irb (1.7.0)
       reline (>= 0.3.0)
@@ -241,6 +242,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1)
   bootsnap
   debug
+  instagram_basic_display
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.5)

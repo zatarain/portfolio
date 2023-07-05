@@ -35,6 +35,13 @@ module Api
       s3_object: 'index.yml',
     }
 
+    config.instagram = {
+      client_id: ENV.fetch('INSTAGRAM_CLIENT_ID', nil),
+      client_secret: ENV.fetch('INSTAGRAM_CLIENT_SECRET', nil),
+      access_token: ENV.fetch('INSTAGRAM_ACCESS_TOKEN', nil),
+      redirect_uri: ENV.fetch('INSTAGRAM_REDIRECT_URI', nil),
+    }
+
     config.curriculum = 'db/cv.yml'
   end
 end
