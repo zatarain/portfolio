@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HeroSlider /> renders the component correctly with passed name 1`] = `
+<DocumentFragment>
+  <div
+    class="carousel-root hero"
+  >
+    <div
+      class="carousel carousel-slider"
+      style="width: 100%;"
+    >
+      <ul
+        class="control-dots"
+      >
+        <li
+          aria-label="slide item 1"
+          class="dot selected"
+          role="button"
+          tabindex="0"
+          value="0"
+        />
+        <li
+          aria-label="slide item 2"
+          class="dot"
+          role="button"
+          tabindex="0"
+          value="1"
+        />
+      </ul>
+      <button
+        aria-label="previous slide / item"
+        class="control-arrow control-prev control-disabled"
+        type="button"
+      />
+      <div
+        class="slider-wrapper axis-horizontal"
+      >
+        <ul
+          class="slider animated"
+        >
+          <li
+            class="slide"
+            style="position: absolute; display: block; z-index: -2; min-height: 100%; opacity: 0; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+          >
+            <figure>
+              <img
+                alt="Dummy caption 01"
+                data-nimg="1"
+                decoding="async"
+                height="768"
+                loading="lazy"
+                src="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75"
+                srcset="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=1920&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75 2x"
+                style="color: transparent;"
+                width="1440"
+              />
+              <figcaption>
+                Dummy caption 01
+              </figcaption>
+            </figure>
+          </li>
+          <li
+            class="slide selected previous"
+            style="position: relative; display: block; z-index: -2; min-height: 100%; opacity: 1; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+          >
+            <figure>
+              <img
+                alt="Dummy caption 01"
+                data-nimg="1"
+                decoding="async"
+                height="768"
+                loading="lazy"
+                src="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75"
+                srcset="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=1920&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75 2x"
+                style="color: transparent;"
+                width="1440"
+              />
+              <figcaption>
+                Dummy caption 01
+              </figcaption>
+            </figure>
+          </li>
+          <li
+            class="slide"
+            style="position: absolute; display: block; z-index: -2; min-height: 100%; opacity: 0; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+          >
+            <figure>
+              <img
+                alt="Dummy caption 01"
+                data-nimg="1"
+                decoding="async"
+                height="768"
+                loading="lazy"
+                src="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75"
+                srcset="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=1920&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75 2x"
+                style="color: transparent;"
+                width="1440"
+              />
+              <figcaption>
+                Dummy caption 01
+              </figcaption>
+            </figure>
+          </li>
+          <li
+            class="slide selected previous"
+            style="position: relative; display: block; z-index: -2; min-height: 100%; opacity: 1; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+          >
+            <figure>
+              <img
+                alt="Dummy caption 01"
+                data-nimg="1"
+                decoding="async"
+                height="768"
+                loading="lazy"
+                src="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75"
+                srcset="/_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=1920&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn.instagram.com%2Fdummy-01.jpg&w=3840&q=75 2x"
+                style="color: transparent;"
+                width="1440"
+              />
+              <figcaption>
+                Dummy caption 01
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+      </div>
+      <button
+        aria-label="next slide / item"
+        class="control-arrow control-next control-disabled"
+        type="button"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
