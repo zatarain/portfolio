@@ -42,6 +42,9 @@ module Api
       redirect_uri: ENV.fetch('INSTAGRAM_REDIRECT_URI', nil),
     }
 
-    config.curriculum = 'db/cv.yml'
+    config.sections = 'db/cv.yml'
+    config.pictures = 'db/instagram.json'
+    config.hashtag = /#hero/i
+    config.cache_duration = 1.day.ago
   end
 end

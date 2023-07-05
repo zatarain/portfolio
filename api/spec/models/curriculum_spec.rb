@@ -4,9 +4,10 @@ require 'rails_helper'
 
 describe Curriculum, type: :model do
   let(:assume_role_credentials) { instance_double(Aws::AssumeRoleCredentials) }
+  let(:instagram_client) { instance_double(InstagramBasicDisplay::Client) }
   let(:ecs_credentials) { instance_double(Aws::ECSCredentials) }
   let(:s3_client) { instance_double(Aws::S3::Client) }
-  let(:data) do
+  let(:sections) do
     {
       name: 'My Test Name',
       phone: [
@@ -54,6 +55,26 @@ describe Curriculum, type: :model do
     }.deep_stringify_keys
   end
 
+  let(:pictures) do
+    [
+      {
+        id: '10101',
+        media_url: 'https://cdn.instagram.com/dummy-01.jpg',
+        caption: '#hero Dummy description 01',
+      },
+      {
+        id: '20202',
+        media_url: 'https://cdn.instagram.com/dummy-03.jpg',
+        caption: 'Dummy description 02',
+      },
+      {
+        id: '30303',
+        media_url: 'https://cdn.instagram.com/dummy-03.jpg',
+        caption: '#hero Dummy description 03',
+      },
+    ]
+  end
+
   describe 'initialize' do
     context 'when AWS_ASSUME_ROLE is set' do
       let(:dummy_role) { 'arn:aws:iam::0123456789:role/DummyRole' }
@@ -61,7 +82,6 @@ describe Curriculum, type: :model do
       let(:sts_client) { instance_double(Aws::STS::Client) }
 
       before do
-        ENV['AWS_ASSUME_ROLE'] = dummy_role
         allow(Rails.configuration).to receive(:aws).and_return({
           assume_role: dummy_role,
           session_name: dummy_session,
@@ -69,6 +89,7 @@ describe Curriculum, type: :model do
         allow(Aws::STS::Client).to receive(:new).and_return(sts_client)
         allow(Aws::AssumeRoleCredentials).to receive(:new).and_return(assume_role_credentials)
         allow(Aws::S3::Client).to receive(:new)
+        allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
       end
 
       it 'uses Assume Role Credentials' do
@@ -84,7 +105,11 @@ describe Curriculum, type: :model do
 
     context 'when AWS_ASSUME_ROLE is NOT set' do
       before do
-        ENV['AWS_ASSUME_ROLE'] = nil
+        allow(Rails.configuration).to receive(:aws).and_return({
+          s3_bucket: 'test-cv',
+          s3_object: 'dummy.yml',
+          assume_role: nil,
+        })
         allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
         allow(Aws::S3::Client).to receive(:new)
       end
@@ -99,15 +124,14 @@ describe Curriculum, type: :model do
 
   describe 'download' do
     before do
-      ENV['AWS_ASSUME_ROLE'] = nil
-      allow(Rails.configuration).to receive(:curriculum).and_return('db/dummy.yml')
+      allow(Rails.configuration).to receive(:sections).and_return('db/dummy.yml')
       allow(Rails.configuration).to receive(:aws).and_return({
         s3_bucket: 'test-cv',
         s3_object: 'dummy.yml',
+        assume_role: nil,
       })
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
-      allow(YAML).to receive(:load_file).with('db/dummy.yml', safe: true).and_return(data)
     end
 
     context 'when file does NOT exist' do
@@ -118,11 +142,11 @@ describe Curriculum, type: :model do
 
       it 'downloads the file from S3' do
         curriculum = described_class.new
-        cv = curriculum.download
+        curriculum.download :sections
+
         expect(File).to have_received(:exist?)
         expect(s3_client).to have_received(:get_object)
           .with(bucket: 'test-cv', key: 'dummy.yml', response_target: 'db/dummy.yml')
-        expect(cv).to be(data)
       end
     end
 
@@ -135,11 +159,10 @@ describe Curriculum, type: :model do
 
       it 'downloads the file from S3' do
         curriculum = described_class.new
-        cv = curriculum.download
+        curriculum.download :sections
         expect(File).to have_received(:exist?)
         expect(s3_client).to have_received(:get_object)
           .with(bucket: 'test-cv', key: 'dummy.yml', response_target: 'db/dummy.yml')
-        expect(cv).to be(data)
       end
     end
 
@@ -153,10 +176,9 @@ describe Curriculum, type: :model do
 
       it 'does NOT download the file from S3 and uses the cached one instead' do
         curriculum = described_class.new
-        cv = curriculum.download
+        curriculum.download :sections
         expect(File).to have_received(:exist?)
         expect(s3_client).not_to have_received(:get_object)
-        expect(cv).to be(data)
         expect(Rails.logger).to have_received(:info)
           .with('Using cached file: db/dummy.yml')
       end
@@ -172,7 +194,7 @@ describe Curriculum, type: :model do
 
       it 'logs the error message' do
         curriculum = described_class.new
-        curriculum.download
+        curriculum.download :sections
         expect(Rails.logger).to have_received(:error)
           .with(/Unable to download the file from AWS S3/)
       end
@@ -180,12 +202,42 @@ describe Curriculum, type: :model do
   end
 
   describe 'find' do
+    let(:hero) do
+      [
+        {
+          id: '10101',
+          media_url: 'https://cdn.instagram.com/dummy-01.jpg',
+          caption: '#hero Dummy description 01',
+        },
+        {
+          id: '30303',
+          media_url: 'https://cdn.instagram.com/dummy-03.jpg',
+          caption: '#hero Dummy description 03',
+        },
+      ]
+    end
+
     before do
-      ENV['AWS_ASSUME_ROLE'] = nil
-      allow(Rails.configuration).to receive(:curriculum).and_return('db/dummy.yml')
+      allow(Rails.configuration).to receive(:sections).and_return('db/dummy.yml')
+      allow(Rails.configuration).to receive(:pictures).and_return('db/dummy.json')
+      allow(Rails.configuration).to receive(:aws).and_return({
+        s3_bucket: 'test-cv',
+        s3_object: 'dummy.yml',
+        assume_role: nil,
+      })
+      allow(Rails.configuration).to receive(:instagram).and_return({
+        client_id: '1010101',
+        client_secret: 'dummy-instagram-secret',
+        access_token: 'dummy-instagram-token',
+        redirect_uri: 'https://dummy.com',
+      })
+      allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
+      allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:mtime).and_return(1.hour.ago)
+      allow(YAML).to receive(:load_file).and_return(sections)
+      allow(File).to receive(:read).and_return(pictures.to_json)
     end
 
     context 'when sensitive argument is false' do
@@ -206,7 +258,7 @@ describe Curriculum, type: :model do
       end
 
       before do
-        allow(curriculum).to receive(:download).and_return(data)
+        allow(curriculum).to receive(:download).and_return(sections, pictures)
       end
 
       it 'filters sensitive data by default' do
@@ -215,7 +267,7 @@ describe Curriculum, type: :model do
         expect(cv['social']).to eq(not_sensitive)
       end
 
-      it 'filters sensitive data when sensitive argument is explicitly passed ' do
+      it 'filters sensitive data when sensitive argument is explicitly passed' do
         cv = curriculum.find(sensitive: false)
         expect(cv).not_to have_key('phone')
         expect(cv['social']).to eq(not_sensitive)
@@ -226,10 +278,14 @@ describe Curriculum, type: :model do
       let(:curriculum) { described_class.new }
 
       before do
-        allow(curriculum).to receive(:download).and_return(data)
+        allow(curriculum).to receive(:download).and_return(sections, pictures)
       end
 
-      it 'filters sensitive data by default' do
+      it 'includes sensitive data in the result' do
+        data = {
+          **sections,
+          pictures: hero,
+        }.deep_stringify_keys
         cv = curriculum.find(sensitive: true)
         expect(cv).to eq(data)
       end
