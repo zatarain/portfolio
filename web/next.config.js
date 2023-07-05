@@ -3,7 +3,7 @@
 const nextConfig = {
 	images: {
 		domains: [
-			'instagram.flhr4-3.fna.fbcdn.net',
+			'scontent-hou1-1.cdninstagram.com',
 		],
 	},
 };
