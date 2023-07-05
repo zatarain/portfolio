@@ -156,15 +156,18 @@ describe Curriculum, type: :model do
       before do
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(2.days.ago)
-        allow(s3_client).to receive(:get_object)
+        response = instance_double(InstagramBasicDisplay::Response)
+        payload = { data: pictures }
+        allow(response).to receive(:payload).and_return(payload)
+        allow(instagram_client).to receive(:media_feed).and_return(response)
       end
 
       it 'downloads the file from S3' do
         curriculum = described_class.new
-        curriculum.download :sections
+        curriculum.download :pictures
         expect(File).to have_received(:exist?)
-        expect(s3_client).to have_received(:get_object)
-          .with(bucket: 'test-cv', key: 'dummy.yml', response_target: 'db/dummy.yml')
+        expect(instagram_client).to have_received(:media_feed)
+          .with(fields: %i[caption media_url])
       end
     end
 
