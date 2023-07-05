@@ -33,6 +33,7 @@ export interface AcademicProject {
 export interface Picture {
 	id: string
 	media_url: string
+	caption: string
 }
 
 export interface CurriculumVitaeProperties {

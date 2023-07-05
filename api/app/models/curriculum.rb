@@ -32,13 +32,12 @@ class Curriculum
       client = InstagramBasicDisplay::Client.new(
         auth_token: Rails.configuration.instagram[:access_token],
       )
-      response = client.media_feed
+      response = client.media_feed(fields: %i[caption media_url])
       media = response.payload.data
       File.write(filename, media.to_json)
     end
 
-    images = JSON.parse(File.read(filename))
-    return images.take(5)
+    return JSON.parse(File.read(filename))
   end
 
   def find(sensitive: false)
@@ -47,7 +46,7 @@ class Curriculum
       cv.delete('phone')
       cv['social'] = cv['social'].reject { |contact| contact['sensitive'] }
     end
-    cv['pictures'] = pictures
+    cv['pictures'] = pictures.select { |picture| /#hero/i =~ picture['caption'] }
     return cv
   end
 

@@ -7,17 +7,9 @@ interface Properties {
 }
 
 const Header = ({ data }: Properties) => {
-	const pictures = data.pictures || [];
-	const images = pictures.reduce((result: object, picture: Picture) => {
-		return {
-			...result,
-			[`Image ${picture.id}`]: picture.media_url,
-		}
-	}, {})
-
 	return (
 		<header className={styles.header}>
-			<HeroSlider images={images} />
+			<HeroSlider images={data.pictures || []} />
 		</header>
 	)
 }

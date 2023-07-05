@@ -1,8 +1,9 @@
 import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
 import styles from './index.module.css'
+import { Picture } from '#components/CurriculumVitae';
 interface Properties {
-	images: object
+	images: Picture[]
 }
 
 const HeroSlider = ({ images }: Properties) => {
@@ -21,10 +22,10 @@ const HeroSlider = ({ images }: Properties) => {
 			className={styles.hero}
 		>
 			{
-				Object.entries(images).map(([key, value], index: number) => (
-					<figure key={key}>
-						<Image src={value} alt={`Image ${index + 1}`} width={1440} height={768} />
-						<figcaption>Image {index + 1}</figcaption>
+				images.map((picture: Picture, index: number) => (
+					<figure key={index}>
+						<Image src={picture.media_url} alt={picture.caption} width={1440} height={768} />
+						<figcaption>{picture.caption}</figcaption>
 					</figure>
 				))
 			}

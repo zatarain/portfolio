@@ -30,10 +30,6 @@
   margin: 0;
 }
 
-.hero figcaption {
-  display: none;
-}
-
 .hero ul.control-dots {
 	bottom: 2rem;
 	z-index: 9;
