@@ -76,7 +76,7 @@ describe Curriculum, type: :model do
   end
 
   describe 'initialize' do
-    context 'when AWS_ASSUME_ROLE is set' do
+    context 'when assume_role is present' do
       let(:dummy_role) { 'arn:aws:iam::0123456789:role/DummyRole' }
       let(:dummy_session) { 'dummy-session-name' }
       let(:sts_client) { instance_double(Aws::STS::Client) }
@@ -103,7 +103,7 @@ describe Curriculum, type: :model do
       end
     end
 
-    context 'when AWS_ASSUME_ROLE is NOT set' do
+    context 'when assume_role is NOT present' do
       before do
         allow(Rails.configuration).to receive(:aws).and_return({
           s3_bucket: 'test-cv',
@@ -112,6 +112,7 @@ describe Curriculum, type: :model do
         })
         allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
         allow(Aws::S3::Client).to receive(:new)
+        allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
       end
 
       it 'uses ECS Credentials' do
@@ -132,6 +133,7 @@ describe Curriculum, type: :model do
       })
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
+      allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
     end
 
     context 'when file does NOT exist' do
