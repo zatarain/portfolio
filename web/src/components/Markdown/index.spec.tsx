@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import Markdown from '.'
 
-describe('<Header />', () => {
+describe('<Markdown />', () => {
 	it('renders the component correctly with passed name', () => {
 		const text = `
 		**Theorem 1** *(Maxwell Equations).* They are a set of coupled partial differential equations that,

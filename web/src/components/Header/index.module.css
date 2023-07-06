@@ -24,3 +24,15 @@
 	z-index: 2;
 	position: relative;
 }
+
+@media screen and (max-width: 850px) {
+  .header {
+    min-height: 30vh;
+  }
+}
+
+@media screen and (max-width: 539px) {
+  .header {
+    min-height: 30vh;
+  }
+}
