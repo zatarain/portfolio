@@ -5,6 +5,12 @@ import userEvent from '@testing-library/user-event'
 import NavigationBar from '.'
 import styles from './index.module.css'
 
+window.print = jest.fn()
+
+beforeEach(() => {
+	window.print.mockClear()
+});
+
 describe('<NavigationBar />', () => {
 	it('renders the component correctly with passed name', () => {
 		const { asFragment, getByText } = render(
@@ -36,5 +42,20 @@ describe('<NavigationBar />', () => {
 
 		await user.click(dropdown)
 		expect(bar).not.toHaveClass(styles.responsive)
+	})
+
+	it('shows print dialog when user clicks on Download button', async () => {
+		const user = userEvent.setup()
+
+		const { getByText } = render(
+			<Provider store={store}>
+				<NavigationBar name="Test Name" />
+			</Provider>
+		)
+
+		const download = getByText('Download')
+
+		await user.click(download)
+		expect(window.print).toHaveBeenCalled()
 	})
 })

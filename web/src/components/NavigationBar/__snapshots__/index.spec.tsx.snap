@@ -44,7 +44,7 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
         <a
           href="#academic-projects"
         >
-          Projects
+          Academic Projects
         </a>
       </li>
       <li>
@@ -52,15 +52,6 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
           href="#leadership"
         >
           Leadership
-        </a>
-      </li>
-      <li
-        class="action"
-      >
-        <a
-          href="#"
-        >
-          E-mail
         </a>
       </li>
       <li

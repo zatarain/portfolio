@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SyntheticEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '#hooks'
-import { flipResponsiveMenu, selectResponsive } from './slice'
+import { closeResponsiveMenu, flipResponsiveMenu, selectResponsive } from './slice'
 import styles from './index.module.css'
 
 interface Properties {
@@ -30,11 +30,18 @@ const NavigationBar = ({ name }: Properties) => {
 				{name}
 			</Link>
 			<ul className={styles.sections}>
-				<li><Link href="#work-experience" scroll={false}>Experience</Link></li>
-				<li><Link href="#education" scroll={false}>Education</Link></li>
-				<li><Link href="#academic-projects" scroll={false}>Projects</Link></li>
-				<li><Link href="#leadership" scroll={false}>Leadership</Link></li>
-				<li className={styles.action}><Link href="#">E-mail</Link></li>
+				<li>
+					<Link href="#work-experience" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Experience</Link>
+				</li>
+				<li>
+					<Link href="#education" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Education</Link>
+				</li>
+				<li>
+					<Link href="#academic-projects" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Academic Projects</Link>
+				</li>
+				<li>
+					<Link href="#leadership" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Leadership</Link>
+				</li>
 				<li className={styles.action}>
 					<Link href="#" className={styles['call-to-action']} onClick={onDownloadClick}>Download</Link>
 				</li>

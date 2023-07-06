@@ -47,7 +47,7 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
           <a
             href="#academic-projects"
           >
-            Projects
+            Academic Projects
           </a>
         </li>
         <li>
@@ -55,15 +55,6 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
             href="#leadership"
           >
             Leadership
-          </a>
-        </li>
-        <li
-          class="action"
-        >
-          <a
-            href="#"
-          >
-            E-mail
           </a>
         </li>
         <li
