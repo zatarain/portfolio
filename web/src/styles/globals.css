@@ -1,5 +1,6 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.cdnfonts.com/css/cascadia-code');
+@import url('react-responsive-carousel/lib/styles/carousel.min.css');
 
 :root {
   --bg-page: #fafbfc;
@@ -28,6 +29,7 @@
     font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
       Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;
+    scroll-behavior: smooth;
   }
 
   main {
@@ -49,4 +51,22 @@ a:link, a:visited {
 
 a:hover, a:hover:visited {
   color: var(--bg-action);
+}
+
+.carousel ul.control-dots {
+	bottom: 4rem;
+	z-index: 3;
+}
+
+.carousel ul.control-dots li {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0.5rem;
+}
+
+.carousel figcaption {
+  margin: 0;
+  position: relative;
+  bottom: 3rem;
+  font-size: 1rem;
 }

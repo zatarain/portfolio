@@ -44,6 +44,9 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# Instagram Basic Display API
+gem 'instagram_basic_display'
+
 group :development, :test do
   gem 'rspec-core', '~> 3.12'
   gem 'rspec-expectations', '~> 3.12'
