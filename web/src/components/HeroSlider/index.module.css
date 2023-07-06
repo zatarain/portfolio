@@ -29,14 +29,3 @@
 .hero figure {
   margin: 0;
 }
-
-.hero ul.control-dots {
-	bottom: 2rem;
-	z-index: 9;
-}
-
-.hero ul.control-dots li {
-  width: 0.5rem;
-  height: 0.5rem;
-  padding: 0.5rem;
-}

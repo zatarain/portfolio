@@ -60,7 +60,7 @@ describe Curriculum, type: :model do
       {
         id: '10101',
         media_url: 'https://cdn.instagram.com/dummy-01.jpg',
-        caption: '#hero Dummy description 01',
+        caption: '#hero #homepage Dummy description 01',
       },
       {
         id: '20202',
@@ -70,7 +70,7 @@ describe Curriculum, type: :model do
       {
         id: '30303',
         media_url: 'https://cdn.instagram.com/dummy-03.jpg',
-        caption: '#hero Dummy description 03',
+        caption: '#hero #homepage Dummy description 03',
       },
     ]
   end
@@ -217,12 +217,12 @@ describe Curriculum, type: :model do
         {
           id: '10101',
           media_url: 'https://cdn.instagram.com/dummy-01.jpg',
-          caption: '#hero Dummy description 01',
+          caption: '#hero #homepage Dummy description 01',
         },
         {
           id: '30303',
           media_url: 'https://cdn.instagram.com/dummy-03.jpg',
-          caption: '#hero Dummy description 03',
+          caption: '#hero #homepage Dummy description 03',
         },
       ]
     end

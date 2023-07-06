@@ -44,7 +44,7 @@ module Api
 
     config.sections = 'db/cv.yml'
     config.pictures = 'db/instagram.json'
-    config.hashtag = /#hero/i
+    config.hashtag = /#hero #homepage/i
     config.cache_duration = 1.day.ago
   end
 end

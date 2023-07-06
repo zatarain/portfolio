@@ -52,3 +52,21 @@ a:link, a:visited {
 a:hover, a:hover:visited {
   color: var(--bg-action);
 }
+
+.carousel ul.control-dots {
+	bottom: 4rem;
+	z-index: 3;
+}
+
+.carousel ul.control-dots li {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0.5rem;
+}
+
+.carousel figcaption {
+  margin: 0;
+  position: relative;
+  bottom: 3rem;
+  font-size: 1rem;
+}

@@ -25,7 +25,7 @@ const HeroSlider = ({ images }: Properties) => {
 				images.map((picture: Picture, index: number) => (
 					<figure key={index}>
 						<Image src={picture.media_url} alt={picture.caption} width={1440} height={768} />
-						<figcaption>{picture.caption}</figcaption>
+						<figcaption>{picture.caption.replaceAll(/#[^ ]+/g, '').trim()}</figcaption>
 					</figure>
 				))
 			}
