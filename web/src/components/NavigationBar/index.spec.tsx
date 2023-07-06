@@ -58,4 +58,30 @@ describe('<NavigationBar />', () => {
 		await user.click(download)
 		expect(window.print).toHaveBeenCalled()
 	})
+
+	test.each([
+		'Experience',
+		'Education',
+		'Academic Projects',
+		'Leadership',
+	])('<Link ...>%s</Link> closes the menu when is open in responsive mode', async (link) => {
+		const user = userEvent.setup()
+
+		const { getByText, getByRole } = render(
+			<Provider store={store}>
+				<NavigationBar name="Test Name" />
+			</Provider>
+		)
+
+		const bar = getByRole('menubar')
+		const dropdown = getByRole('menuitemcheckbox')
+
+		expect(bar).not.toHaveClass(styles.responsive)
+
+		await user.click(dropdown)
+		expect(bar).toHaveClass(styles.responsive)
+
+		await user.click(getByText(link))
+		expect(bar).not.toHaveClass(styles.responsive)
+	})
 })
