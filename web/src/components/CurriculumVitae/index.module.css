@@ -170,6 +170,7 @@
 
 	.curriculum p {
 		margin: 0.1em 0;
+		font-size: 0.95em;
 	}
 
 	.curriculum dl {
@@ -178,6 +179,7 @@
 
 	.curriculum li {
 		margin: 0.1em 0;
+		font-size: 0.95em;
 	}
 
 	.ticks {
@@ -190,7 +192,7 @@
 
 	.experiences dl {
 		font-size: 0.8em;
-		width: 9em;
+		width: 9.5em;
 	}
 
 	.education > ul {

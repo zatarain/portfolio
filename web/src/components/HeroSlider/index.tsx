@@ -1,35 +1,35 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
-
+import styles from './index.module.css'
+import { Picture } from '#components/CurriculumVitae';
 interface Properties {
-	images: object
+	images: Picture[]
 }
 
 const HeroSlider = ({ images }: Properties) => {
 	return (
-		<div className="hero">
-			<Carousel
-				animationHandler="fade"
-				autoPlay={true}
-				showThumbs={false}
-				showStatus={false}
-				transitionTime={1000}
-				interval={4000}
-				showArrows={false}
-				infiniteLoop={true}
-				stopOnHover={true}
-				swipeable={false}
-			>
-				{
-					Object.entries(images).map(([key, value]) => (
-						<div key={key}>
-							<Image src={value} alt={key} width={1440} height={1080} />
-						</div>
-					))
-				}
-			</Carousel>
-		</div>
+		<Carousel
+			animationHandler="fade"
+			autoPlay={true}
+			showThumbs={false}
+			showStatus={false}
+			transitionTime={1000}
+			interval={7000}
+			showArrows={false}
+			infiniteLoop={true}
+			stopOnHover={true}
+			swipeable={true}
+			className={styles.hero}
+		>
+			{
+				images.map((picture: Picture, index: number) => (
+					<figure key={index}>
+						<Image src={picture.media_url} alt={picture.caption} width={1440} height={768} />
+						<figcaption>{picture.caption.replaceAll(/#[^ ]+/g, '').trim()}</figcaption>
+					</figure>
+				))
+			}
+		</Carousel>
 	)
 }
 

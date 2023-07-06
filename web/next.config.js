@@ -2,8 +2,11 @@
 
 const nextConfig = {
 	images: {
-		domains: [
-			'instagram.flhr4-3.fna.fbcdn.net',
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**.cdninstagram.com',
+			},
 		],
 	},
 };

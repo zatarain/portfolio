@@ -45,32 +45,16 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
         </li>
         <li>
           <a
-            href="#"
-          >
-            Skills
-          </a>
-        </li>
-        <li>
-          <a
             href="#academic-projects"
           >
-            Projects
+            Academic Projects
           </a>
         </li>
         <li>
           <a
-            href="#volunteering"
+            href="#leadership"
           >
-            Hobbies
-          </a>
-        </li>
-        <li
-          class="action"
-        >
-          <a
-            href="#"
-          >
-            E-mail
+            Leadership
           </a>
         </li>
         <li
