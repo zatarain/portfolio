@@ -3,6 +3,15 @@ import store from '#store'
 import { render } from '@testing-library/react'
 import HeroSlider from '.'
 
+jest.mock('react-responsive-carousel', () => {
+	return {
+		__esModule: true,
+		Carousel: jest.fn(({ children }) => {
+			return (<>{children}</>)
+		}),
+	}
+})
+
 describe('<HeroSlider />', () => {
 	it('renders the component correctly with passed name', () => {
 		const pictures = [

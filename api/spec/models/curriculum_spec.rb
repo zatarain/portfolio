@@ -158,7 +158,7 @@ describe Curriculum, type: :model do
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(2.days.ago)
         response = instance_double(InstagramBasicDisplay::Response)
-        json = {data: pictures}
+        json = { data: pictures }
         payload = Struct.new(*json.keys).new(*json.values)
         allow(response).to receive(:payload).and_return(payload)
         allow(instagram_client).to receive(:media_feed).and_return(response)
