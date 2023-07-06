@@ -126,6 +126,7 @@ describe Curriculum, type: :model do
   describe 'download' do
     before do
       allow(Rails.configuration).to receive(:sections).and_return('db/dummy.yml')
+      allow(Rails.configuration).to receive(:pictures).and_return('db/dummy.json')
       allow(Rails.configuration).to receive(:aws).and_return({
         s3_bucket: 'test-cv',
         s3_object: 'dummy.yml',
@@ -157,17 +158,21 @@ describe Curriculum, type: :model do
         allow(File).to receive(:exist?).and_return(true)
         allow(File).to receive(:mtime).and_return(2.days.ago)
         response = instance_double(InstagramBasicDisplay::Response)
-        payload = { data: pictures }
+        json = {data: pictures}
+        payload = Struct.new(*json.keys).new(*json.values)
         allow(response).to receive(:payload).and_return(payload)
         allow(instagram_client).to receive(:media_feed).and_return(response)
+        allow(File).to receive(:write).and_return(true)
       end
 
-      it 'downloads the file from S3' do
+      it 'downloads the file from Instagram' do
         curriculum = described_class.new
         curriculum.download :pictures
         expect(File).to have_received(:exist?)
         expect(instagram_client).to have_received(:media_feed)
           .with(fields: %i[caption media_url])
+        expect(File).to have_received(:write)
+          .with('db/dummy.json', pictures.to_json)
       end
     end
 
@@ -189,19 +194,19 @@ describe Curriculum, type: :model do
       end
     end
 
-    context 'when there is an error raised from AWS SDK' do
+    context 'when there is an error raised from AWS SDK or Instagram' do
       before do
         allow(File).to receive(:exist?).and_return(false)
         allow(Rails.logger).to receive(:error)
         allow(s3_client).to receive(:get_object)
-          .and_raise(StandardError.new('Unable to download the file from AWS S3'))
+          .and_raise(StandardError.new('Unable to download the file from Internet'))
       end
 
       it 'logs the error message' do
         curriculum = described_class.new
         curriculum.download :sections
         expect(Rails.logger).to have_received(:error)
-          .with(/Unable to download the file from AWS S3/)
+          .with(/Unable to download the file from Internet/)
       end
     end
   end
