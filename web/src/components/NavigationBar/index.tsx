@@ -18,6 +18,11 @@ const NavigationBar = ({ name }: Properties) => {
 		dispatch(flipResponsiveMenu())
 	}
 
+	const onDownloadClick = (event: SyntheticEvent) => {
+		event.preventDefault()
+		window.print()
+	}
+
 	return (
 		<nav id="navigation-bar" className={`${styles['navigation-bar']} ${className}`} role="menubar">
 			<Link href="/" className={styles.logo}>
@@ -27,12 +32,11 @@ const NavigationBar = ({ name }: Properties) => {
 			<ul className={styles.sections}>
 				<li><Link href="#work-experience" scroll={false}>Experience</Link></li>
 				<li><Link href="#education" scroll={false}>Education</Link></li>
-				<li><Link href="#" scroll={false}>Skills</Link></li>
 				<li><Link href="#academic-projects" scroll={false}>Projects</Link></li>
-				<li><Link href="#volunteering" scroll={false}>Hobbies</Link></li>
+				<li><Link href="#leadership" scroll={false}>Leadership</Link></li>
 				<li className={styles.action}><Link href="#">E-mail</Link></li>
 				<li className={styles.action}>
-					<Link href="#" className={styles['call-to-action']}>Download</Link>
+					<Link href="#" className={styles['call-to-action']} onClick={onDownloadClick}>Download</Link>
 				</li>
 				<li className={styles.dropdown}>
 					<Link href="#" onClick={onOpenMenuClick} role="menuitemcheckbox">
