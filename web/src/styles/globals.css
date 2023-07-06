@@ -71,7 +71,7 @@ a:hover, a:hover:visited {
   font-size: 1rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   .carousel figure img {
     height: 50vh;
   }
@@ -85,16 +85,17 @@ a:hover, a:hover:visited {
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 539px) {
   .carousel figure img {
     height: 30vh;
   }
 
   .carousel figcaption {
     bottom: 3rem;
+    display: none;
   }
 
   .carousel ul.control-dots {
-    bottom: 0;
+    bottom: -1rem;
   }
 }
