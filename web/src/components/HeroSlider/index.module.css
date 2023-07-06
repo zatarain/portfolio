@@ -32,7 +32,7 @@
 
 @media screen and (max-width: 850px) {
 	.hero::before {
-		box-shadow: 0 -2rem 2rem 2rem var(--bg-primary) inset;
+		box-shadow: 0 -5rem 3rem 3rem var(--bg-primary) inset;
 	}
 }
 
