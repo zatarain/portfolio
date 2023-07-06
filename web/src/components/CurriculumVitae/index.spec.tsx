@@ -74,6 +74,18 @@ describe('<CurriculumVitae />', () => {
 			],
 			leadership: 'Test leadership paragraph',
 			volunteering: 'Test volunteering paragraph',
+			pictures: [
+				{
+					id: '1001',
+					media_url: 'https://cdn.instagram.com/dummy-01.jpg',
+					caption: 'Dummy caption 01',
+				},
+				{
+					id: '1001',
+					media_url: 'https://cdn.instagram.com/dummy-01.jpg',
+					caption: 'Dummy caption 01',
+				},
+			],
 		}
 		const { asFragment, getByText } = render(<CurriculumVitae data={data} />)
 
