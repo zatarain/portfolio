@@ -30,6 +30,12 @@ export interface AcademicProject {
 	description: string
 }
 
+export interface Picture {
+	id: string
+	media_url: string
+	caption: string
+}
+
 export interface CurriculumVitaeProperties {
 	name: string
 	email?: string[]
@@ -45,6 +51,7 @@ export interface CurriculumVitaeProperties {
 	leadership?: string
 	volunteering?: string
 	tex?: string
+	pictures?: Picture[]
 }
 
 interface Properties {
