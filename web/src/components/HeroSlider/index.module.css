@@ -29,3 +29,15 @@
 .hero figure {
   margin: 0;
 }
+
+@media screen and (max-width: 800px) {
+	.hero::before {
+		box-shadow: 0 -2rem 2rem 2rem var(--bg-primary) inset;
+	}
+}
+
+@media screen and (max-width: 540px) {
+	.hero::before {
+		box-shadow: 0 -1rem 1rem 1rem var(--bg-primary) inset;
+	}
+}

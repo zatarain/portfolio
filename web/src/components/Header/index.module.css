@@ -24,3 +24,23 @@
 	z-index: 2;
 	position: relative;
 }
+
+@media screen and (max-width: 800px) {
+  .header {
+    min-height: 30vh;
+  }
+
+	.header::before {
+		box-shadow: 0 1px 5px 0 var(--bg-primary);
+	}
+}
+
+@media screen and (max-width: 540px) {
+  .header {
+    min-height: 30vh;
+  }
+
+	.header::before {
+		box-shadow: 0 1px 5px 0 var(--bg-primary);
+	}
+}

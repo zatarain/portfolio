@@ -70,3 +70,31 @@ a:hover, a:hover:visited {
   bottom: 3rem;
   font-size: 1rem;
 }
+
+@media screen and (max-width: 800px) {
+  .carousel figure img {
+    height: 50vh;
+  }
+
+  .carousel figcaption {
+    bottom: 5rem;
+  }
+
+  .carousel ul.control-dots {
+    bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .carousel figure img {
+    height: 30vh;
+  }
+
+  .carousel figcaption {
+    bottom: 3rem;
+  }
+
+  .carousel ul.control-dots {
+    bottom: 0;
+  }
+}
