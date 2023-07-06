@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.0.6'
 
 # Use AWS S3 API to get files from S3 buckets
 gem 'aws-sdk-s3', '~> 1'
@@ -15,7 +15,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'sqlite3', '~> 1.6'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 6.3'
 
 # Use YAML parser
 gem 'safe_yaml', '~> 1.0', '>= 1.0.5'
@@ -44,12 +44,15 @@ gem 'bootsnap', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# Instagram Basic Display API
+gem 'instagram_basic_display'
+
 group :development, :test do
   gem 'rspec-core', '~> 3.12'
   gem 'rspec-expectations', '~> 3.12'
   gem 'rspec-mocks', '~> 3.12'
-  gem 'rspec-rails', '~> 6.0.0'
-  gem 'rubocop', '~> 1.53', require: false
+  gem 'rspec-rails', '~> 6.0.3'
+  gem 'rubocop', '~> 1.54', require: false
   gem 'rubocop-rails', '~> 2.20'
   gem 'rubocop-rspec', '~> 2.0.0'
   gem 'simplecov', require: false

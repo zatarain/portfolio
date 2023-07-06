@@ -1,3 +1,9 @@
 .markdown {
 	border: 0
 }
+
+@media print {
+	.markdown {
+		font-size: 1em;
+	}
+}
