@@ -9,6 +9,24 @@ on:
     paths: ['api/**', '.github/workflows/back-end.yml']
 
 jobs:
+  database:
+    runs-on: ubuntu-latest
+    container:
+      image: postgres:14.8
+      env:
+        POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      ports:
+        - 5432
+      options: --cpus 1
+    steps:
+      - name: Check for dockerenv file
+        run: |
+          (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+          pwd
+          hostname
+          PGPASSWORD="$POSTGRES_PASSWORD" psql --host=localhost --username=$POSTGRES_USER --dbname=$POSTGRES_USER --list -w
+
   setup:
     runs-on: ubuntu-latest
     steps:
