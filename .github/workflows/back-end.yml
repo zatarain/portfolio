@@ -11,7 +11,10 @@ on:
 jobs:
   database:
     runs-on: ubuntu-latest
-    container:
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  container:
       image: postgres:14.8
       env:
         POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
