@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Check for dockerenv file
         run: |
-          (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+          (ls /.dockerenv && cat /.dockerenv) || (echo No dockerenv)
           pwd
           hostname
           PGPASSWORD="$POSTGRES_PASSWORD" psql --host=localhost --username=$POSTGRES_USER --dbname=$POSTGRES_USER --list -w
