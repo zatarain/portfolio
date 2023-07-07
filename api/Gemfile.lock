@@ -135,6 +135,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
+    pg (1.5.3)
     puma (6.3.0)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -225,7 +226,6 @@ GEM
       simplecov (~> 0.19)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sqlite3 (1.6.3-x86_64-linux)
     thor (1.2.2)
     timeout (0.4.0)
     tzinfo (2.0.6)
@@ -244,6 +244,7 @@ DEPENDENCIES
   bootsnap
   debug
   instagram_basic_display
+  pg
   puma (~> 6.3)
   rack-cors
   rails (~> 7.0.6)
@@ -257,7 +258,6 @@ DEPENDENCIES
   safe_yaml (~> 1.0, >= 1.0.5)
   simplecov
   simplecov-cobertura
-  sqlite3 (~> 1.6)
   tzinfo-data
 
 RUBY VERSION
