@@ -62,6 +62,8 @@ jobs:
         with:
           bundler-cache: true
           working-directory: api
+      - name: Create databases
+        run: cd api && bundle exec rails db:create
       - name: Run specs
         run: cd api && bundle exec rspec
       - name: Upload coverage report to CodeCov
