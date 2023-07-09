@@ -68,20 +68,20 @@ GEM
       tzinfo (~> 2.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.781.0)
-    aws-sdk-core (3.175.0)
+    aws-partitions (1.785.0)
+    aws-sdk-core (3.177.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.67.0)
-      aws-sdk-core (~> 3, >= 3.174.0)
+    aws-sdk-kms (1.70.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.126.0)
-      aws-sdk-core (~> 3, >= 3.174.0)
+    aws-sdk-s3 (1.128.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
       aws-sdk-kms (~> 1)
-      aws-sigv4 (~> 1.4)
-    aws-sigv4 (1.5.2)
+      aws-sigv4 (~> 1.6)
+    aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -101,7 +101,7 @@ GEM
       concurrent-ruby (~> 1.0)
     instagram_basic_display (0.2.0)
     io-console (0.6.0)
-    irb (1.7.0)
+    irb (1.7.1)
       reline (>= 0.3.0)
     jmespath (1.6.2)
     json (2.6.3)
@@ -118,7 +118,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.1)
-    msgpack (1.7.0)
+    msgpack (1.7.1)
     net-imap (0.3.6)
       date
       net-protocol
@@ -135,6 +135,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
+    pg (1.5.3)
     puma (6.3.0)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -174,7 +175,7 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.8.1)
-    reline (0.3.5)
+    reline (0.3.6)
       io-console (~> 0.5)
     rexml (3.2.5)
     rspec-core (3.12.2)
@@ -225,7 +226,6 @@ GEM
       simplecov (~> 0.19)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sqlite3 (1.6.3-x86_64-linux)
     thor (1.2.2)
     timeout (0.4.0)
     tzinfo (2.0.6)
@@ -244,6 +244,7 @@ DEPENDENCIES
   bootsnap
   debug
   instagram_basic_display
+  pg
   puma (~> 6.3)
   rack-cors
   rails (~> 7.0.6)
@@ -257,11 +258,10 @@ DEPENDENCIES
   safe_yaml (~> 1.0, >= 1.0.5)
   simplecov
   simplecov-cobertura
-  sqlite3 (~> 1.6)
   tzinfo-data
 
 RUBY VERSION
    ruby 3.2.1p31
 
 BUNDLED WITH
-   2.4.6
+   2.4.12
