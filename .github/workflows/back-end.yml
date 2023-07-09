@@ -10,8 +10,25 @@ on:
 
 jobs:
   setup:
+    name: Setup workspace
     runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.names.outputs.name }}
+      environment: ${{ steps.names.outputs.environment }}
+    env:
+      BRANCH: ${{ github.ref_name }}
     steps:
+      - id: names
+        name: Name for GitHub Environment
+        run: |
+          environtment=Development
+          if [ "$BRANCH" = "main" ]; then
+            name=production
+            environment=Production
+          elif [ "$BRANCH" = "staging" ]; then
+            environment=${BRANCH^}
+          fi
+          echo environment=$environment >> "$GITHUB_OUTPUT"
       - name: Checkout
         uses: actions/checkout@v3
       - name: Installing ruby and dependencies
@@ -73,10 +90,10 @@ jobs:
           flags: back-end
 
   deploy:
-    needs: [lint, unit-tests]
+    needs: [setup, lint, unit-tests]
     runs-on: ubuntu-latest
     if: ${{ github.actor != 'dependabot' }}
-    environment: ${{ github.ref_name == 'main' && 'production' || contains(toJson('["staging", "development"]'), github.ref_name) && github.ref_name || null }}
+    environment: ${{ needs.setup.outputs.environment }}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
