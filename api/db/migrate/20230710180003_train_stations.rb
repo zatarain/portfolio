@@ -6,7 +6,7 @@ class TrainStations < ActiveRecord::Migration[7.0]
       column.integer :trainline_id
       column.string :name, limit: 255
       column.string :slug, limit: 63
-      column.st_point :location, geographic: true, srid: 4326
+      column.st_point :location, geographic: true, srid: Rails.configuration.spatial_reference_system
       column.integer :parent_station_id
       column.string :country, limit: 2
       column.string :time_zone, limit: 64

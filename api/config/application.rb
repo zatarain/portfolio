@@ -46,5 +46,9 @@ module Api
     config.pictures = 'db/instagram.json'
     config.hashtag = /#hero #homepage/i
     config.cache_duration = 1.day.ago
+
+    # Spatial Referece System WGS 84 - EPSG:4326
+    # Latitude/Longitud Coordinate System
+    config.spatial_reference_system = 4326
   end
 end

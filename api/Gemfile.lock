@@ -256,6 +256,8 @@ DEPENDENCIES
   puma (~> 6.3)
   rack-cors
   rails (~> 7.0.6)
+  rgeo
+  rgeo-activerecord
   rspec-core (~> 3.12)
   rspec-expectations (~> 3.12)
   rspec-mocks (~> 3.12)
