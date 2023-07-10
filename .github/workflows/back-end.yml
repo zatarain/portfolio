@@ -83,7 +83,7 @@ jobs:
       - name: Create databases
         run: cd api && bundle exec rails db:create
       - name: Run migrations
-        run: cd api && bundle exec rails db:migrate
+        run: cd api && bin/rails db:migrate RAILS_ENV=test
       - name: Run specs
         run: cd api && bundle exec rspec
       - name: Upload coverage report to CodeCov
