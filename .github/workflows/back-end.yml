@@ -68,6 +68,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
+      RAILS_ENV: test
       POSTGRES_HOST: localhost
       POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -81,6 +82,8 @@ jobs:
           working-directory: api
       - name: Create databases
         run: cd api && bundle exec rails db:create
+      - name: Run migrations
+        run: cd api && bundle exec rails db:migrate
       - name: Run specs
         run: cd api && bundle exec rspec
       - name: Upload coverage report to CodeCov
