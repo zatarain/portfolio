@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TrainStation < ApplicationRecord
+class TrainStation < ActiveRecord::Base
   validates :name, presence: true
   validates :latitude, presence: true
   validates :longitude, presence: true
@@ -17,6 +17,7 @@ class TrainStation < ApplicationRecord
   private
 
   def set_location
-    self.location = @@geographic.point(longitude, latitude)
+    geographic ||= RGeo::Geographic.spherical_factory(srid: Rails.configuration.spatial_reference_system)
+    self[:location] = geographic.point(self[:longitude], self[:latitude])
   end
 end

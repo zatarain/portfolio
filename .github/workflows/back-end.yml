@@ -89,6 +89,7 @@ jobs:
       - name: Run specs
         run: |
           cd api
+          bundle exec rails db:seed
           bundle exec rails db:test:prepare
           bundle exec rspec
       - name: Upload coverage report to CodeCov

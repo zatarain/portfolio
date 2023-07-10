@@ -6,6 +6,8 @@ class TrainStations < ActiveRecord::Migration[7.0]
       column.integer :trainline_id
       column.string :name, limit: 255
       column.string :slug, limit: 63
+      column.float :latitude, null: false
+      column.float :longitude, null: false
       column.st_point :location, geographic: true, srid: Rails.configuration.spatial_reference_system
       column.integer :parent_station_id
       column.string :country, limit: 2
@@ -16,7 +18,6 @@ class TrainStations < ActiveRecord::Migration[7.0]
       column.boolean :is_suggestable, default: false, null: false
       column.boolean :country_hint, default: false, null: false
       column.boolean :main_station_hint, default: false, null: false
-      column.integer :same_as
       column.text :info_en
       column.text :info_es
       column.string :normalised_code, limit: 40
@@ -25,6 +26,7 @@ class TrainStations < ActiveRecord::Migration[7.0]
       column.datetime :updated_at, default: -> { 'CURRENT_TIMESTAMP' }
 
       column.index :name
+      column.index %i[latitude longitude]
       column.index :location, using: :gist
       column.index :country
       column.index :time_zone
