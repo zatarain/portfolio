@@ -56,8 +56,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:14.8
+        image: postgis/postgis:14-3.3
         env:
+          POSTGRES_DB: test-portfolio
           POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
