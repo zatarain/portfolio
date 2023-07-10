@@ -80,10 +80,14 @@ jobs:
         with:
           bundler-cache: true
           working-directory: api
-      - name: Create databases
-        run: cd api && bundle exec rails db:create
       - name: Run specs
-        run: cd api && bundle exec rails db:migrate && bundle exec rspec
+        run: |
+          cd api
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+          bundle exec rails db:migrate:status
+          bundle exec rails db:test:prepare
+          bundle exec rspec
       - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
         with:
