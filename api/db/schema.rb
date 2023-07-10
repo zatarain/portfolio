@@ -647,26 +647,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.integer "trainline_id"
     t.string "name", limit: 255
     t.string "slug", limit: 63
-    t.float "latitude", null: false
-    t.float "longitude", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.integer "parent_station_id"
     t.string "country", limit: 2
     t.string "time_zone", limit: 64
-    t.boolean "is_city"
-    t.boolean "is_main_station"
-    t.boolean "is_airport"
-    t.boolean "is_suggestable"
-    t.boolean "country_hint"
-    t.boolean "main_station_hint"
+    t.boolean "is_city", default: false, null: false
+    t.boolean "is_main_station", default: false, null: false
+    t.boolean "is_airport", default: false, null: false
+    t.boolean "is_suggestable", default: false, null: false
+    t.boolean "country_hint", default: false, null: false
+    t.boolean "main_station_hint", default: false, null: false
     t.integer "same_as"
     t.text "info_en"
     t.text "info_es"
     t.string "normalised_code", limit: 40
     t.string "iata_airport_code", limit: 3
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.index ["country"], name: "index_train_stations_on_country"
     t.index ["iata_airport_code"], name: "index_train_stations_on_iata_airport_code"
-    t.index ["latitude", "longitude"], name: "index_train_stations_on_latitude_and_longitude"
     t.index ["location"], name: "index_train_stations_on_location", using: :gist
     t.index ["name"], name: "index_train_stations_on_name"
     t.index ["normalised_code"], name: "index_train_stations_on_normalised_code"
