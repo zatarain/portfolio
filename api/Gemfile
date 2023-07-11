@@ -14,7 +14,7 @@ gem 'aws-sdk-s3', '~> 1'
 # Use postgres as the database for Active Record
 gem 'pg'
 
-# Gems to manipulate postgis data
+# Gems to manipulate PostGIS data
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
 gem 'rgeo-activerecord'
