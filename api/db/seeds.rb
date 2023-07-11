@@ -12,10 +12,10 @@ require 'open-uri'
 #   Character.create(name: 'Luke', movie: movies.first)
 
 unless Rails.env.production?
-	# Populating train_stations from trainline data to generate the spatial layer
-	connection = ActiveRecord::Base.connection
-	TrainStation.destroy_all
-	connection.execute('TRUNCATE train_stations')
+  # Populating train_stations from trainline data to generate the spatial layer
+  connection = ActiveRecord::Base.connection
+  TrainStation.destroy_all
+  connection.execute('TRUNCATE train_stations')
 
   ActiveRecord::Base.transaction do
     connection.execute(File.read(Rails.configuration.trainline_eu_dataset))

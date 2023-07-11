@@ -361,11 +361,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
   end
 
   create_table "train_stations", id: :serial, force: :cascade do |t|
-    t.integer "trainline_id"
     t.string "name", limit: 255
     t.string "slug", limit: 63
-    t.float "latitude", null: false
-    t.float "longitude", null: false
+    t.float "latitude"
+    t.float "longitude"
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.integer "parent_station_id"
     t.string "country", limit: 2
@@ -389,6 +388,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.index ["name"], name: "index_train_stations_on_name"
     t.index ["normalised_code"], name: "index_train_stations_on_normalised_code"
     t.index ["time_zone"], name: "index_train_stations_on_time_zone"
+  end
+
+  create_table "trainline_stations", primary_key: "ogc_fid", id: :serial, force: :cascade do |t|
+    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
+    t.decimal "trainline_id", precision: 10
+    t.string "name"
+    t.string "slug"
+    t.float "latitude"
+    t.float "longitude"
+    t.decimal "parent_station_id", precision: 10
+    t.string "country"
+    t.string "time_zone"
+    t.boolean "is_city"
+    t.boolean "is_main_station"
+    t.boolean "is_airport"
+    t.boolean "is_suggestable"
+    t.boolean "country_hint"
+    t.boolean "main_station_hint"
+    t.string "info_en"
+    t.string "info_es"
+    t.string "normalised_code"
+    t.string "iata_airport_code"
+    t.index ["location"], name: "trainline_stations_location_geom_idx", using: :gist
   end
 
   create_table "zcta5", primary_key: ["zcta5ce", "statefp"], force: :cascade do |t|
