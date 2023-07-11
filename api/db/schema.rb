@@ -390,29 +390,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.index ["time_zone"], name: "index_train_stations_on_time_zone"
   end
 
-  create_table "trainline_stations", primary_key: "ogc_fid", id: :serial, force: :cascade do |t|
-    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
-    t.decimal "trainline_id", precision: 10
-    t.string "name"
-    t.string "slug"
-    t.float "latitude"
-    t.float "longitude"
-    t.decimal "parent_station_id", precision: 10
-    t.string "country"
-    t.string "time_zone"
-    t.boolean "is_city"
-    t.boolean "is_main_station"
-    t.boolean "is_airport"
-    t.boolean "is_suggestable"
-    t.boolean "country_hint"
-    t.boolean "main_station_hint"
-    t.string "info_en"
-    t.string "info_es"
-    t.string "normalised_code"
-    t.string "iata_airport_code"
-    t.index ["location"], name: "trainline_stations_location_geom_idx", using: :gist
-  end
-
   create_table "zcta5", primary_key: ["zcta5ce", "statefp"], force: :cascade do |t|
     t.serial "gid", null: false
     t.string "statefp", limit: 2, null: false
