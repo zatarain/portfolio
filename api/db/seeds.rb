@@ -18,34 +18,36 @@ unless Rails.env.production?
     connection.execute(File.read(Rails.configuration.trainline_eu_dataset))
   end
 
-  Stadium.create([
-                   {
-                     name: 'Anfield Road',
-                     slug: 'anfield-road',
-                     team: 'Liverpool F. C.',
-                     latitude: 53.43083,
-                     longitude: -2.96083,
-                   },
-                   {
-                     name: 'Wembley Stadium',
-                     slug: 'wembley-stadium',
-                     team: 'England National Football Team',
-                     latitude: 51.555556,
-                     longitude: -0.279444,
-                   },
-                   {
-                     name: 'Hampden Park',
-                     slug: 'hampden-park',
-                     team: 'Scotland National Football Team',
-                     latitude: 55.8259,
-                     longitude: -4.2520,
-                   },
-                   {
-                     name: 'Millennium Stadium',
-                     slug: 'millennium-stadium',
-                     team: 'Wales National Football Team',
-                     latitude: 51.4781,
-                     longitude: -3.1825,
-                   },
-                 ])
+  Stadium.create(
+    [
+      {
+        name: 'Anfield Road',
+        slug: 'anfield-road',
+        team: 'Liverpool F. C.',
+        latitude: 53.43083,
+        longitude: -2.96083,
+      },
+      {
+        name: 'Wembley Stadium',
+        slug: 'wembley-stadium',
+        team: 'England National Football Team',
+        latitude: 51.555556,
+        longitude: -0.279444,
+      },
+      {
+        name: 'Hampden Park',
+        slug: 'hampden-park',
+        team: 'Scotland National Football Team',
+        latitude: 55.8259,
+        longitude: -4.2520,
+      },
+      {
+        name: 'Millennium Stadium',
+        slug: 'millennium-stadium',
+        team: 'Wales National Football Team',
+        latitude: 51.4781,
+        longitude: -3.1825,
+      },
+    ],
+  )
 end
