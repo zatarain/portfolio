@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_11_174811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "address_standardizer"
   enable_extension "address_standardizer_data_us"
@@ -275,6 +275,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.check_constraint "geometrytype(the_geom) = 'MULTIPOLYGON'::text OR the_geom IS NULL", name: "enforce_geotype_the_geom"
     t.check_constraint "st_ndims(the_geom) = 2", name: "enforce_dims_the_geom"
     t.check_constraint "st_srid(the_geom) = 4269", name: "enforce_srid_the_geom"
+  end
+
+  create_table "stadia", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "slug", limit: 63
+    t.float "latitude"
+    t.float "longitude"
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.string "team", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "state", primary_key: "statefp", id: { type: :string, limit: 2 }, force: :cascade do |t|
