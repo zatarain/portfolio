@@ -168,164 +168,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.check_constraint "st_srid(the_geom) = 4269", name: "enforce_srid_the_geom"
   end
 
-  create_table "eu_estations", primary_key: "ogc_fid", id: :serial, force: :cascade do |t|
-    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
-    t.decimal "id", precision: 10
-    t.string "name"
-    t.string "slug"
-    t.decimal "uic", precision: 10
-    t.decimal "uic8_sncf", precision: 10
-    t.float "latitude"
-    t.float "longitude"
-    t.decimal "parent_station_id", precision: 10
-    t.string "country"
-    t.string "time_zone"
-    t.boolean "is_city"
-    t.boolean "is_main_station"
-    t.boolean "is_airport"
-    t.boolean "is_suggestable"
-    t.boolean "country_hint"
-    t.boolean "main_station_hint"
-    t.string "sncf_id"
-    t.string "sncf_tvs_id"
-    t.boolean "sncf_is_enabled"
-    t.string "entur_id"
-    t.boolean "entur_is_enabled"
-    t.decimal "db_id", precision: 10
-    t.boolean "db_is_enabled"
-    t.string "busbud_id"
-    t.boolean "busbud_is_enabled"
-    t.string "distribusion_id"
-    t.boolean "distribusion_is_enabled"
-    t.decimal "flixbus_id", precision: 10
-    t.boolean "flixbus_is_enabled"
-    t.decimal "cff_id", precision: 10
-    t.boolean "cff_is_enabled"
-    t.string "leoexpress_id"
-    t.boolean "leoexpress_is_enabled"
-    t.decimal "obb_id", precision: 10
-    t.boolean "obb_is_enabled"
-    t.string "ouigo_id"
-    t.boolean "ouigo_is_enabled"
-    t.decimal "trenitalia_id", precision: 10
-    t.boolean "trenitalia_is_enabled"
-    t.string "trenitalia_rtvt_id"
-    t.decimal "ntv_rtiv_id", precision: 10
-    t.string "ntv_id"
-    t.boolean "ntv_is_enabled"
-    t.decimal "hkx_id", precision: 10
-    t.boolean "hkx_is_enabled"
-    t.string "renfe_id"
-    t.boolean "renfe_is_enabled"
-    t.string "atoc_id"
-    t.boolean "atoc_is_enabled"
-    t.string "benerail_id"
-    t.boolean "benerail_is_enabled"
-    t.decimal "westbahn_id", precision: 10
-    t.boolean "westbahn_is_enabled"
-    t.boolean "sncf_self_service_machine"
-    t.decimal "same_as", precision: 10
-    t.string "info:de"
-    t.string "info:en"
-    t.string "info:es"
-    t.string "info:fr"
-    t.string "info:it"
-    t.string "info:nb"
-    t.string "info:nl"
-    t.string "info:cs"
-    t.string "info:da"
-    t.string "info:hu"
-    t.string "info:ja"
-    t.string "info:ko"
-    t.string "info:pl"
-    t.string "info:pt"
-    t.string "info:ru"
-    t.string "info:sv"
-    t.string "info:tr"
-    t.string "info:zh"
-    t.string "normalised_code"
-    t.string "iata_airport_code"
-    t.index ["location"], name: "eu_estations_location_geom_idx", using: :gist
-  end
-
-  create_table "eu_stations", id: :integer, default: nil, force: :cascade do |t|
-    t.geometry "geom", limit: {:srid=>4326, :type=>"st_point"}
-    t.string "name"
-    t.string "slug"
-    t.integer "uic"
-    t.integer "uic8_sncf"
-    t.float "latitude"
-    t.float "longitude"
-    t.integer "parent_station_id"
-    t.string "country"
-    t.string "time_zone"
-    t.boolean "is_city"
-    t.boolean "is_main_station"
-    t.boolean "is_airport"
-    t.boolean "is_suggestable"
-    t.boolean "country_hint"
-    t.boolean "main_station_hint"
-    t.string "sncf_id"
-    t.string "sncf_tvs_id"
-    t.boolean "sncf_is_enabled"
-    t.string "entur_id"
-    t.boolean "entur_is_enabled"
-    t.integer "db_id"
-    t.boolean "db_is_enabled"
-    t.string "busbud_id"
-    t.boolean "busbud_is_enabled"
-    t.string "distribusion_id"
-    t.boolean "distribusion_is_enabled"
-    t.integer "flixbus_id"
-    t.boolean "flixbus_is_enabled"
-    t.integer "cff_id"
-    t.boolean "cff_is_enabled"
-    t.string "leoexpress_id"
-    t.boolean "leoexpress_is_enabled"
-    t.integer "obb_id"
-    t.boolean "obb_is_enabled"
-    t.string "ouigo_id"
-    t.boolean "ouigo_is_enabled"
-    t.integer "trenitalia_id"
-    t.boolean "trenitalia_is_enabled"
-    t.string "trenitalia_rtvt_id"
-    t.integer "ntv_rtiv_id"
-    t.string "ntv_id"
-    t.boolean "ntv_is_enabled"
-    t.integer "hkx_id"
-    t.boolean "hkx_is_enabled"
-    t.string "renfe_id"
-    t.boolean "renfe_is_enabled"
-    t.string "atoc_id"
-    t.boolean "atoc_is_enabled"
-    t.string "benerail_id"
-    t.boolean "benerail_is_enabled"
-    t.integer "westbahn_id"
-    t.boolean "westbahn_is_enabled"
-    t.boolean "sncf_self_service_machine"
-    t.integer "same_as"
-    t.string "info:de"
-    t.string "info:en"
-    t.string "info:es"
-    t.string "info:fr"
-    t.string "info:it"
-    t.string "info:nb"
-    t.string "info:nl"
-    t.string "info:cs"
-    t.string "info:da"
-    t.string "info:hu"
-    t.string "info:ja"
-    t.string "info:ko"
-    t.string "info:pl"
-    t.string "info:pt"
-    t.string "info:ru"
-    t.string "info:sv"
-    t.string "info:tr"
-    t.string "info:zh"
-    t.string "normalised_code"
-    t.string "iata_airport_code"
-  end
-
   create_table "faces", primary_key: "gid", id: :serial, force: :cascade do |t|
     t.decimal "tfid", precision: 10
     t.string "statefp00", limit: 2
@@ -435,131 +277,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.check_constraint "st_srid(the_geom) = 4269", name: "enforce_srid_the_geom"
   end
 
-  create_table "railway_stations", primary_key: "ogc_fid", id: :serial, force: :cascade do |t|
-    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
-    t.string "name"
-    t.string "slug"
-    t.decimal "uic", precision: 10
-    t.decimal "uic8_sncf", precision: 10
-    t.float "latitude"
-    t.float "longitude"
-    t.decimal "parent_station_id", precision: 10
-    t.string "country"
-    t.string "time_zone"
-    t.boolean "is_city"
-    t.boolean "is_main_station"
-    t.boolean "is_airport"
-    t.boolean "is_suggestable"
-    t.boolean "country_hint"
-    t.boolean "main_station_hint"
-    t.string "sncf_id"
-    t.string "sncf_tvs_id"
-    t.boolean "sncf_is_enabled"
-    t.string "entur_id"
-    t.boolean "entur_is_enabled"
-    t.decimal "db_id", precision: 10
-    t.boolean "db_is_enabled"
-    t.string "busbud_id"
-    t.boolean "busbud_is_enabled"
-    t.string "distribusion_id"
-    t.boolean "distribusion_is_enabled"
-    t.decimal "flixbus_id", precision: 10
-    t.boolean "flixbus_is_enabled"
-    t.decimal "cff_id", precision: 10
-    t.boolean "cff_is_enabled"
-    t.string "leoexpress_id"
-    t.boolean "leoexpress_is_enabled"
-    t.decimal "obb_id", precision: 10
-    t.boolean "obb_is_enabled"
-    t.string "ouigo_id"
-    t.boolean "ouigo_is_enabled"
-    t.decimal "trenitalia_id", precision: 10
-    t.boolean "trenitalia_is_enabled"
-    t.string "trenitalia_rtvt_id"
-    t.decimal "ntv_rtiv_id", precision: 10
-    t.string "ntv_id"
-    t.boolean "ntv_is_enabled"
-    t.decimal "hkx_id", precision: 10
-    t.boolean "hkx_is_enabled"
-    t.string "renfe_id"
-    t.boolean "renfe_is_enabled"
-    t.string "atoc_id"
-    t.boolean "atoc_is_enabled"
-    t.string "benerail_id"
-    t.boolean "benerail_is_enabled"
-    t.decimal "westbahn_id", precision: 10
-    t.boolean "westbahn_is_enabled"
-    t.boolean "sncf_self_service_machine"
-    t.decimal "same_as", precision: 10
-    t.string "info:en"
-    t.string "info:es"
-    t.string "normalised_code"
-    t.string "iata_airport_code"
-    t.index ["location"], name: "railway_stations_location_geom_idx", using: :gist
-  end
-
-  create_table "railway_stations_shp", id: :bigint, default: nil, force: :cascade do |t|
-    t.geometry "location", limit: {:srid=>4326, :type=>"st_point"}
-    t.string "name", limit: 254
-    t.string "slug", limit: 254
-    t.bigint "uic"
-    t.bigint "uic8_sncf"
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.bigint "parent_sta"
-    t.string "country", limit: 254
-    t.string "time_zone", limit: 254
-    t.integer "is_city"
-    t.integer "is_main_st"
-    t.integer "is_airport"
-    t.integer "is_suggest"
-    t.integer "country_hi"
-    t.integer "main_stati"
-    t.string "sncf_id", limit: 254
-    t.string "sncf_tvs_i", limit: 254
-    t.integer "sncf_is_en"
-    t.string "entur_id", limit: 254
-    t.integer "entur_is_e"
-    t.bigint "db_id"
-    t.integer "db_is_enab"
-    t.string "busbud_id", limit: 254
-    t.integer "busbud_is_"
-    t.string "distribusi", limit: 254
-    t.integer "distribu_1"
-    t.bigint "flixbus_id"
-    t.integer "flixbus_is"
-    t.bigint "cff_id"
-    t.integer "cff_is_ena"
-    t.string "leoexpress", limit: 254
-    t.integer "leoexpre_1"
-    t.bigint "obb_id"
-    t.integer "obb_is_ena"
-    t.string "ouigo_id", limit: 254
-    t.integer "ouigo_is_e"
-    t.bigint "trenitalia"
-    t.integer "trenital_1"
-    t.string "trenital_2", limit: 254
-    t.bigint "ntv_rtiv_i"
-    t.string "ntv_id", limit: 254
-    t.integer "ntv_is_ena"
-    t.bigint "hkx_id"
-    t.integer "hkx_is_ena"
-    t.string "renfe_id", limit: 254
-    t.integer "renfe_is_e"
-    t.string "atoc_id", limit: 254
-    t.integer "atoc_is_en"
-    t.string "benerail_i", limit: 254
-    t.integer "benerail_1"
-    t.bigint "westbahn_i"
-    t.integer "westbahn_1"
-    t.integer "sncf_self_"
-    t.bigint "same_as"
-    t.string "info_en", limit: 254
-    t.string "info_es", limit: 254
-    t.string "normalised", limit: 254
-    t.string "iata_airpo", limit: 254
-  end
-
   create_table "state", primary_key: "statefp", id: { type: :string, limit: 2 }, force: :cascade do |t|
     t.serial "gid", null: false
     t.string "region", limit: 2
@@ -647,6 +364,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.integer "trainline_id"
     t.string "name", limit: 255
     t.string "slug", limit: 63
+    t.float "latitude", null: false
+    t.float "longitude", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.integer "parent_station_id"
     t.string "country", limit: 2
@@ -657,7 +376,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.boolean "is_suggestable", default: false, null: false
     t.boolean "country_hint", default: false, null: false
     t.boolean "main_station_hint", default: false, null: false
-    t.integer "same_as"
     t.text "info_en"
     t.text "info_es"
     t.string "normalised_code", limit: 40
@@ -666,6 +384,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_180003) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.index ["country"], name: "index_train_stations_on_country"
     t.index ["iata_airport_code"], name: "index_train_stations_on_iata_airport_code"
+    t.index ["latitude", "longitude"], name: "index_train_stations_on_latitude_and_longitude"
     t.index ["location"], name: "index_train_stations_on_location", using: :gist
     t.index ["name"], name: "index_train_stations_on_name"
     t.index ["normalised_code"], name: "index_train_stations_on_normalised_code"
