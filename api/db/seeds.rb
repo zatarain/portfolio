@@ -12,19 +12,16 @@ require 'open-uri'
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Populating train_stations from trainline data to generate the spatial layer
+connection = ActiveRecord::Base.connection
 TrainStation.destroy_all
+station = TrainStation.new
+columns = station.attributes.keys.reject{ |key| key == 'location' }.join(' ')
 dataset = Rails.configuration.trainline_eu_dataset
-CSV.foreach dataset, headers: true, col_sep: ';', encoding: 'UTF-8' do |row|
-  # puts row
-  id_from_trainline = row[:id]
-  row.delete :id
-  station = TrainStation.new
-  station.attributes = {
-    **row,
-    trainline_id: id_from_trainline,
-    info_en: row['info:en'],
-    info_es: row['info:es'],
-  }.select { |k, _v| station.attributes.keys.member?(k.to_s) }
-  # puts station
-  station.save
+ActiveRecord::Base.transaction do
+	connection.execute <<-SQL
+		COPY "public"."train_stations"
+		FROM '#{dataset}'
+		DELIMITER ';'
+		CSV HEADER;
+	SQL
 end
