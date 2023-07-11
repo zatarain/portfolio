@@ -2,6 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Stadium, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Stadium, type: :model do
+  context 'when all fields are valid' do
+    it 'save the stadium with generated location in the datbase' do
+      Stadium.create!(
+        name: 'Phillips Stadium',
+        slug: 'phillips-stadium',
+        team: 'PSV Eindhoven',
+        latitude: 51.441781,
+        longitude: 5.467442,
+      )
+    end
+  end
 end

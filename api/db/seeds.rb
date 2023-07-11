@@ -8,7 +8,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-unless Rails.env.production?
+if Rails.env.development? || Rails.configuration.needs_seeds
   # Populating train_stations from trainline data to generate the spatial layer
   connection = ActiveRecord::Base.connection
   connection.execute('TRUNCATE stadia')

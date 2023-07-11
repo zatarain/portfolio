@@ -52,5 +52,6 @@ module Api
     config.spatial_reference_system = 4326
     config.trainline_eu_stations = 'https://raw.githubusercontent.com/trainline-eu/stations/master/stations.csv'
     config.trainline_eu_dataset = 'db/trainline-eu-stations.sql'
+    config.needs_seeds = ENV.fetch('NEEDS_SEEDS', nil).present?
   end
 end

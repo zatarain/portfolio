@@ -69,6 +69,7 @@ jobs:
           --health-retries 5
     env:
       RAILS_ENV: test
+      NEEDS_SEEDS: true
       POSTGRES_HOST: localhost
       POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -89,8 +90,8 @@ jobs:
       - name: Run specs
         run: |
           cd api
-          bundle exec rails db:seed
           bundle exec rails db:test:prepare
+          bundle exec rails db:seed
           bundle exec rspec
       - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
