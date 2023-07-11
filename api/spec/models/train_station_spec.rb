@@ -15,7 +15,11 @@ describe TrainStation, type: :model do
         info_en: 'London Underground Station',
         info_es: 'Estación del Metro de Londres',
       )
+
       expect(station.id).to be_present
+      expect(station.location).to be_present
+      expect(station.location.x).to eq(-0.01861)
+      expect(station.location.y).to eq(51.50361)
     end
   end
 end

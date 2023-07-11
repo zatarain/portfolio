@@ -12,7 +12,11 @@ describe Stadium, type: :model do
         latitude: 51.441781,
         longitude: 5.467442,
       )
+
       expect(stadium.id).to be_present
+      expect(stadium.location).to be_present
+      expect(stadium.location.x).to eq(5.467442)
+      expect(stadium.location.y).to eq(51.441781)
     end
   end
 end
