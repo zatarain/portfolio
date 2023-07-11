@@ -16,6 +16,9 @@ if Rails.env.development? || Rails.configuration.needs_seeds
 
   ActiveRecord::Base.transaction do
     connection.execute(File.read(Rails.configuration.trainline_eu_dataset))
+    connection.execute <<-SQL.squish
+      SELECT SETVAL('train_stations_id_seq', (SELECT MAX(id) FROM train_stations));
+    SQL
   end
 
   # Populating few initial stadiums
