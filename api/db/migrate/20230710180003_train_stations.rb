@@ -3,11 +3,10 @@
 class TrainStations < ActiveRecord::Migration[7.0]
   def change
     create_table :train_stations, id: :serial, force: :cascade do |column|
-      column.integer :trainline_id
       column.string :name, limit: 255
       column.string :slug, limit: 63
-      column.float :latitude, null: false
-      column.float :longitude, null: false
+      column.float :latitude
+      column.float :longitude
       column.st_point :location, geographic: true, srid: Rails.configuration.spatial_reference_system
       column.integer :parent_station_id
       column.string :country, limit: 2

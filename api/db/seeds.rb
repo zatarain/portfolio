@@ -11,17 +11,13 @@ require 'open-uri'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Populating train_stations from trainline data to generate the spatial layer
-connection = ActiveRecord::Base.connection
-TrainStation.destroy_all
-station = TrainStation.new
-columns = station.attributes.keys.reject{ |key| key == 'location' }.join(' ')
-dataset = Rails.configuration.trainline_eu_dataset
-ActiveRecord::Base.transaction do
-	connection.execute <<-SQL
-		COPY "public"."train_stations"
-		FROM '#{dataset}'
-		DELIMITER ';'
-		CSV HEADER;
-	SQL
+unless Rails.env.production?
+	# Populating train_stations from trainline data to generate the spatial layer
+	connection = ActiveRecord::Base.connection
+	TrainStation.destroy_all
+	connection.execute('TRUNCATE train_stations')
+
+  ActiveRecord::Base.transaction do
+    connection.execute(File.read(Rails.configuration.trainline_eu_dataset))
+  end
 end
