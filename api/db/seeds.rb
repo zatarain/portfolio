@@ -18,6 +18,7 @@ unless Rails.env.production?
     connection.execute(File.read(Rails.configuration.trainline_eu_dataset))
   end
 
+  # Populating few initial stadiums
   Stadium.create(
     [
       {
