@@ -31,16 +31,16 @@ const NavigationBar = ({ name }: Properties) => {
 			</Link>
 			<ul className={styles.sections}>
 				<li>
-					<Link href="#work-experience" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Experience</Link>
+					<Link href="/#work-experience" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Experience</Link>
 				</li>
 				<li>
-					<Link href="#education" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Education</Link>
+					<Link href="/#education" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Education</Link>
 				</li>
 				<li>
-					<Link href="#academic-projects" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Academic Projects</Link>
+					<Link href="/#academic-projects" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Academic Projects</Link>
 				</li>
 				<li>
-					<Link href="#leadership" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Leadership</Link>
+					<Link href="/#leadership" scroll={false} onClick={() => dispatch(closeResponsiveMenu())}>Leadership</Link>
 				</li>
 				<li className={styles.action}>
 					<Link href="#" className={styles['call-to-action']} onClick={onDownloadClick}>Download</Link>

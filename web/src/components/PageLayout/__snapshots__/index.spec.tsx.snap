@@ -31,28 +31,28 @@ exports[`<PageLayout ...>...</PageLayout> renders name same as title when data i
       >
         <li>
           <a
-            href="#work-experience"
+            href="/#work-experience"
           >
             Experience
           </a>
         </li>
         <li>
           <a
-            href="#education"
+            href="/#education"
           >
             Education
           </a>
         </li>
         <li>
           <a
-            href="#academic-projects"
+            href="/#academic-projects"
           >
             Academic Projects
           </a>
         </li>
         <li>
           <a
-            href="#leadership"
+            href="/#leadership"
           >
             Leadership
           </a>
@@ -421,28 +421,28 @@ exports[`<PageLayout ...>...</PageLayout> renders only NavigationBar and Footer 
       >
         <li>
           <a
-            href="#work-experience"
+            href="/#work-experience"
           >
             Experience
           </a>
         </li>
         <li>
           <a
-            href="#education"
+            href="/#education"
           >
             Education
           </a>
         </li>
         <li>
           <a
-            href="#academic-projects"
+            href="/#academic-projects"
           >
             Academic Projects
           </a>
         </li>
         <li>
           <a
-            href="#leadership"
+            href="/#leadership"
           >
             Leadership
           </a>
@@ -811,28 +811,28 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
       >
         <li>
           <a
-            href="#work-experience"
+            href="/#work-experience"
           >
             Experience
           </a>
         </li>
         <li>
           <a
-            href="#education"
+            href="/#education"
           >
             Education
           </a>
         </li>
         <li>
           <a
-            href="#academic-projects"
+            href="/#academic-projects"
           >
             Academic Projects
           </a>
         </li>
         <li>
           <a
-            href="#leadership"
+            href="/#leadership"
           >
             Leadership
           </a>
