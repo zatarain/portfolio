@@ -10,5 +10,8 @@ rm -f /api/tmp/pids/server.pid
 echo "Create database if it doesn't exists"
 bundle exec rails db:create
 
+echo "Run migrations to update database"
+bundle exec rails db:migrate
+
 echo "Exec the container's main process (what's set as CMD in the Dockerfile)."
 exec "$@"

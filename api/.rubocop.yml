@@ -34,6 +34,7 @@ AllCops:
     - vendor/bundle/**/*
     - gemfiles/vendor/bundle/**/*
     - spec/rails_helper.rb
+    - db/schema.rb
 Lint/ScriptPermission:
   Enabled: false
 Rails/HttpStatus:

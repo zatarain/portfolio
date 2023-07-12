@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:14.8
+        image: postgis/postgis:14-3.3
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -68,6 +68,8 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
+      RAILS_ENV: test
+      NEEDS_SEEDS: true
       POSTGRES_HOST: localhost
       POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -79,10 +81,18 @@ jobs:
         with:
           bundler-cache: true
           working-directory: api
-      - name: Create databases
-        run: cd api && bundle exec rails db:create
+      - name: Create and migrate test database
+        run: |
+          cd api
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+          bundle exec rails db:migrate:status
       - name: Run specs
-        run: cd api && bundle exec rspec
+        run: |
+          cd api
+          bundle exec rails db:test:prepare
+          bundle exec rails db:seed
+          bundle exec rspec
       - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
         with:
