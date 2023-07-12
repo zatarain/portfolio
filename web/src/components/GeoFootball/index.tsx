@@ -32,8 +32,13 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 					{(stations as Station[]).map((station: Station) =>
 						<Marker key={`train-${station.id}`} position={[station.latitude, station.longitude]} icon={train}>
 							<Popup key={`train-popup-${station.id}`}>
-								<h5>{station.name}</h5>
-								<span>Country: {country}</span>
+								<h3>{station.name}</h3>
+								<dl className={styles.popup}>
+									<dt>Country: </dt><dd>{country}</dd>
+									<dt>Position: </dt><dd>{station.latitude}, {station.longitude}</dd>
+									<dt>Time zone: </dt><dd>{station.time_zone}</dd>
+								</dl>
+								<p>{station.info_en}</p>
 							</Popup>
 						</Marker>
 					)}

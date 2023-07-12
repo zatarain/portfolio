@@ -1,3 +1,20 @@
 .map {
 	height: 81vh;
 }
+
+.popup {
+	display: grid;
+	grid-template-columns: 2fr 4fr;
+}
+
+.popup dt {
+	display: inline-block;
+	font-weight: bold;
+	margin: 0;
+	text-align: right;
+}
+
+.popup dd {
+	display: inline-block;
+	margin: 0 1ch;
+}

@@ -28,15 +28,17 @@ jest.mock('react-leaflet', () => {
 
 describe('<GeoFootball ...>...</GeoFootball>', () => {
 	it('renders the component correctly', async () => {
-		const stations = [
-			{
+		const stations = {
+			GB: [
+				{
 
-			}
-		] as Station[]
+				},
+			],
+		}
 
 		const { asFragment } = render(
 			<Provider store={store}>
-				<GeoFootball stations={stations} />
+				<GeoFootball stationsByCountry={stations} />
 			</Provider>
 		)
 
