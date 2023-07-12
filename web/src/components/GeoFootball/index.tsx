@@ -8,7 +8,6 @@ interface Properties {
 }
 
 const GeoFootball = ({ stations }: Properties) => {
-	// var map = L.map('map').setView([51.505, -0.09], 13);
 	const train = new Icon({
 		iconUrl: 'https://cdn-icons-png.flaticon.com/512/1702/1702305.png',
 		iconSize: [24, 24],
@@ -22,7 +21,7 @@ const GeoFootball = ({ stations }: Properties) => {
 	})
 
 	return (
-		<MapContainer className={styles.map} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+		<MapContainer className={styles.map} center={[51.505, 0]} zoom={5} scrollWheelZoom>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
