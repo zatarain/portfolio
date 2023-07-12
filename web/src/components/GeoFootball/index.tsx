@@ -27,8 +27,8 @@ const GeoFootball = ({ stations }: Properties) => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			{stations.map((station: Station) =>
-				<Marker key={station.id} position={[station.latitude, station.longitude]} icon={train}>
-					<Popup>{station.name}</Popup>
+				<Marker key={`train-${station.id}`} position={[station.latitude, station.longitude]} icon={train}>
+					<Popup key={`train-popup-${station.id}`}>{station.name}</Popup>
 				</Marker>
 			)}
 

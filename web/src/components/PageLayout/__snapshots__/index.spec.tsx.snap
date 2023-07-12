@@ -3,7 +3,7 @@
 exports[`<PageLayout ...>...</PageLayout> renders name same as title when data is missing 1`] = `
 <DocumentFragment>
   <div
-    class="my-font container"
+    class="my-font container "
   >
     <nav
       class="navigation-bar "
@@ -393,7 +393,7 @@ exports[`<PageLayout ...>...</PageLayout> renders name same as title when data i
 exports[`<PageLayout ...>...</PageLayout> renders only NavigationBar and Footer when hero is false 1`] = `
 <DocumentFragment>
   <div
-    class="my-font container"
+    class="my-font container "
   >
     <nav
       class="navigation-bar "
@@ -783,7 +783,7 @@ exports[`<PageLayout ...>...</PageLayout> renders only NavigationBar and Footer 
 exports[`<PageLayout ...>...</PageLayout> renders the component correctly with passed name 1`] = `
 <DocumentFragment>
   <div
-    class="my-font container"
+    class="my-font container "
   >
     <nav
       class="navigation-bar "

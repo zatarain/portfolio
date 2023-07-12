@@ -13,7 +13,7 @@ interface Properties {
 	data?: CurriculumVitaeProperties,
 	title?: string,
 	hero?: boolean,
-	className: string,
+	className?: string,
 }
 
 const inter = Inter({ subsets: ['latin'] })

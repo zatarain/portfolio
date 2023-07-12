@@ -2,6 +2,9 @@
 
 const nextConfig = {
 	images: {
+		domains: [
+			'cdn.instagram.com',
+		],
 		remotePatterns: [
 			{
 				protocol: 'https',
