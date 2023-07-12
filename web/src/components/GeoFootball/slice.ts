@@ -20,8 +20,14 @@ async function GET(path: string) {
 	return await response.json()
 }
 
-export function getStations(): Promise<{ data: Station[] }> {
-	return GET('/stations')
+export async function getStations(): Promise<Map<string, Station[]>> {
+	const stations = await GET('/stations') as Array<Station>
+	return stations.reduce((clusters: any, station: Station) => {
+		clusters[station.country] = clusters[station.country] || []
+		clusters[station.country].push(station)
+		// console.log(clusters)
+		return clusters
+	}, {});
 }
 
 const slice = createSlice({

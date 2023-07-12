@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+	transpilePackages: [
+		'react-leaflet-cluster',
+	],
 	images: {
 		domains: [
 			'cdn.instagram.com',

@@ -7,22 +7,22 @@ import styles from '#styles/GeoFootball.module.css'
 
 const GeoFootballMap = dynamic(() => import('../components/GeoFootball/index'), { ssr: false })
 interface Properties {
-	stations: Station[],
+	stationsByCountry: any,
 }
 
 export async function getServerSideProps() {
-	const stations = await getStations()
+	const stationsByCountry = await getStations()
 	return {
 		props: {
-			stations,
+			stationsByCountry,
 		},
 	}
 }
 
-const GeoFootballPage: NextPage<Properties> = ({ stations }) => {
+const GeoFootballPage: NextPage<Properties> = ({ stationsByCountry }) => {
 	return (
 		<PageLayout title="Ulises/Geo-Football" hero={false} className={styles['geo-football']}>
-			<GeoFootballMap stations={stations} />
+			<GeoFootballMap stationsByCountry={stationsByCountry} />
 		</PageLayout >
 	)
 }
