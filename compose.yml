@@ -18,6 +18,8 @@ services:
     build: api
     ports:
       - 3000:3000
+    depends_on:
+      - database
     volumes:
       - api-source:/api
     environment:
