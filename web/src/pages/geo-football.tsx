@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { getStations } from '#components/GeoFootball/slice'
 import type { Station } from '#components/GeoFootball/types'
 import PageLayout from '#components/PageLayout'
+import styles from '#styles/GeoFootball.module.css'
 
 const GeoFootballMap = dynamic(() => import('../components/GeoFootball/index'), { ssr: false })
 interface Properties {
@@ -20,7 +21,7 @@ export async function getServerSideProps() {
 
 const GeoFootballPage: NextPage<Properties> = ({ stations }) => {
 	return (
-		<PageLayout title="Ulises/Geo-Football" hero={false}>
+		<PageLayout title="Ulises/Geo-Football" hero={false} className={styles['geo-football']}>
 			<GeoFootballMap stations={stations} />
 		</PageLayout >
 	)

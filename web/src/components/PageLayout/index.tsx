@@ -9,21 +9,22 @@ import { ReactNode } from 'react';
 import styles from './index.module.css'
 
 interface Properties {
-	children?: ReactNode
+	children?: ReactNode,
 	data?: CurriculumVitaeProperties,
-	title?: string
-	hero?: boolean
+	title?: string,
+	hero?: boolean,
+	className: string,
 }
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function PageLayout({ children, title, data, hero = true }: Properties) {
+export default function PageLayout({ children, title, data, hero = true, className = '' }: Properties) {
 	const pageTitle = [data?.name, title].filter(part => !!part).join(' - ')
 	const name = data?.name || pageTitle;
 	const pass = data || { name }
 
 	return (
-		<div className={`${inter.className} ${styles.container}`}>
+		<div className={`${inter.className} ${styles.container} ${className}`}>
 			<Head>
 				<title>{pageTitle}</title>
 			</Head>
