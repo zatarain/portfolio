@@ -1,4 +1,5 @@
 import type { Station } from './types'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import styles from './index.module.css'
 
 interface Properties {
@@ -6,23 +7,19 @@ interface Properties {
 }
 
 const GeoFootball = ({ stations }: Properties) => {
+	// var map = L.map('map').setView([51.505, -0.09], 13);
 	return (
-		<div className={styles.map}>
-			{stations.map((station: Station) => {
-				return (
-					<ul key={`station-${station.id}`}>
-						{Object.entries(station).map(([key, value]) => {
-							return (
-								<li key={`${key}-${station.id}`}>
-									<strong>{key}: </strong>
-									<span>{value}</span>
-								</li>
-							)
-						})}
-					</ul>
-				)
-			})}
-		</div>
+		<MapContainer className={styles.map} center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+			<TileLayer
+				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			/>
+			<Marker position={[51.505, -0.09]}>
+				<Popup>
+					A pretty CSS3 popup. <br /> Easily customizable.
+				</Popup>
+			</Marker>
+		</MapContainer>
 	)
 }
 
