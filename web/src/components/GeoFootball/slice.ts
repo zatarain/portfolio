@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AppState } from '#store'
+import type { Station } from './types'
 
 export interface GeoFootballState {
 	latitude: number,
