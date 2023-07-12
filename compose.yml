@@ -36,6 +36,20 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USERNAME: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  database:
+    container_name: database
+    image: postgis/postgis:14-3.3
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: postgres
+
 volumes:
   web-source:
     name: portfolio-web-source
@@ -51,3 +65,10 @@ volumes:
       o: bind
       type: none
       device: api
+  data:
+    name: portfolio-database
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: data
