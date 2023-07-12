@@ -14,11 +14,12 @@ const GeoFootball = ({ stations }: Properties) => {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<Marker position={[51.505, -0.09]}>
-				<Popup>
-					A pretty CSS3 popup. <br /> Easily customizable.
-				</Popup>
-			</Marker>
+			{stations.map((station: Station) =>
+				<Marker key={station.id} position={[station.latitude, station.longitude]}>
+					<Popup>{station.name}</Popup>
+				</Marker>
+			)}
+
 		</MapContainer>
 	)
 }
