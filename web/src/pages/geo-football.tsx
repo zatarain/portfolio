@@ -11,10 +11,14 @@ interface Properties {
 }
 
 export async function getServerSideProps() {
+	console.log('process.env.API_URL = ', process.env.API_URL)
+	console.log('process.env.NEXT_PUBLIC_API_URL = ', process.env.NEXT_PUBLIC_API_URL)
+	console.log(process.env.API_URL || process.env.NEXT_PUBLIC_API_URL)
 	const stationsByCountry = await getStationsByCountry()
 	return {
 		props: {
 			stationsByCountry,
+			api: process.env.API_URL || '',
 		},
 	}
 }

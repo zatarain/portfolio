@@ -18,7 +18,7 @@ class StationsController < ApplicationController
 
   def create
     @station = TrainStation.new(fields)
-    if @station.save
+    if @station.save!
       render json: @station, status: :ok
     else
       render :new, status: :bad_request

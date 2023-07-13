@@ -2,14 +2,15 @@ import type { Station } from './types'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet'
 import { Icon, LatLng, Marker as LeafletMarker, Map as LeafletMap } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { useState, useRef, FormEvent, MutableRefObject } from 'react'
+import { useState, useRef, FormEvent, MutableRefObject, FormHTMLAttributes, InputHTMLAttributes } from 'react'
 import styles from './index.module.css'
 import { Noto_Color_Emoji } from 'next/font/google'
+import { saveStation } from './slice'
 
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
 interface Properties {
-	stationsByCountry: object
+	stationsByCountry: object,
 }
 
 function flag(country: string) {
@@ -40,21 +41,13 @@ const pin = new Icon({
 
 interface MapFormProperties {
 	countries: string[],
-	map: MutableRefObject<LeafletMap | null>,
-}
-
-async function saveMarker() {
-
-}
-
-interface MapFormState {
-	station: Station,
-	location: LatLng,
+	map?: MutableRefObject<LeafletMap | null>,
 }
 
 const MapForm = ({ countries, map }: MapFormProperties) => {
 	const [station, setStation] = useState({
 		name: '',
+		slug: '',
 		country: 'GB',
 		time_zone: 'Europe/London',
 		latitude: 51.478,
@@ -79,7 +72,24 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 
 	const submit = async (event: FormEvent) => {
 		event.preventDefault()
-		await saveMarker()
+		console.log(station)
+		saveStation(station).then(
+			(data) => {
+				console.log(data)
+			}
+		).catch(
+			(error) => {
+				console.error(error)
+			}
+		)
+	}
+
+	const updateValue = (event: any) => {
+		//setEmail(e.target.value)
+		const target = event?.target
+		const data = { ...station }
+		data[target.name] = target?.value
+		setStation(data)
 	}
 
 	return (
@@ -88,7 +98,7 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 				<form id="popup-add-form" className={`${styles.form}`} method="POST" onSubmit={submit}>
 					<h3>Add New Marker</h3>
 					<label htmlFor="name">Name: </label>
-					<input type="text" name="name" required />
+					<input type="text" name="name" required onChange={updateValue} />
 					<div className={styles.location}>
 						<div>
 							<label htmlFor="latitude">Latitude: </label>
@@ -100,18 +110,18 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 						</div>
 					</div>
 					<label htmlFor="slug">Slug: </label>
-					<input type="text" name="slug" />
+					<input type="text" name="slug" onChange={updateValue} />
 					<div className={styles['country-time']}>
 						<div className={styles.country}>
 							<label htmlFor="country">Country: </label>
-							<select name="country" className={emoji.className}>
+							<select name="country" className={emoji.className} onChange={updateValue}>
 								{countries.map((country) =>
 									<option className={emoji.className} key={country} value={country}>{flag(country)}</option>)}
 							</select>
 						</div>
 						<div className={styles.time}>
 							<label htmlFor="time_zone">Timezone: </label>
-							<input type="text" name="time_zone" />
+							<input type="text" name="time_zone" onChange={updateValue} />
 						</div>
 					</div>
 					<button type="submit">Save</button>
@@ -122,22 +132,12 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 }
 
 const GeoFootball = ({ stationsByCountry }: Properties) => {
-	const map = useRef(null)
-
+	const openStreetMaps = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+	const copyright = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	return (
-		<MapContainer
-			className={styles.map}
-			center={[51.505, 0]}
-			zoom={5}
-			scrollWheelZoom
-			doubleClickZoom={false}
-			whenCreated={(self: any) => { map.current = self }}
-		>
-			<TileLayer
-				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			/>
-			<MapForm countries={Object.keys(stationsByCountry)} map={map} />
+		<MapContainer className={styles.map} center={[51.505, 0]} zoom={5} scrollWheelZoom doubleClickZoom={false}>
+			<TileLayer attribution={copyright} url={openStreetMaps} />
+			<MapForm countries={Object.keys(stationsByCountry)} />
 			{Object.entries(stationsByCountry).map(([country, stations]) =>
 				<MarkerClusterGroup key={country} chunkedLoading>
 					{(stations as Station[]).map((station: Station) =>

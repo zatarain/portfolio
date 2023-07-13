@@ -13,11 +13,22 @@ const initialState = {
 } as GeoFootballState
 
 
-const BASE_URL = process.env.API_URL || ''
+const BASE_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
 
 async function GET(path: string) {
+	console.log('BASE_URL = ', BASE_URL)
 	const response = await fetch(`${BASE_URL}${path}`)
 	return await response.json()
+}
+
+async function POST(path: string, data: string) {
+	return fetch(`${BASE_URL}${path}`, {
+		body: data,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	})
 }
 
 export async function getStationsByCountry(): Promise<object> {
@@ -27,6 +38,11 @@ export async function getStationsByCountry(): Promise<object> {
 		clusters[station.country].push(station)
 		return clusters
 	}, {});
+}
+
+export async function saveStation(station: Station): Promise<object> {
+	console.log(`BASE_URL = ${BASE_URL}`)
+	return POST('/stations', JSON.stringify(station))
 }
 
 const slice = createSlice({
