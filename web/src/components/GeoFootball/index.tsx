@@ -2,10 +2,11 @@ import type { Station, GroupedStations } from './types'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import { Icon, Marker as LeafletMarker } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { useState, useRef } from 'react'
+import { useState, forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { deleteStation, saveStation } from './slice'
 import Image from 'next/image'
+import type { ForwardedRef } from 'react'
 
 import { Noto_Color_Emoji } from 'next/font/google'
 import styles from './index.module.css'
@@ -54,7 +55,7 @@ const Loading = ({ text }: LoadingProperties) => {
 	)
 }
 
-const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
+const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker: ForwardedRef<LeafletMarker<any>>) => {
 	const countries = Object.keys(clusters)
 	const initialStation = {
 		name: '',
@@ -66,7 +67,6 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 	} as Station
 	const [station, setStation] = useState(initialStation)
 
-	const marker = useRef(null)
 	const {
 		register,
 		handleSubmit,
@@ -85,8 +85,8 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 				longitude: event.latlng.lng,
 			})
 
-			if (marker.current) {
-				(marker.current as LeafletMarker).openPopup()
+      if (marker?.current) {
+        (marker?.current as LeafletMarker).openPopup()
 			}
 		}
 	})
@@ -98,8 +98,8 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 			longitude: station.longitude,
 		} as Station)
 		if (response.ok) {
-			if (marker.current) {
-				const current = (marker.current as LeafletMarker)
+      if (marker?.current) {
+        const current = (marker?.current as LeafletMarker)
 				current.closePopup()
 			}
 			const record = await response.json() as Station
@@ -164,7 +164,9 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 			</Popup>
 		</Marker >
 	)
-}
+})
+
+MapForm.displayName = 'MapForm'
 
 const GeoFootball = ({ stationsByCountry }: Properties) => {
 	const openStreetMaps = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
