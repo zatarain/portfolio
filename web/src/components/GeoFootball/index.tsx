@@ -1,12 +1,11 @@
 import type { Station, GroupedStations } from './types'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
-import { Icon, Marker as LeafletMarker } from 'leaflet'
+import { Icon, LeafletEvent, Marker as LeafletMarker } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { useState, forwardRef } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { deleteStation, saveStation } from './slice'
 import Image from 'next/image'
-import type { ForwardedRef } from 'react'
 
 import { Noto_Color_Emoji } from 'next/font/google'
 import styles from './index.module.css'
@@ -55,7 +54,7 @@ const Loading = ({ text }: LoadingProperties) => {
 	)
 }
 
-const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker: ForwardedRef<LeafletMarker<any>>) => {
+const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 	const countries = Object.keys(clusters)
 	const initialStation = {
 		name: '',
@@ -66,6 +65,7 @@ const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker
 		longitude: 0,
 	} as Station
 	const [station, setStation] = useState(initialStation)
+  const [marker, setMarker] = useState(null);
 
 	const {
 		register,
@@ -84,10 +84,7 @@ const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker
 				latitude: event.latlng.lat,
 				longitude: event.latlng.lng,
 			})
-
-      if (marker?.current) {
-        (marker?.current as LeafletMarker).openPopup()
-			}
+      marker && (marker as LeafletMarker).openPopup()
 		}
 	})
 
@@ -98,10 +95,7 @@ const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker
 			longitude: station.longitude,
 		} as Station)
 		if (response.ok) {
-      if (marker?.current) {
-        const current = (marker?.current as LeafletMarker)
-				current.closePopup()
-			}
+      marker && (marker as LeafletMarker).closePopup()
 			const record = await response.json() as Station
 			setStation({ ...initialStation });
 			const cluster = clusters[record.country] as Station[]
@@ -124,8 +118,10 @@ const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker
 		return response
 	}
 
+  const afterAdd = (event: LeafletEvent) => setMarker(event.target)
+
 	return (
-		<Marker ref={marker} position={[station.latitude, station.longitude]} icon={pin}>
+    <Marker position={[station.latitude, station.longitude]} icon={pin} eventHandlers={{ add: afterAdd }}>
 			<Popup>
 				<form id="popup-add-form" className={`${styles.form}`} method="POST" onSubmit={handleSubmit(save)}>
 					<h3>Add New Marker</h3>
@@ -164,7 +160,7 @@ const MapForm = forwardRef(({ clusters, setClusters }: MapFormProperties, marker
 			</Popup>
 		</Marker >
 	)
-})
+}
 
 MapForm.displayName = 'MapForm'
 
@@ -174,8 +170,7 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 
 	const [clusters, setClusters] = useState(stationsByCountry)
 
-	const remove = async (station: Station, index: number) => {
-		console.log('Delete:', station.id)
+  const remove = async (station: Station, index: number) => {
 		const response = await deleteStation(station.id)
 		if (response.ok) {
 			const cluster = clusters[station.country]
