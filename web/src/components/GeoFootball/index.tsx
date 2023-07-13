@@ -1,18 +1,19 @@
 import type { Station } from './types'
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet'
-import { Icon, LatLng, Marker as LeafletMarker, Map as LeafletMap } from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { Icon, Marker as LeafletMarker } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { useState, useRef, FormEvent, MutableRefObject } from 'react'
+import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { saveStation } from './slice'
 
 import { Noto_Color_Emoji } from 'next/font/google'
 import styles from './index.module.css'
+import { stat } from 'fs'
 
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
 interface Properties {
-	stationsByCountry: object,
+	stationsByCountry: { [country: string]: Station[] },
 }
 
 function flag(country: string) {
@@ -42,7 +43,8 @@ const pin = new Icon({
 })
 
 interface MapFormProperties {
-	stationsByCountry: object,
+	clusters: { [country: string]: Station[] },
+	setClusters: Function,
 }
 
 interface LoadingProperties {
@@ -57,8 +59,8 @@ const Loading = ({ text }: LoadingProperties) => {
 	)
 }
 
-const MapForm = ({ stationsByCountry }: MapFormProperties) => {
-	const countries = Object.keys(stationsByCountry)
+const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
+	const countries = Object.keys(clusters)
 	const initialStation = {
 		name: '',
 		slug: '',
@@ -94,24 +96,33 @@ const MapForm = ({ stationsByCountry }: MapFormProperties) => {
 	})
 
 	const save = async (data: object) => {
-		const response = await saveStation({ ...station, ...data })
+		const response = await saveStation({
+			...data,
+			latitude: station.latitude,
+			longitude: station.longitude,
+		} as Station)
 		if (response.ok) {
 			if (marker.current) {
 				const current = (marker.current as LeafletMarker)
 				current.closePopup()
 			}
-			const record = response.json()
+			const record = await response.json() as Station
 			console.log('Response:', record)
 			setStation({ ...initialStation });
-			stationsByCountry[station.country].push(record)
+			const cluster = clusters[record.country] as Station[]
+			cluster.push(record)
+
+			setClusters({
+				...clusters,
+				[record.country]: [...cluster],
+			})
 		} else if (response.status == 400) {
-			console.log()
-			const fieldToErrorMessage: { [fieldName: string]: string } = await response.json()
-			for (const [fieldName, errorMessage] of Object.entries(fieldToErrorMessage)) {
-				setError(fieldName, { type: 'custom', message: errorMessage })
+			const errors: { [field: string]: string } = await response.json()
+			for (const [field, message] of Object.entries(errors)) {
+				setError(field, { type: 'custom', message })
 			}
 		} else {
-			console.error(await response.text())
+			console.error('Unknown error:', await response.text())
 		}
 
 		return response
@@ -128,11 +139,11 @@ const MapForm = ({ stationsByCountry }: MapFormProperties) => {
 					<div className={styles.location}>
 						<div>
 							<label htmlFor="latitude">Latitude: </label>
-							<input type="text" name="latitude" value={station.latitude.toFixed(5)} disabled required />
+							<input type="text" name="latitude" value={station.latitude.toFixed(5)} disabled />
 						</div>
 						<div>
 							<label htmlFor="longitude">Longitude: </label>
-							<input type="text" name="longitude" value={station.longitude.toFixed(5)} disabled required />
+							<input type="text" name="longitude" value={station.longitude.toFixed(5)} disabled />
 						</div>
 					</div>
 					<label htmlFor="slug">Slug: </label>
@@ -162,11 +173,14 @@ const MapForm = ({ stationsByCountry }: MapFormProperties) => {
 const GeoFootball = ({ stationsByCountry }: Properties) => {
 	const openStreetMaps = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 	const copyright = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+
+	const [clusters, setClusters] = useState(stationsByCountry)
+
 	return (
 		<MapContainer className={styles.map} center={[51.505, 0]} zoom={5} scrollWheelZoom doubleClickZoom={false}>
 			<TileLayer attribution={copyright} url={openStreetMaps} />
-			<MapForm stationsByCountry={stationsByCountry} />
-			{Object.entries(stationsByCountry).map(([country, stations]) =>
+			<MapForm clusters={clusters} setClusters={setClusters} />
+			{Object.entries(clusters).map(([country, stations]) =>
 				<MarkerClusterGroup key={country} chunkedLoading>
 					{(stations as Station[]).map((station: Station) =>
 						<Marker key={`train-${station.id}`} position={[station.latitude, station.longitude]} icon={train}>

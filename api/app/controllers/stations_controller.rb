@@ -12,10 +12,6 @@ class StationsController < ApplicationController
     render status: :internal_server_error
   end
 
-  def new
-    @station = TrainStation.new
-  end
-
   def create
     @station = TrainStation.new(fields)
     if @station.save
