@@ -120,6 +120,8 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 		} else if (response.status == 400) {
 			const errors: { [field: string]: string } = await response.json()
 			for (const [field, message] of Object.entries(errors)) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-nocheck
 				setError(field, { type: 'custom', message })
 			}
 		} else {
