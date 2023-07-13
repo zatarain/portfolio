@@ -34,6 +34,15 @@ async function POST(path: string, data: string): Promise<Response> {
 	})
 }
 
+async function DELETE(path: string): Promise<Response> {
+	return await fetch(`${BASE_URL}${path}`, {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'DELETE',
+	})
+}
+
 export async function getStationsByCountry(): Promise<object> {
 	const stations = await GET('/stations', console.error) as Array<Station>
 	return stations.reduce((clusters: any, station: Station) => {
@@ -45,6 +54,10 @@ export async function getStationsByCountry(): Promise<object> {
 
 export async function saveStation(station: Station): Promise<Response> {
 	return POST('/stations', JSON.stringify(station))
+}
+
+export async function deleteStation(id: number): Promise<Response> {
+	return DELETE(`/stations/${id}`)
 }
 
 const slice = createSlice({

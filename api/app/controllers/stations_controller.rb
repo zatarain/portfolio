@@ -24,6 +24,18 @@ class StationsController < ApplicationController
     render status: :internal_server_error
   end
 
+  def destroy
+    @station = TrainStation.find(params[:id])
+    if @station.destroy
+      render status: :ok
+    else
+      render status: :bad_request
+    end
+  rescue StandardError => exception
+    Rails.logger.error "Failed to remove data: #{exception.message}"
+    render status: :internal_server_error
+  end
+
   private
 
   def fields

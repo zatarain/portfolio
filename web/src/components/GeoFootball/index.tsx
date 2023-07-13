@@ -4,11 +4,12 @@ import { Icon, Marker as LeafletMarker } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
-import { saveStation } from './slice'
+import { deleteStation, saveStation } from './slice'
+import Image from 'next/image'
 
 import { Noto_Color_Emoji } from 'next/font/google'
 import styles from './index.module.css'
-import { stat } from 'fs'
+
 
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
@@ -176,13 +177,26 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 
 	const [clusters, setClusters] = useState(stationsByCountry)
 
+	const remove = async (station: Station, index: number) => {
+		console.log('Delete:', station.id)
+		const response = await deleteStation(station.id)
+		if (response.ok) {
+			const cluster = clusters[station.country]
+			cluster.splice(index, 1)
+			setClusters({
+				...clusters,
+				[station.country]: [...cluster],
+			})
+		}
+	}
+
 	return (
 		<MapContainer className={styles.map} center={[51.505, 0]} zoom={5} scrollWheelZoom doubleClickZoom={false}>
 			<TileLayer attribution={copyright} url={openStreetMaps} />
 			<MapForm clusters={clusters} setClusters={setClusters} />
 			{Object.entries(clusters).map(([country, stations]) =>
 				<MarkerClusterGroup key={country} chunkedLoading>
-					{(stations as Station[]).map((station: Station) =>
+					{(stations as Station[]).map((station: Station, index: number) =>
 						<Marker key={`train-${station.id}`} position={[station.latitude, station.longitude]} icon={train}>
 							<Popup key={`train-popup-${station.id}`}>
 								<div className={styles.popup}>
@@ -193,6 +207,10 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 										<dt>Timezone: </dt><dd>{station.time_zone}</dd>
 									</dl>
 									<p>{station.info_en}</p>
+									<button className={styles.delete} onClick={() => remove(station, index)}>
+										<Image src="https://cdn-icons-png.flaticon.com/512/6711/6711573.png" width={16} height={16} alt="Delete" />
+										Delete
+									</button>
 								</div>
 							</Popup>
 						</Marker>
