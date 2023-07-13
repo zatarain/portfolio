@@ -1,5 +1,5 @@
 .map {
-	height: 81vh;
+	height: 100%;
 }
 
 .popup {
@@ -28,4 +28,66 @@
 .popup dd {
 	display: inline-block;
 	margin: 0 0 0 1ch;
+}
+
+.form {
+	width: 200px;
+}
+
+.form input[type="text"] {
+	width: 100%;
+	padding: .2rem;
+}
+
+.form  select {
+	width: 100%;
+	padding: .2rem;
+}
+
+.form label {
+	display: block;
+	margin: .7rem 0 0;
+}
+
+.form .location {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: .5rem;
+}
+
+.form .location > div {
+	width: 100%;
+	display: inline-block;
+}
+
+.country-time {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	gap: .5rem;
+}
+
+.country-time > div {
+	display: inline-block;
+}
+
+.country-time .country {
+	width: 4rem;
+}
+
+.form button[type="submit"] {
+	background: var(--bg-primary);
+	box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.04);
+	border-radius: 6px;
+	padding: .75rem;
+	cursor: pointer;
+	border: 0;
+	display: block;
+	margin: .75rem 0;
+	color: white;
+	width: 100%;
+}
+
+.form button[type="submit"]:hover {
+	color: white;
+	background: var(--ldn-dark);
 }

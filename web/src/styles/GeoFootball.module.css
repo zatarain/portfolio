@@ -1,10 +1,15 @@
 .geo-football main {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 0;
+	height: 94vh;
 }
 
 .geo-football footer {
 	margin: 0;
 	position: sticky;
 	bottom: 0;
+}
+
+.geo-football footer ul {
+	display: none;
 }

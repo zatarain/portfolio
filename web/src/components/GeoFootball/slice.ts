@@ -20,12 +20,11 @@ async function GET(path: string) {
 	return await response.json()
 }
 
-export async function getStations(): Promise<Map<string, Station[]>> {
+export async function getStationsByCountry(): Promise<object> {
 	const stations = await GET('/stations') as Array<Station>
 	return stations.reduce((clusters: any, station: Station) => {
 		clusters[station.country] = clusters[station.country] || []
 		clusters[station.country].push(station)
-		// console.log(clusters)
 		return clusters
 	}, {});
 }

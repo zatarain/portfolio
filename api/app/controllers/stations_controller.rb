@@ -4,8 +4,8 @@ class StationsController < ApplicationController
   def index
     @station = TrainStation.new
     render json: TrainStation.within_box(
-      @station.point(49.000000, -12.00000),
-      @station.point(60.000000,  12.00000),
+      @station.point(49.000000, -7.00000),
+      @station.point(60.000000,  7.00000),
     ), status: :ok
   rescue StandardError => exception
     Rails.logger.error "Failed to find data: #{exception.message}"
@@ -16,12 +16,12 @@ class StationsController < ApplicationController
     @station = TrainStation.new
   end
 
-  def add
+  def create
     @station = TrainStation.new(fields)
     if @station.save
       render json: @station, status: :ok
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :bad_request
     end
   rescue StandardError => exception
     Rails.logger.error "Failed to save data: #{exception.message}"

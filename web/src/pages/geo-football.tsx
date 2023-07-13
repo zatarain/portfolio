@@ -1,17 +1,17 @@
 import dynamic from 'next/dynamic'
 import type { NextPage } from 'next'
-import { getStations } from '#components/GeoFootball/slice'
-import type { Station } from '#components/GeoFootball/types'
+import { getStationsByCountry } from '#components/GeoFootball/slice'
 import PageLayout from '#components/PageLayout'
 import styles from '#styles/GeoFootball.module.css'
+import { Station } from '#components/GeoFootball/types'
 
 const GeoFootballMap = dynamic(() => import('../components/GeoFootball/index'), { ssr: false })
 interface Properties {
-	stationsByCountry: any,
+	stationsByCountry: object,
 }
 
 export async function getServerSideProps() {
-	const stationsByCountry = await getStations()
+	const stationsByCountry = await getStationsByCountry()
 	return {
 		props: {
 			stationsByCountry,
