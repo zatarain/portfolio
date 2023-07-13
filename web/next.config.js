@@ -8,6 +8,7 @@ const nextConfig = {
 		domains: [
 			'cdn.instagram.com',
 			'cdn-icons-png.flaticon.com',
+			'i.gifer.com',
 		],
 		remotePatterns: [
 			{

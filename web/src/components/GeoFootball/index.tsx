@@ -31,12 +31,6 @@ const train = new Icon({
 	iconAnchor: [12, 12],
 })
 
-const stadium = new Icon({
-	iconUrl: 'https://cdn-icons-png.flaticon.com/512/1540/1540530.png',
-	iconSize: [24, 24],
-	iconAnchor: [12, 12],
-})
-
 const pin = new Icon({
 	iconUrl: 'https://cdn-icons-png.flaticon.com/512/2684/2684860.png',
 	iconSize: [24, 24],
@@ -55,7 +49,7 @@ interface LoadingProperties {
 const Loading = ({ text }: LoadingProperties) => {
 	return (
 		<>
-			<img src="https://i.gifer.com/VAyR.gif" alt={text} width={16} height={16} /> {text}
+			<Image src="https://i.gifer.com/VAyR.gif" alt={text} width={16} height={16} /> {text}
 		</>
 	)
 }
@@ -77,6 +71,7 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 		register,
 		handleSubmit,
 		formState: { isSubmitting, errors },
+		reset,
 		setError,
 	} = useForm({
 		defaultValues: { ...initialStation },
@@ -108,7 +103,6 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 				current.closePopup()
 			}
 			const record = await response.json() as Station
-			console.log('Response:', record)
 			setStation({ ...initialStation });
 			const cluster = clusters[record.country] as Station[]
 			cluster.push(record)
@@ -117,10 +111,10 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 				...clusters,
 				[record.country]: [...cluster],
 			})
+			reset()
 		} else if (response.status == 400) {
 			const errors: { [field: string]: string } = await response.json()
 			for (const [field, message] of Object.entries(errors)) {
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-nocheck
 				setError(field, { type: 'custom', message })
 			}
@@ -149,8 +143,6 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 							<input type="text" name="longitude" value={station.longitude.toFixed(5)} disabled />
 						</div>
 					</div>
-					<label htmlFor="slug">Slug: </label>
-					<input type="text" {...register('slug')} />
 					<div className={styles['country-time']}>
 						<div className={styles.country}>
 							<label htmlFor="country">Country: </label>
@@ -164,6 +156,8 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 							<input type="text" {...register('time_zone')} />
 						</div>
 					</div>
+					<label htmlFor="info_en">Additional information: </label>
+					<input type="text" {...register('info_en')} />
 					<button type="submit" disabled={isSubmitting}>
 						{isSubmitting ? <Loading text="Saving..." /> : 'Save'}
 					</button>
