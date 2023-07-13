@@ -1,8 +1,7 @@
 services:
   frontend:
     container_name: website
-    image: zatarain/portfolio-web
-    build: web
+    build: ./web/
     ports:
       - 5000:5000
     depends_on:
@@ -14,8 +13,7 @@ services:
       NODE_ENV: development
   backend:
     container_name: service
-    image: zatarain/portfolio-api
-    build: api
+    build: ./api/
     ports:
       - 3000:3000
     depends_on:
