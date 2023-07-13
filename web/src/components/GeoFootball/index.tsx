@@ -115,8 +115,7 @@ const MapForm = ({ clusters, setClusters }: MapFormProperties) => {
 		} else if (response.status == 400) {
 			const errors: { [field: string]: string } = await response.json()
 			for (const [field, message] of Object.entries(errors)) {
-				// @ts-nocheck
-				setError(field, { type: 'custom', message })
+				setError(field as keyof Station, { type: 'custom', message })
 			}
 		} else {
 			console.error('Unknown error:', await response.text())
