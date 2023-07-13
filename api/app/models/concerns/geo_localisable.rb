@@ -7,8 +7,8 @@ module GeoLocalisable
   SRID = Rails.configuration.spatial_reference_system
 
   included do
-    validates :latitude, presence: true
-    validates :longitude, presence: true
+    validates :latitude, presence: true, numericality: { in: -90..90 }
+    validates :longitude, presence: true, numericality: { in: -180..180 }
     validates :location, presence: true
     before_validation :set_location
 
