@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 
 const GeoFootballPage: NextPage<Properties> = ({ stationsByCountry }) => {
 	return (
-		<PageLayout title="Ulises/Geo-Football" hero={false} className={styles['geo-football']}>
+		<PageLayout title="Geo-Football on Rails" hero={false} className={styles['geo-football']}>
 			<GeoFootballMap stationsByCountry={stationsByCountry} />
 		</PageLayout >
 	)

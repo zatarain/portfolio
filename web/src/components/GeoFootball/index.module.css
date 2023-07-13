@@ -3,8 +3,19 @@
 }
 
 .popup {
+	margin: 0 -1rem;
+	min-width: 165px;
+}
+
+.popup h3 {
+	text-align: center!important;
+	margin-bottom: 0;
+}
+
+.popup dl {
 	display: grid;
-	grid-template-columns: 2fr 4fr;
+	grid-template-columns: 1fr 2fr;
+	margin: 0;
 }
 
 .popup dt {
@@ -16,5 +27,5 @@
 
 .popup dd {
 	display: inline-block;
-	margin: 0 1ch;
+	margin: 0 0 0 1ch;
 }
