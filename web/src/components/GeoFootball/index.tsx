@@ -1,4 +1,4 @@
-import type { Station } from './types'
+import type { Station, GroupedStations } from './types'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import { Icon, Marker as LeafletMarker } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -14,7 +14,7 @@ import styles from './index.module.css'
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
 interface Properties {
-	stationsByCountry: { [country: string]: Station[] },
+	stationsByCountry: GroupedStations,
 }
 
 function flag(country: string) {
@@ -38,7 +38,7 @@ const pin = new Icon({
 })
 
 interface MapFormProperties {
-	clusters: { [country: string]: Station[] },
+	clusters: GroupedStations,
 	setClusters: Function,
 }
 

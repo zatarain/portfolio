@@ -3,15 +3,15 @@ import type { NextPage } from 'next'
 import { getStationsByCountry } from '#components/GeoFootball/slice'
 import PageLayout from '#components/PageLayout'
 import styles from '#styles/GeoFootball.module.css'
-import { Station } from '#components/GeoFootball/types'
+import { GroupedStations } from '#components/GeoFootball/types'
 
 const GeoFootballMap = dynamic(() => import('../components/GeoFootball/index'), { ssr: false })
 interface Properties {
-	stationsByCountry: object,
+	stationsByCountry: GroupedStations,
 }
 
 export async function getServerSideProps() {
-	const stationsByCountry = await getStationsByCountry()
+	const stationsByCountry = await getStationsByCountry() as GroupedStations
 	return {
 		props: {
 			stationsByCountry,

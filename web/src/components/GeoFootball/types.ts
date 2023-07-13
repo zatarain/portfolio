@@ -20,3 +20,5 @@ export interface Stadium {
 	longitude: number,
 	location: string,
 }
+
+export type GroupedStations = { [country: string]: Station[] }
