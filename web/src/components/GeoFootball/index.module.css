@@ -85,9 +85,20 @@
 	margin: .75rem 0;
 	color: white;
 	width: 100%;
+	line-height: 1.1rem;
 }
 
 .form button[type="submit"]:hover {
 	color: white;
 	background: var(--ldn-dark);
+}
+
+.form button[type="submit"] img {
+	line-height: 1.1rem;
+	vertical-align: middle;
+	margin-right: 1ch;
+}
+
+.form .error {
+	color: red;
 }

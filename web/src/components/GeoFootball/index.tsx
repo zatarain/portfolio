@@ -2,10 +2,12 @@ import type { Station } from './types'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet'
 import { Icon, LatLng, Marker as LeafletMarker, Map as LeafletMap } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { useState, useRef, FormEvent, MutableRefObject, FormHTMLAttributes, InputHTMLAttributes } from 'react'
-import styles from './index.module.css'
-import { Noto_Color_Emoji } from 'next/font/google'
+import { useState, useRef, FormEvent, MutableRefObject } from 'react'
+import { useForm } from 'react-hook-form'
 import { saveStation } from './slice'
+
+import { Noto_Color_Emoji } from 'next/font/google'
+import styles from './index.module.css'
 
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
@@ -40,21 +42,42 @@ const pin = new Icon({
 })
 
 interface MapFormProperties {
-	countries: string[],
-	map?: MutableRefObject<LeafletMap | null>,
+	stationsByCountry: object,
 }
 
-const MapForm = ({ countries, map }: MapFormProperties) => {
-	const [station, setStation] = useState({
+interface LoadingProperties {
+	text: string,
+}
+
+const Loading = ({ text }: LoadingProperties) => {
+	return (
+		<>
+			<img src="https://i.gifer.com/VAyR.gif" alt={text} width={16} height={16} /> {text}
+		</>
+	)
+}
+
+const MapForm = ({ stationsByCountry }: MapFormProperties) => {
+	const countries = Object.keys(stationsByCountry)
+	const initialStation = {
 		name: '',
 		slug: '',
 		country: 'GB',
 		time_zone: 'Europe/London',
 		latitude: 51.478,
 		longitude: 0,
-	} as Station)
+	} as Station
+	const [station, setStation] = useState(initialStation)
 
 	const marker = useRef(null)
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting, errors },
+		setError,
+	} = useForm({
+		defaultValues: { ...initialStation },
+	});
 
 	useMapEvents({
 		dblclick(event) {
@@ -70,35 +93,38 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 		}
 	})
 
-	const submit = async (event: FormEvent) => {
-		event.preventDefault()
-		console.log(station)
-		saveStation(station).then(
-			(data) => {
-				console.log(data)
+	const save = async (data: object) => {
+		const response = await saveStation({ ...station, ...data })
+		if (response.ok) {
+			if (marker.current) {
+				const current = (marker.current as LeafletMarker)
+				current.closePopup()
 			}
-		).catch(
-			(error) => {
-				console.error(error)
+			const record = response.json()
+			console.log('Response:', record)
+			setStation({ ...initialStation });
+			stationsByCountry[station.country].push(record)
+		} else if (response.status == 400) {
+			console.log()
+			const fieldToErrorMessage: { [fieldName: string]: string } = await response.json()
+			for (const [fieldName, errorMessage] of Object.entries(fieldToErrorMessage)) {
+				setError(fieldName, { type: 'custom', message: errorMessage })
 			}
-		)
-	}
+		} else {
+			console.error(await response.text())
+		}
 
-	const updateValue = (event: any) => {
-		//setEmail(e.target.value)
-		const target = event?.target
-		const data = { ...station }
-		data[target.name] = target?.value
-		setStation(data)
+		return response
 	}
 
 	return (
 		<Marker ref={marker} position={[station.latitude, station.longitude]} icon={pin}>
 			<Popup>
-				<form id="popup-add-form" className={`${styles.form}`} method="POST" onSubmit={submit}>
+				<form id="popup-add-form" className={`${styles.form}`} method="POST" onSubmit={handleSubmit(save)}>
 					<h3>Add New Marker</h3>
 					<label htmlFor="name">Name: </label>
-					<input type="text" name="name" required onChange={updateValue} />
+					<input type="text" required {...register('name')} />
+					<div className={styles.error}>{errors.name?.message}</div>
 					<div className={styles.location}>
 						<div>
 							<label htmlFor="latitude">Latitude: </label>
@@ -110,21 +136,23 @@ const MapForm = ({ countries, map }: MapFormProperties) => {
 						</div>
 					</div>
 					<label htmlFor="slug">Slug: </label>
-					<input type="text" name="slug" onChange={updateValue} />
+					<input type="text" {...register('slug')} />
 					<div className={styles['country-time']}>
 						<div className={styles.country}>
 							<label htmlFor="country">Country: </label>
-							<select name="country" className={emoji.className} onChange={updateValue}>
+							<select className={emoji.className} {...register('country')}>
 								{countries.map((country) =>
 									<option className={emoji.className} key={country} value={country}>{flag(country)}</option>)}
 							</select>
 						</div>
 						<div className={styles.time}>
 							<label htmlFor="time_zone">Timezone: </label>
-							<input type="text" name="time_zone" onChange={updateValue} />
+							<input type="text" {...register('time_zone')} />
 						</div>
 					</div>
-					<button type="submit">Save</button>
+					<button type="submit" disabled={isSubmitting}>
+						{isSubmitting ? <Loading text="Saving..." /> : 'Save'}
+					</button>
 				</form>
 			</Popup>
 		</Marker >
@@ -137,7 +165,7 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 	return (
 		<MapContainer className={styles.map} center={[51.505, 0]} zoom={5} scrollWheelZoom doubleClickZoom={false}>
 			<TileLayer attribution={copyright} url={openStreetMaps} />
-			<MapForm countries={Object.keys(stationsByCountry)} />
+			<MapForm stationsByCountry={stationsByCountry} />
 			{Object.entries(stationsByCountry).map(([country, stations]) =>
 				<MarkerClusterGroup key={country} chunkedLoading>
 					{(stations as Station[]).map((station: Station) =>

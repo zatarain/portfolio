@@ -18,10 +18,10 @@ class StationsController < ApplicationController
 
   def create
     @station = TrainStation.new(fields)
-    if @station.save!
+    if @station.save
       render json: @station, status: :ok
     else
-      render :new, status: :bad_request
+      render json: @station.errors, status: :bad_request
     end
   rescue StandardError => exception
     Rails.logger.error "Failed to save data: #{exception.message}"
