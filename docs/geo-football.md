@@ -429,7 +429,12 @@ The deployment includes the build of the Docker images for the containers and th
 
 ### 🔀 Related Pull Requests
 
-* [PORT-016: PORT-016: Geo-Football API end-points and Webpage](zatarain/portfolio#57)
+Following are the pull requests related to this project so far (they also include the infrastructure provisioning of the database instance with Lorentz):
+
+* [PORT-016: PORT-016: Geo-Football API end-points and Webpage](https://github.com/zatarain/portfolio/pull/57)
+* [PORT-015: Initial migrations and seed data](https://github.com/zatarain/portfolio/pull/56)
+* [LRNT-014: Setting up database and permissions](https://github.com/zatarain/lorentz/pull/23)
+* [PORT-012: Adding database configuration](https://github.com/zatarain/portfolio/pull/48)
 
 ### 💭 Future work
 
