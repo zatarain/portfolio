@@ -429,7 +429,7 @@ The deployment includes the build of the Docker images for the containers and th
 
 ### 🔀 Related Pull Requests
 
-* zatarain/portfolio#57
+* [PORT-016: PORT-016: Geo-Football API end-points and Webpage](zatarain/portfolio#57)
 
 ### 💭 Future work
 
