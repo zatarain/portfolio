@@ -12,11 +12,11 @@ This prototype project aims to be an exercise to to discuss about software engin
 * 📐 [Design](#-design)
   * 📊 [Data model](#-data-model)
     * 🚂 [Train Stations](#-train-stations)
-    * 🏟️ ~~[Stadiums](#-stadiums)~~
+    * 🏟️ ~~[Stadiums](#-stadiums)~~ *(coming soon...)*
   * 🔚 [End-points](#-end-points)
-* ✅ [Testing](#-testing)
-  * 🤖 [Automated Unit Tests](#-automated-unit-tests)
-  * 💯 [Coverage](#-coverage)
+    * 📃 [GET `/stations`](#-get-stations)
+    * ➕ [POST `/stations`](#-post-stations)
+    * ➖ [DELETE `/stations/:id`](#-delete-stationsid)
 * 📚 [References](#-references)
 
 ## 🔭 Overview
@@ -150,11 +150,11 @@ The end-points implemented (so far) in the class [`StationsController`][stations
 | `POST`    | `/stations`     | Create a station record in the system   | `200 OK`       | `400 Bad Request`, `500 Internal Server Error` |
 | `DELETE`  | `/stations/:id` | Delete a station from the system        | `200 OK`       | `404 Not Found`, `500 Internal Server Error`   |
 
-In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/end-point` either using a web browser or an application like [Postman][postman-website]. For instance, if we would like to remove a record we can do it with `DELETE` HTTP request to `https://api.ulises.zatara.in/stations/68185` which would remove the record with `id = 68185` if it exists. Following is how a `POST` request would looks in Postman:
+In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/end-point` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
 
 ![image](https://github.com/zatarain/portfolio/assets/539783/07f86de0-b354-4a84-a442-8e900ff7c7fd)
 
-#### 🔚 GET `/stations`
+#### 📃 GET `/stations`
 
 This end-point doesn't receive any input ***yet*** and it returns a JSON with a list of stations within a fixed box [`(49.00, -7.00)`,`(60.00,  7.00)`] which is a box boundary to include United Kingdom. Following is a sample of the output data:
 
@@ -232,30 +232,30 @@ This end-point doesn't receive any input ***yet*** and it returns a JSON with a 
 ]
 ```
 
-#### 🔚 POST `/stations`
+#### ➕ POST `/stations`
 
 This end-point allow us to create a new feature for the spatial layer (or just insert a new record/row in the table `train_stations`). It required the name of the station and the separate coordinates as input, then the `POINT` will be generated on behind the scenes by the model and the concern if the coordinates are valid values. Following is an example of the minimum input:
 
 ```json
 {
-  name: 'Canary Wharf',
-  latitude: 51.50361,
-  longitude: -0.01861,
+  "name": "Canary Wharf",
+  "latitude": 51.50361,
+  "longitude": -0.01861
 }
 ```
 
-A more extended input could be:
+A more extended or completed input could be:
 
 ```json
 {
-  name: 'Canary Wharf',
-  slug: 'canary-wharf',
-  country: 'GB',
-  time_zone: 'Europe/London',
-  latitude: 51.50361,
-  longitude: -0.01861,
-  info_en: 'London Underground Station',
-  info_es: 'Estación del Metro de Londres',
+  "name": "Canary Wharf",
+  "slug": "canary-wharf",
+  "country": "GB",
+  "time_zone": "Europe/London",
+  "latitude": 51.50361,
+  "longitude": -0.01861,
+  "info_en": "London Underground Station",
+  "info_es": "Estación del Metro de Londres"
 }
 ```
 
@@ -287,9 +287,9 @@ The end-point will return the whole new record. For example:
 }
 ```
 
-#### 🔚 DELETE `/stations/:id`
+#### ➖ DELETE `/stations/:id`
 
-This end-point allows to remove features from the `train_stations` spatial layer. It receives the `id` (primary key of the record) within the path of the URL. It doesn't return any output, just the status code of the HTTP request.
+This end-point allows to remove features from the `train_stations` spatial layer. It receives the `id` (primary key of the record) within the path of the URL. It doesn't return any output, just the status code of the HTTP request. For instance, if we would like to remove a record we can do it with `DELETE` HTTP request to `https://api.ulises.zatara.in/stations/68185` which would remove the record with `id = 68185` if it exists.
 
 ## 📚 References
 
