@@ -349,7 +349,7 @@ Unfortunately, the test coverage of the repository has been damaged producing te
 
 ### 🔐 Security
 
-Regarding the security, all the secrets for the application are managed within the infrastructure layer using [AWS Secret Manager][aws-secret-manager]. I actually might not know either the usernames nor the passwords for the database for example and they automatically rotate every week 😊.
+Regarding the security, all the secrets for the application are managed within the infrastructure layer using [AWS Secret Manager][aws-secret-manager]. I actually might not know either the usernames nor the passwords for the database for example and they automatically rotate every week 😊. Also, only the development database is publicly accessible and only from the IP my machine by using AWS EC2 Security Groups; test and production database instances are only accessible within the VPC.
 
 The application is using SSL certificates, so the API and the website require to use HTTPS protocol to hit the end-points. If we use plain HTTP, the load balancer will redirect to use HTTPS through a `HTTP 301` status.
 
