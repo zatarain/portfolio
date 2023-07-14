@@ -48,12 +48,12 @@ Additionally, it will provide a way to access the API end-points to manipulate t
 
 As this is just a small prototype right now it's not taking care about some corner case scenarios like following:
 
-* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my own portfolio website][zatarain-website] (under **`https://ulises.zatara.in/geo-football`**) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with PostGIS extension enabled and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
+* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my own portfolio website][zatarain-website] (under **`https://ulises.zatara.in/geo-football`**) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with [PostGIS extension enabled][migrate-enable-postgis] and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
 * To provision the infrastructure to [Amazon Web Services][aws-amazon] of that repository I use another of my personal projects called [Lorentz][zatarain-lorenz] which is an Infrastructure as a Code project to provision AWS resources for my personal projects.
 * The website is public an anybody can access to it to read/write spatial data. In the real world, it should be behind an authentication and authorisation system where a user without enough privileges may have read-only access to visualise the data on the map.
 * For now the remove action doesn't require confirmation. In the future it will require confirmation through a modal box asking to the user if they really want to delete a record.
 * In order to manage the spatial data, the application will use the Spatial Reference System [WGS 84 - EPSG:4326][EPSG-4326-WGS84], which is basically Latitude/Longitude Coordinate System.
-* The dataset for the stations comes from a CSV file in a [Trainline EU repository][trainline-eu-stations] and used [QGIS][qgis-web] to parse it to PostgresSQL then clean it a little bit removing some fields I don't need. That data set include train stations across all Europe 😍, but for the purposes of this exercise I will use only the UK ones an neighbourhood areas.
+* The dataset for the stations comes from a CSV file in a [Trainline EU repository][trainline-eu-stations] and used [QGIS][qgis-web] to parse it to PostgresSQL then clean it a little bit by removing some fields I don't need. That data set include train stations across all Europe 😍, but for the purposes of this exercise I will use only the UK ones an neighbourhood areas.
 
 ## 📐 Design
 
@@ -137,6 +137,10 @@ In the code, that entity is represented with the model [`TrainStation`][train-st
 * Validate `latitude` and `longitude` are present
 * Validate `latitude` to be a numeric value in the closed interval `[-90.00, 90.00]`
 * Validate `longitude` to be a numeric value in the closed interval `[-180.00, 180.00]`
+
+The `GeoLocalisable` concern also provides methods to perform spatial queries. For instance, I implemented a method to look for features `within_box` using the PostGIS SQL function `ST_MakeEnvelope` in the query. This is one of the most simplest ones but, it could be more complex queries later.
+
+Last, but not least, I added indexes to some columns of the table that may have recurrent queries: `name`, `country`, `time_zone`, `latitude`, `longitude` and the most important one an spatial index for the `location` field. More details about the table definition can be found in [the code of the migration to create the table][migrate-train-stations].
 
 ### 🔚 End-points
 
@@ -315,3 +319,5 @@ This end-point allows to remove features from the `train_stations` spatial layer
 [train-station-model]: https://github.com/zatarain/portfolio/blob/main/api/app/models/train_station.rb
 [geo-localisable-concern]: https://github.com/zatarain/portfolio/blob/main/api/app/models/concerns/geo_localisable.rb
 [postman-website]: https://www.postman.com
+[migrate-train-stations]: https://github.com/zatarain/portfolio/blob/main/api/db/migrate/20230710180003_train_stations.rb
+[migrate-enable-postgis]: https://github.com/zatarain/portfolio/blob/main/api/db/migrate/20230710040341_postgis_enabler.rb
