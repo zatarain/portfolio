@@ -298,6 +298,10 @@ The end-point will return the whole new record. For example:
 }
 ```
 
+This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football]) and **double clicking on the map** which looks like following:
+
+![image](https://github.com/zatarain/portfolio/assets/539783/c7592e5d-7715-4850-bb0f-53382351821f)
+
 #### ➖ DELETE `/stations/:id`
 
 This end-point allows to remove features from the `train_stations` spatial layer. It receives the `id` (primary key of the record) within the path of the URL. It doesn't return any output, just the status code of the HTTP request. For instance, if we would like to remove a record we can do it with `DELETE` HTTP request to `https://api.ulises.zatara.in/stations/68185` which would remove the record with `id = 68185` if it exists.
@@ -409,3 +413,4 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [aws-ecs]: https://aws.amazon.com/ecs/
 [aws-fargate]: https://aws.amazon.com/fargate/
 [github-dependabot]: https://github.com/dependabot
+[geo-football]: https://ulises.zatara.in/geo-football
