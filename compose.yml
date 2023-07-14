@@ -1,8 +1,7 @@
 services:
   frontend:
     container_name: website
-    image: zatarain/portfolio-web
-    build: web
+    build: ./web/
     ports:
       - 5000:5000
     depends_on:
@@ -12,12 +11,14 @@ services:
     environment:
       API_URL: http://service:3000
       NODE_ENV: development
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
   backend:
     container_name: service
-    image: zatarain/portfolio-api
-    build: api
+    build: ./api/
     ports:
       - 3000:3000
+    depends_on:
+      - database
     volumes:
       - api-source:/api
     environment:
@@ -36,6 +37,20 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USERNAME: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  database:
+    container_name: database
+    image: postgis/postgis:14-3.3
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: postgres
+
 volumes:
   web-source:
     name: portfolio-web-source
@@ -51,3 +66,10 @@ volumes:
       o: bind
       type: none
       device: api
+  data:
+    name: portfolio-database
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: data
