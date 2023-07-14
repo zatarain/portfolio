@@ -98,7 +98,26 @@ erDiagram
 
 The table names are in plural to follow the convention from Ruby on Rails framework (and Ulises' conventions too 😅). In the future those entities may be related someway based-on their location. For now, we will focus mainly or only in the `train_stations`.
 
-The columns of `train_stations` table are actually way more as they come from the Trainline EU dataset, but for the purpose of this exercise I will use only following:
+The columns of `train_stations` table are actually way more as they come from the Trainline EU dataset, but for the purpose of this exercise I will use only the ones described in the next subsection.
+
+#### 🚂 Train Stations
+
+This entity will represent the spatial layer for train stations in the system and each record will represent a feature of the data layer and will be stored in the table `train_stations` which has following fields:
+
+| ⏹️ | Name         |     Type       | Description                                                  |
+|:--:| :---         |    :----:      | :---                                                         |
+| 🗝️ | `id`         | `SERIAL`       | Auto-numeric identifier for the station                      |
+| 🔤 | `name`       | `VARCHAR(255)` | Name of the train station                                    |
+| 🔢 | `latitude`   | `FLOAT`        | The latitude coordinate also included within location field  |
+| 🔢 | `longitude`  | `FLOAT`        | The longitude coordinate also included within location field |
+| 📌 | `location`   | `ST_POINT`     | The spatial point with the coordinates of the station        |
+| 🗾 | `country`    | `VARCHAR(2)`   | ISO code for the country where the station is                |
+| ⏲️ | `time_zone`  | `VARCHAR(64)`  | The time zone for the station                                |
+| 🔤 | `info_en`    | `TEXT`         | Additional information in English language                   |
+| 🗓️ | `created_at` | `DATETIME`     | Timestamp representing the creation time                     |
+| 🗓️ | `updated_at` | `DATETIME`     | Timestamp representing the last update time                  |
+
+**Note** that the `latitude` and `longitude` are also included within the `location` field, so in principle they actually don't need to be separately stored as they are duplicated, but I decided to leave them, sometimes they might be useful either for debugging queries or for other purposes.
 
 ## 📚 References
 
