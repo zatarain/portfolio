@@ -9,7 +9,8 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV LANG=C.UTF-8 \
-	NODE_ENV=development
+	NODE_ENV=development \
+	NEXT_PUBLIC_API_URL=https://api.beta.zatara.in
 WORKDIR /web
 RUN npm config set fund false -g \
 	&& npm config set audit false -g
