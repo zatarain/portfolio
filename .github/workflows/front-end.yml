@@ -118,6 +118,8 @@ jobs:
         with:
           context: ./web
           file: ./web/Dockerfile
+          build-args: |
+            "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}"
           push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.aws-ecr.outputs.registry }}/curriculum-vitae:front-end
       - name: Restart the service
