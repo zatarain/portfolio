@@ -314,7 +314,7 @@ As it's been mentioned on earlier sections, this prototype is hosted on my perso
 
 ### 📦 Dependencies
 
-In addition to the stack mentioned, the application rely on open source dependencies. Following are some examples of them:
+In addition to the stack mentioned, the application rely on open source dependencies. Those dependencies are weekly updated trough [Github `dependabot`][github-dependabot]. Following are some examples of them:
 
 #### Back-End
 
@@ -339,9 +339,23 @@ In addition to the stack mentioned, the application rely on open source dependen
 
 ### ✅ Testing
 
+I added some unit testing on the project, but they are mainly focus on the `INSERT` query for the train stations and the generation of the location `POINT`. They basically test concern and the model.
+
+Unfortunately, the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿.
+
 ### 🔐 Security
 
+Regarding the security, all the secrets for the application are managed within the infrastructure layer using [AWS Secret Manager][aws-secret-manager]. I actually might not know either the usernames nor the passwords for the database for example and they automatically rotate every week 😊.
+
+The application is using SSL certificates, so the API and the website require to use HTTPS protocol to hit the end-points. If we use plain HTTP, the load balancer will redirect to use HTTPS through a `HTTP 301` status.
+
+I have `3` different and isolated environments: `Development`, `Staging` and `Production`. They don't even know each other as they live in different AWS accounts and have different Terraform states via Terraform Workspaces. The secrets they hold are also different of course.
+
 ### ⏩ Deployment
+
+The deployment is performed automatically by a [CI/CD pipelines][portfolio-pipelines] (one workflow for each back-end and front-end) within [Github Actions][github-actions-docs]. Every time I open a pull request and/or merge changes the pipelines are triggered and if the changes were merged to `deployment`, `staging` or `main` branches, the workflow will include a deployment to the correspondent environment.
+
+The deployment includes the build of the Docker images for the containers and the push those images to [AWS Elastic Container Registry][aws-ecr] of the correspondent account and then reload the services for the front-end and back-end in the cluster within [AWS Elastic Container Service][aws-ecs] which holds the [Fargate][aws-fargate] workers for the service task definitions.
 
 ### 💭 Future work
 
@@ -389,3 +403,9 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [react-hook-forms]: https://react-hook-form.com/docs
 [osm-website]: https://www.openstreetmap.org
 [flat-icon]: https://www.flaticon.com/
+[aws-secret-manager]: https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html
+[portfolio-pipelines]: https://github.com/zatarain/portfolio/actions
+[aws-ecr]: https://aws.amazon.com/ecr/
+[aws-ecs]: https://aws.amazon.com/ecs/
+[aws-fargate]: https://aws.amazon.com/fargate/
+[github-dependabot]: https://github.com/dependabot
