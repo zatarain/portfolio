@@ -66,5 +66,35 @@ describe TrainStation, type: :model do
 
       expect(station.id).not_to be_present
     end
+
+    it 'does NOT save when the latitude is out of range -90..90' do
+      station = described_class.create(
+        name: 'Canary Wharf',
+        slug: 'canary-wharf',
+        country: 'GB',
+        time_zone: 'Europe/London',
+        latitude: 90.5231,
+        longitude: -0.01861,
+        info_en: 'London Underground Station',
+        info_es: 'Estación del Metro de Londres',
+      )
+
+      expect(station.id).not_to be_present
+    end
+
+    it 'does NOT save when the longitude is out of range -180..180' do
+      station = described_class.create(
+        name: 'Canary Wharf',
+        slug: 'canary-wharf',
+        country: 'GB',
+        time_zone: 'Europe/London',
+        latitude: -0.01861,
+        longitude: -180.5564,
+        info_en: 'London Underground Station',
+        info_es: 'Estación del Metro de Londres',
+      )
+
+      expect(station.id).not_to be_present
+    end
   end
 end
