@@ -11,6 +11,9 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
 ENV LANG=C.UTF-8 \
 	NODE_ENV=development
 WORKDIR /web
+RUN npm config set fund false -g \
+	&& npm config set audit false -g
 COPY . .
+RUN npm ci --omit=optional && npm run build
 ENTRYPOINT ["bin/entrypoint"]
 CMD ["npm", "run", "start"]
