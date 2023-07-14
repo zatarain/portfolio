@@ -15,7 +15,6 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			stationsByCountry,
-			api: process.env.API_URL || '',
 		},
 	}
 }
