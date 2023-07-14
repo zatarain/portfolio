@@ -17,6 +17,13 @@ This prototype project aims to be an exercise to to discuss about software engin
     * 📃 [GET `/stations`](#-get-stations)
     * ➕ [POST `/stations`](#-post-stations)
     * ➖ [DELETE `/stations/:id`](#-delete-stationsid)
+* 🏗️ [Implementation details](#-implementation-details)
+  * 📦 [Dependencies](#-dependencies)
+  * 🗄️ [Storage](#-storage)
+  * ✅ [Testing](#-testing)
+  * 🔐 [Security](#-security)
+  * ⏩ [Deployment](#-deployment)
+  * 💭 [Future work](#-future-work)
 * 📚 [References](#-references)
 
 ## 🔭 Overview
@@ -140,7 +147,7 @@ In the code, that entity is represented with the model [`TrainStation`][train-st
 
 The `GeoLocalisable` concern also provides methods to perform spatial queries. For instance, I implemented a method to look for features `within_box` using the PostGIS SQL function `ST_MakeEnvelope` in the query. This is one of the most simplest ones but, it could be more complex queries later.
 
-Last, but not least, I added indexes to some columns of the table that may have recurrent queries: `name`, `country`, `time_zone`, `latitude`, `longitude` and the most important one an spatial index for the `location` field. More details about the table definition can be found in [the code of the migration to create the table][migrate-train-stations].
+Last, but not least, I added indexes to some columns of the table that may have recurrent queries: `name`, `country`, `time_zone` and `latitude` and `longitude` (together). But, the most important one is an **spatial index** for the `location` field. More details about the table definition can be found in [the code of the migration to create the table][migrate-train-stations].
 
 ### 🔚 End-points
 
@@ -295,11 +302,65 @@ The end-point will return the whole new record. For example:
 
 This end-point allows to remove features from the `train_stations` spatial layer. It receives the `id` (primary key of the record) within the path of the URL. It doesn't return any output, just the status code of the HTTP request. For instance, if we would like to remove a record we can do it with `DELETE` HTTP request to `https://api.ulises.zatara.in/stations/68185` which would remove the record with `id = 68185` if it exists.
 
+## 🏗️ Implementation details
+
+As it's been mentioned on earlier sections, this prototype is hosted on my personal website and I been using following tech stack:
+
+* Ruby on Rails for the back-end
+* React and NextJS with Typescript in the front-end
+* Terraform and AWS for the cloud infrastructure
+* The database is a PostgreSQL instance with PostGIS extension
+* Docker containers to isolate different ends of the whole system
+
+### 📦 Dependencies
+
+In addition to the stack mentioned, the application rely on open source dependencies. Following are some examples of them:
+
+#### Back-End
+
+* **`gem 'pg'`** to use PostgreSQL as the database for Active Record
+* Gems to manipulate PostGIS data:
+  * `gem 'activerecord-postgis-adapter'`
+  * `gem 'rgeo'`
+  * `gem 'rgeo-activerecord'`
+
+#### Front-End
+
+* **[Leaflet][leaflet-website]** is a JavaScript library to present visualise maps in a web browser.
+* **[`react-leaflet`][react-leaflet]** is a package adaptation of Leaflet to use React components.
+* **[`react-leaflet-cluster`][react-leaflet-cluster]** is a plugin to *clusterise* the Markers within a Leaflet map.
+* **[`react-hook-form`][react-hook-forms]** is a package to manage forms and input fields in React style.
+
+#### Graphical and data resources
+
+* I am also using [Open Street Maps][osm-website] Standard Layer to visualise the train stations.
+* The icons for the markers in the map come from [Flat Icon Website][flat-icon].
+* As mentioned before, the dataset comes from the [Trainline EU Stations repository][trainline-eu-stations].
+
+### ✅ Testing
+
+### 🔐 Security
+
+### ⏩ Deployment
+
+### 💭 Future work
+
+As mentioned in the [Assumptions](#-assumptions) and other sections, there are several rooms for improvement:
+
+* Add an authentication and authorisation layer, so the user need to login to have access to write data.
+* Add more unit testing to reduce the technical debt an return the whole portfolio project to the good coverage.
+* Add a confirmation for the delete request on the UI.
+* Add more end-points to edit stations and leverage the other fields.
+* Actually support the stadiums and compute the closest train stations based-on fastest and shortest paths.
+* Make sure everything also works on mobile devices.
+
 ## 📚 References
 
 * [PostgreSQL][postgresql-web]
 * [PostGIS][postgis-web]
 * [GitHub Actions Documentation][github-actions-docs]
+* [Leaflet documentation][leaflet-docs]
+* [Open Street Maps][osm-website]
 
 ---
 
@@ -321,3 +382,10 @@ This end-point allows to remove features from the `train_stations` spatial layer
 [postman-website]: https://www.postman.com
 [migrate-train-stations]: https://github.com/zatarain/portfolio/blob/main/api/db/migrate/20230710180003_train_stations.rb
 [migrate-enable-postgis]: https://github.com/zatarain/portfolio/blob/main/api/db/migrate/20230710040341_postgis_enabler.rb
+[leaflet-website]: https://leafletjs.com
+[leaflet-docs]: https://leafletjs.com/reference.html#popup
+[react-leaflet]: https://react-leaflet.js.org/docs/api-components
+[react-leaflet-cluster]: https://www.npmjs.com/package/react-leaflet-cluster
+[react-hook-forms]: https://react-hook-form.com/docs
+[osm-website]: https://www.openstreetmap.org
+[flat-icon]: https://www.flaticon.com/
