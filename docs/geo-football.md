@@ -7,7 +7,7 @@ This prototype project aims to be an exercise to to discuss about software engin
 * 🔭 [Overview](#-overview)
   * 🎫 [Requirements](#-requirements)
     * 🖥️ [API Service](#-api-service)
-    * 🖼️ [Web Application](#-web-application)
+    * 🗺️ [Web Application](#-web-application)
   * 🤔 [Assumptions](#-assumptions)
 * 📐 [Design](#-design)
   * 📊 [Data model](#-data-model)
@@ -23,6 +23,7 @@ This prototype project aims to be an exercise to to discuss about software engin
   * ✅ [Testing](#-testing)
   * 🔐 [Security](#-security)
   * ⏩ [Deployment](#-deployment)
+  * 🔀 [Related Pull Requests](#-related-pull-requests)
   * 💭 [Future work](#-future-work)
 * 📚 [References](#-references)
 
@@ -44,7 +45,7 @@ The initial requirements for the API will be following:
 * **Add a new train station.** The API will include an end-point to be able to add a new station with a `POST` request.
 * **Remove an existing train station.** It should provides an end-point to remove an existing station with a `DELETE` request.
 
-### 🖼️ Web Application
+### 🗺️ Web Application
 
 The web application initially should just visualise the data layer in a map. The map
 should allow users to zoom in and zoom out.
@@ -425,6 +426,10 @@ I have `3` different and isolated environments: `Development`, `Staging` and `Pr
 The deployment is performed automatically by a [CI/CD pipelines][portfolio-pipelines] (one workflow for each back-end and front-end) within [Github Actions][github-actions-docs]. Every time I open a pull request and/or merge changes the pipelines are triggered and if the changes were merged to `deployment`, `staging` or `main` branches, the workflow will include a deployment to the correspondent environment.
 
 The deployment includes the build of the Docker images for the containers and the push those images to [AWS Elastic Container Registry][aws-ecr] of the correspondent account and then reload the services for the front-end and back-end in the cluster within [AWS Elastic Container Service][aws-ecs] which holds the [Fargate][aws-fargate] workers for the service task definitions.
+
+### 🔀 Related Pull Requests
+
+* zatarain/portfolio#57
 
 ### 💭 Future work
 
