@@ -19,7 +19,7 @@ This prototype project aims to be an exercise to to discuss about software engin
     * ➖ [DELETE `/stations/:id`](#-delete-stationsid)
 * 🏗️ [Implementation details](#-implementation-details)
   * 📦 [Dependencies](#-dependencies)
-  * 🗄️ [Storage](#-storage)
+  * 📈 [Data manipulation](#-data-manipulation)
   * ✅ [Testing](#-testing)
   * 🔐 [Security](#-security)
   * ⏩ [Deployment](#-deployment)
@@ -340,6 +340,71 @@ In addition to the stack mentioned, the application rely on open source dependen
 * I am also using [Open Street Maps][osm-website] Standard Layer to visualise the train stations.
 * The icons for the markers in the map come from [Flat Icon Website][flat-icon].
 * As mentioned before, the dataset comes from the [Trainline EU Stations repository][trainline-eu-stations].
+* [QGIS][qgis-web] is a GUI application to edit and visualise vectorised spatial data and provides quite nice features, like connection to PostgreSQL database with PostGIS enabled and digest CSV datasets.
+
+### 📈 Data manipulation
+
+The data manipulation for spatial data it could be different than normal relational data, while in the normal relational data we tend to use just relational algebra and arithmetic comparisons with direct relational operators `=`, `>=`, `<=` or simple functions like `SUM`, `MIN` or `MAX`, for spatial data we need to use some special geometric functions and operations with not necessary intuitive names almost all the time.
+
+For instance, we can have following relational tables:
+
+**`countries`**
+| `id` | `name`    | `region`       |
+|:--:  | :---      | :---           |
+| 1    | Bhutan    |  Asia          |
+| 2    | Colombia  |  South America |
+| 3    | Japan     |  Asia          |
+| 4    | Ecuador   |  South America |
+| 5    | Serbia    |  Europe        |
+
+**`occurrences`**
+| `id` | `country_id` | `occurrences` |
+|:--:  | :---:        | :---:         |
+| 1    | 1            |  35           |
+| 2    | 3            |  50           |
+| 3    | 5            |  23           |
+| 4    | 1            |  45           |
+| 5    | 4            |  38           |
+| 6    | 2            |  34           |
+| 7    | 5            |  23           |
+
+If we want to compute the number of occurrences group by region, we would need a simple query like following:
+
+```sql
+SELECT
+  Country.region, SUM(occurrences)
+FROM occurrences AS Occurrence
+  LEFT JOIN countries AS Country ON (Country.id = Occurrence.country_id)
+GROUP BY Country.region;
+```
+
+And get a table like:
+
+| `region`      | `sum` |
+|:--            | :---: |
+| South America | 72    |
+| Asia          | 130   |
+| Europe        | 46    |
+
+Or at most do something in the `GROUP` sentence to make it case insensitive.
+
+In the other, for spatial data, even for a single table we need a query like following:
+
+```sql
+SELECT "train_stations".* FROM "train_stations"
+  WHERE (location && ST_MakeEnvelope( -7.0, 49.0, 7.0, 60.0, 4326 ));
+```
+
+That is the query to get the stations inside a given box of coordinates which use the function `ST_MakeEnvelope`, so it could happens that the resulting queries for spatial data it might not quite easy to read. In particular, that query and given the fact we have the separate columns `latitude` and `longitude` with a composed index, could be also written as follow:
+
+```sql
+SELECT "train_stations".* FROM "train_stations"
+WHERE
+  (latitude BETWEEN -49.0 AND 60.0)
+  AND (longitude BETWEEN -7.0 AND 7.0);
+```
+
+However, it's quite frequently NOT possible be able to rewrite a query like this. So, we need to be careful with the spatial data 😊, but it's also exiting 😃😂.
 
 ### ✅ Testing
 
