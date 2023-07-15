@@ -416,9 +416,7 @@ However, it's quite frequently NOT possible be able to rewrite a query like this
 
 I added some unit testing on the project, but they are mainly focus on the `INSERT` query for the train stations and the generation of the location `POINT`. They basically test concern and the model.
 
-Unfortunately, the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿.
-
-You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
+Unfortunately, given the test is low (overall for the front-end part), the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿. You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
 
 | Sun Burst                      | iCicle                    | Grid                  |
 | :----------------------------: | :-----------------------: | :-------------------: |
