@@ -164,7 +164,7 @@ The end-points implemented (so far) in the class [`StationsController`][stations
 
 In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/end-point` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
 
-![image](https://github.com/zatarain/portfolio/assets/539783/07f86de0-b354-4a84-a442-8e900ff7c7fd)
+![image](https://github.com/zatarain/portfolio/assets/539783/22224292-b4a1-4344-8aab-28e3599b81f1)
 
 #### 📃 GET `/stations`
 
@@ -301,7 +301,7 @@ The end-point will return the whole new record. For example:
 
 This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football]) and **double clicking on the map** which looks like following:
 
-![image](https://github.com/zatarain/portfolio/assets/539783/c7592e5d-7715-4850-bb0f-53382351821f)
+![image](https://github.com/zatarain/portfolio/assets/539783/db2dface-4c2c-4e49-a76c-8ee37928d827)
 
 #### ➖ DELETE `/stations/:id`
 
