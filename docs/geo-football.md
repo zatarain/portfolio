@@ -21,6 +21,9 @@ This prototype project aims to be an exercise to discuss about software engineer
     * ➖ [DELETE `/stations/:id`](#-delete-stationsid)
 * 🏗️ [Implementation details](#🏗️-implementation-details)
   * 📦 [Dependencies](#-dependencies)
+    * 🔙 [Back-End](#-back-end)
+    * 🪟 [Front-End](#-front-end)
+    * 🖼️ [Graphical and data resources](#🖼️-graphical-and-data-resources)
   * 📈 [Data manipulation](#-data-manipulation)
   * ✅ [Testing](#-testing)
   * 🔐 [Security](#-security)
@@ -323,7 +326,7 @@ As it's been mentioned on earlier sections, this prototype is hosted on my perso
 
 In addition to the stack mentioned, the application rely on open source dependencies. Those dependencies are weekly updated trough [Github `dependabot`][github-dependabot]. Following are some examples of them:
 
-#### Back-End
+#### 🔙 Back-End
 
 * **`gem 'pg'`** to use PostgreSQL as the database for Active Record
 * Gems to manipulate PostGIS data:
@@ -331,14 +334,14 @@ In addition to the stack mentioned, the application rely on open source dependen
   * `gem 'rgeo'`
   * `gem 'rgeo-activerecord'`
 
-#### Front-End
+#### 🪟 Front-End
 
 * **[Leaflet][leaflet-website]** is a JavaScript library to present visualise maps in a web browser.
 * **[`react-leaflet`][react-leaflet]** is a package adaptation of Leaflet to use React components.
 * **[`react-leaflet-cluster`][react-leaflet-cluster]** is a plugin to *clusterise* the Markers within a Leaflet map.
 * **[`react-hook-form`][react-hook-forms]** is a package to manage forms and input fields in React style.
 
-#### Graphical and data resources
+#### 🖼️ Graphical and data resources
 
 * I am also using [Open Street Maps][osm-website] Standard Layer to visualise the train stations.
 * The icons for the markers in the map come from [Flat Icon Website][flat-icon].
