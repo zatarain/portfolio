@@ -460,6 +460,7 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 * Add more end-points to edit stations and leverage the other fields.
 * Actually support the stadiums and compute the closest train stations based-on fastest and shortest paths.
 * Make sure everything also works on mobile devices.
+* Adding more validations based on the selected location (e. g. what would happens if I try to add an station in the middle of the ocean or in a place outside the box boundary?)
 
 ## 📚 References
 
