@@ -355,6 +355,7 @@ The data manipulation for spatial data it could be different than normal relatio
 For instance, we can have following relational tables:
 
 **`countries`**
+
 | `id` | `name`    | `region`       |
 |:--:  | :---      | :---           |
 | 1    | Bhutan    |  Asia          |
@@ -364,6 +365,7 @@ For instance, we can have following relational tables:
 | 5    | Serbia    |  Europe        |
 
 **`occurrences`**
+
 | `id` | `country_id` | `occurrences` |
 |:--:  | :---:        | :---:         |
 | 1    | 1            |  35           |
