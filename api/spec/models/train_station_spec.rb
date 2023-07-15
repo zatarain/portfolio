@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe TrainStation, type: :model do
+describe TrainStation do
   context 'when all fields are valid' do
     it 'save the station with generated location in the datbase' do
       station = described_class.create(
