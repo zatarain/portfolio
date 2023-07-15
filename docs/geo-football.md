@@ -415,6 +415,14 @@ I added some unit testing on the project, but they are mainly focus on the `INSE
 
 Unfortunately, the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿.
 
+You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
+
+| Sun Burst                      | iCicle                    | Grid                  |
+| :----------------------------: | :-----------------------: | :-------------------: |
+| ![Sun Burst][codecov-sunburst] | ![iCicle][codecov-icicle] | ![Grid][codecov-grid] |
+
+**IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions section](#-assumptions) there are many chances to improve and for sure it may have even more.
+
 ### 🔐 Security
 
 Regarding the security, all the secrets for the application are managed within the infrastructure layer using [AWS Secret Manager][aws-secret-manager]. I actually might not know either the usernames nor the passwords for the database for example and they automatically rotate every week 😊. Also, only the development database is publicly accessible and only from the IP my machine by using AWS EC2 Security Groups; test and production database instances are only accessible within the VPC.
@@ -496,3 +504,7 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [github-dependabot]: https://github.com/dependabot
 [nextjs-docs]: https://nextjs.org/docs
 [react-reference]: https://react.dev/reference/react
+[codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
+[codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
+[codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T
+[codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.
