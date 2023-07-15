@@ -162,7 +162,7 @@ The end-points implemented (so far) in the class [`StationsController`][stations
 | `POST`    | `/stations`     | Create a station record in the system   | `200 OK`       | `400 Bad Request`, `500 Internal Server Error` |
 | `DELETE`  | `/stations/:id` | Delete a station from the system        | `200 OK`       | `404 Not Found`, `500 Internal Server Error`   |
 
-In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/end-point` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
+In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/:end-point-address` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
 
 ![image](https://github.com/zatarain/portfolio/assets/539783/22224292-b4a1-4344-8aab-28e3599b81f1)
 
@@ -299,7 +299,7 @@ The end-point will return the whole new record. For example:
 }
 ```
 
-This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football]) and **double clicking on the map** which looks like following:
+This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football-on-rails]) and **double clicking on the map** which looks like following:
 
 ![image](https://github.com/zatarain/portfolio/assets/539783/db2dface-4c2c-4e49-a76c-8ee37928d827)
 
@@ -431,6 +431,7 @@ The deployment includes the build of the Docker images for the containers and th
 
 Following are the pull requests related to this project so far (they also include the infrastructure provisioning of the database instance with Lorentz):
 
+* [PORT-017: Fixing typos and links on the documentation](https://github.com/zatarain/portfolio/pull/57)
 * [PORT-016: PORT-016: Geo-Football API end-points and Webpage](https://github.com/zatarain/portfolio/pull/57)
 * [PORT-015: Initial migrations and seed data](https://github.com/zatarain/portfolio/pull/56)
 * [LRNT-014: Setting up database and permissions](https://github.com/zatarain/lorentz/pull/23)
@@ -458,7 +459,7 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 ---
 
 [what-is-api]: aws.amazon.com/what-is/api
-[personal-website]: https://ulises.zatara.in/
+[personal-website]: https://ulises.zatara.in
 [geo-football-on-rails]: https://ulises.zatara.in/geo-football
 [zatarain-portfolio]: https://github.com/zatarain/portfolio
 [zatarain-lorenz]: https://github.com/zatarain/lorentz
@@ -489,4 +490,3 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [aws-ecs]: https://aws.amazon.com/ecs/
 [aws-fargate]: https://aws.amazon.com/fargate/
 [github-dependabot]: https://github.com/dependabot
-[geo-football]: https://ulises.zatara.in/geo-football
