@@ -56,7 +56,7 @@ Additionally, it will provide a way to access the API end-points to manipulate t
 
 As this is just a small prototype right now it's not taking care about some corner case scenarios like following:
 
-* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my own portfolio website][zatarain-website] (under **`https://ulises.zatara.in/geo-football`**) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with [PostGIS extension enabled][migrate-enable-postgis] and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
+* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my own portfolio website][personal-website] (under [**`https://ulises.zatara.in/geo-football`**][geo-football-on-rails]) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with [PostGIS extension enabled][migrate-enable-postgis] and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
 * To provision the infrastructure to [Amazon Web Services][aws-amazon] of that repository I use another of my personal projects called [Lorentz][zatarain-lorenz] which is an Infrastructure as a Code project to provision AWS resources for my personal projects.
 * The website is public an anybody can access to it to read/write spatial data. In the real world, it should be behind an authentication and authorisation system where a user without enough privileges may have read-only access to visualise the data on the map.
 * For now the remove action doesn't require confirmation. In the future it will require confirmation through a modal box asking to the user if they really want to delete a record.
@@ -458,7 +458,8 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 ---
 
 [what-is-api]: aws.amazon.com/what-is/api
-[zatarain-website]: https:/ulises.zatara.in
+[personal-website]: https:/ulises.zatara.in
+[geo-football-on-rails]: https://ulises.zatara.in/geo-football
 [zatarain-portfolio]: https://github.com/zatarain/portfolio
 [zatarain-lorenz]: https://github.com/zatarain/lorentz
 [ror-web]: https://rubyonrails.org
