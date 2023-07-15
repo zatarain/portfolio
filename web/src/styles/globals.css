@@ -1,6 +1,8 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.cdnfonts.com/css/cascadia-code');
 @import url('react-responsive-carousel/lib/styles/carousel.min.css');
+@import url('leaflet/dist/leaflet.css');
+
 
 :root {
   --bg-page: #fafbfc;
@@ -69,6 +71,13 @@ a:hover, a:hover:visited {
   position: relative;
   bottom: 3rem;
   font-size: 1rem;
+}
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
 }
 
 @media screen and (max-width: 850px) {
