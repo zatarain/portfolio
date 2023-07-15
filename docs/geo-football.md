@@ -1,4 +1,6 @@
-# 👨🏽‍💻 Project: `Geo-Football on Rails` [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+# 👨🏽‍💻 Project: `Geo-Football on Rails`
+
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Front-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml) [![Back-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml) [![codecov](https://codecov.io/gh/zatarain/portfolio/branch/main/graph/badge.svg?token=CKLB4JPO9T)](https://codecov.io/gh/zatarain/portfolio)
 
 This prototype project aims to be an exercise to discuss about software engineering technical topics like software development, security, deployment, databases, spatial data layers, etcetera. More specifically, to discuss the development of an [API (Application Programming Interface)][what-is-api] to **manage spatial data layers** implemented written in Ruby with [Ruby on Rails framework][ror-web] and other open source libraries.
 
@@ -455,6 +457,8 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 * [GitHub Actions Documentation][github-actions-docs]
 * [Leaflet documentation][leaflet-docs]
 * [Open Street Maps][osm-website]
+* [React Reference][react-reference]
+* [NextJS Documentation][nextjs-docs]
 
 ---
 
@@ -490,3 +494,5 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [aws-ecs]: https://aws.amazon.com/ecs/
 [aws-fargate]: https://aws.amazon.com/fargate/
 [github-dependabot]: https://github.com/dependabot
+[nextjs-docs]: https://nextjs.org/docs
+[react-reference]: https://react.dev/reference/react
