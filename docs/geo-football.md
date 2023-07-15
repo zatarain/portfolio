@@ -422,7 +422,7 @@ Unfortunately, given the test is low (overall for the front-end part), the test 
 | :----------------------------: | :-----------------------: | :-------------------: |
 | ![Sun Burst][codecov-sunburst] | ![iCicle][codecov-icicle] | ![Grid][codecov-grid] |
 
-**IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions section](#-assumptions) there are many chances to improve and for sure it may have even more.
+**IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions](#-assumptions) and [Future work](#-future-work) sections there are many chances to improve and for sure it may have even more.
 
 ### 🔐 Security
 
