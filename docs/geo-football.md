@@ -511,4 +511,4 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
 [codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
 [codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T
-[codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.
+[codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.svg?token=CKLB4JPO9T
