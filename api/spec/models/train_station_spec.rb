@@ -6,8 +6,6 @@ describe TrainStation do
   describe '#create' do
     context 'when all fields are valid' do
       it 'save the station with generated location in the datbase' do
-        ActiveRecord.verbose_query_logs = true
-        ActiveRecord::Base.logger = Logger.new(STDOUT)
         station = described_class.create(
           name: 'Canary Wharf',
           slug: 'canary-wharf',

@@ -36,8 +36,7 @@ RSpec.describe 'Stations' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(data.to_json)
       expect(TrainStation).to  have_received(:within_box)
-        .with([49.000000, -7.0000], [60.000000,  7.00000])
+        .with([49.000000, -7.0000], [60.000000, 7.00000])
     end
-
   end
 end
