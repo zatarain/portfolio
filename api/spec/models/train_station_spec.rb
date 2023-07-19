@@ -16,7 +16,6 @@ describe TrainStation do
           info_en: 'London Underground Station',
           info_es: 'Estación del Metro de Londres',
         )
-        puts station
 
         expect(station.id).to be_present
         expect(station.location).to be_present

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Stations' do
-  describe 'GET /index' do
+  describe 'GET /stations' do
     data = [
       {
         id: 1,
@@ -54,6 +54,28 @@ RSpec.describe 'Stations' do
       expect(response).to have_http_status(:internal_server_error)
       expect(Rails.logger).to have_received(:error)
         .with(/Unable to find the data for train stations/)
+    end
+  end
+
+  describe 'POST /stations' do
+    it 'responses with JSON data on body describing new point when data is saved' do
+      station = {
+        name: 'Canary Wharf',
+        slug: 'canary-wharf',
+        country: 'GB',
+        time_zone: 'Europe/London',
+        latitude: 51.50361,
+        longitude: -0.01861,
+        info_en: 'London Underground Station',
+        info_es: 'Estación del Metro de Londres',
+      }
+
+      post '/stations', params: { station: }
+
+      expect(response).to have_http_status(:ok)
+      body = response.parsed_body
+      expect(body).to match(hash_including(station.stringify_keys))
+      expect(body.keys).to match(array_including(%w[id location created_at updated_at]))
     end
   end
 end
