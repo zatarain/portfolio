@@ -130,7 +130,7 @@ RSpec.describe 'Stations' do
   end
 
   describe 'DELETE /stations/:id' do
-    it 'responses with HTTP 404 when record is not found' do
+    it 'responses with HTTP 200 when record is successfully deleted' do
       station = instance_double(TrainStation)
       allow(station).to receive(:destroy).and_return(true)
       allow(TrainStation).to receive(:find).and_return(station)

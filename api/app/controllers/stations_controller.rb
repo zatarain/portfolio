@@ -26,11 +26,9 @@ class StationsController < ApplicationController
 
   def destroy
     @station = TrainStation.find(params[:id])
-    if @station.destroy
-      render status: :ok
-    else
-      raise StandardError.new('Unknown error')
-    end
+    raise StandardError, 'Unknown error' unless @station.destroy
+
+    render status: :ok
   rescue ActiveRecord::RecordNotFound
     render status: :not_found
   rescue StandardError => exception
