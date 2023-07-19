@@ -128,4 +128,21 @@ RSpec.describe 'Stations' do
       end
     end
   end
+
+  describe 'DELETE /stations/:id' do
+    context 'when there is an exception' do
+      it 'responses with HTTP 500' do
+        allow(TrainStation).to receive(:find).and_raise(
+          StandardError.new('Unable to delete the data for train stations'),
+        )
+        allow(Rails.logger).to receive(:error)
+
+        delete '/stations/4'
+
+        expect(response).to have_http_status(:internal_server_error)
+        expect(Rails.logger).to have_received(:error)
+          .with(/Unable to delete the data for train stations/)
+      end
+    end
+  end
 end
