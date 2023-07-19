@@ -60,6 +60,14 @@ export async function deleteStation(id: number): Promise<Response> {
 	return DELETE(`/stations/${id}`)
 }
 
+export function flag(country: string) {
+	const points = country
+		.toUpperCase()
+		.split('')
+		.map((char) => 127397 + char.charCodeAt(0));
+	return String.fromCodePoint(...points);
+}
+
 const slice = createSlice({
 	name: 'responsive',
 	initialState,
