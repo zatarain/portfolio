@@ -58,8 +58,8 @@ RSpec.describe 'Stations' do
   end
 
   describe 'POST /stations' do
-    it 'responses with JSON data on body describing new point when data is saved' do
-      station = {
+    let(:station) do
+      {
         name: 'Canary Wharf',
         slug: 'canary-wharf',
         country: 'GB',
@@ -69,7 +69,9 @@ RSpec.describe 'Stations' do
         info_en: 'London Underground Station',
         info_es: 'Estación del Metro de Londres',
       }
+    end
 
+    it 'responses with HTTP 400 and JSON data on body describing new point when data is saved' do
       post '/stations', params: { station: }
 
       expect(response).to have_http_status(:ok)
@@ -85,17 +87,6 @@ RSpec.describe 'Stations' do
         [:longitude, ['can\'t be blank', 'is not a number']],
       ].each do |field, message|
         it "responses with JSON on body describing error when #{field} is missing" do
-          station = {
-            name: 'Canary Wharf',
-            slug: 'canary-wharf',
-            country: 'GB',
-            time_zone: 'Europe/London',
-            latitude: 51.50361,
-            longitude: -0.01861,
-            info_en: 'London Underground Station',
-            info_es: 'Estación del Metro de Londres',
-          }
-
           post '/stations', params: { station: station.reject { |key| key == field } }
 
           expect(response).to have_http_status(:bad_request)
@@ -111,17 +102,6 @@ RSpec.describe 'Stations' do
         [:longitude, -181, ['must be in -180..180']],
       ].each do |field, value, message|
         it "responses with JSON on body describing error when #{field} is out of range" do
-          station = {
-            name: 'Canary Wharf',
-            slug: 'canary-wharf',
-            country: 'GB',
-            time_zone: 'Europe/London',
-            latitude: 51.50361,
-            longitude: -0.01861,
-            info_en: 'London Underground Station',
-            info_es: 'Estación del Metro de Londres',
-          }
-
           station[field] = value
 
           post '/stations', params: { station: }
@@ -130,6 +110,21 @@ RSpec.describe 'Stations' do
           body = response.parsed_body
           expect(body).to match(hash_including({ field => message }.stringify_keys))
         end
+      end
+    end
+
+    context 'when there is an exception' do
+      it 'responses with HTTP 500' do
+        allow(TrainStation).to receive(:new).and_raise(
+          StandardError.new('Unable to save the data for train stations'),
+        )
+        allow(Rails.logger).to receive(:error)
+
+        post '/stations', params: { station: }
+
+        expect(response).to have_http_status(:internal_server_error)
+        expect(Rails.logger).to have_received(:error)
+          .with(/Unable to save the data for train stations/)
       end
     end
   end
