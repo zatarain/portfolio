@@ -84,7 +84,8 @@ const MapForm = ({ clusters, setClusters }: Properties) => {
 				setError(field as keyof Station, { type: 'custom', message })
 			}
 		} else {
-			console.error('Unknown error:', await response.text())
+			const message = await response.text()
+			console.error(`Unknown error: ${message}`)
 		}
 
 		return response

@@ -163,4 +163,41 @@ describe('<MapForm ...>...</MapForm>', () => {
 		}))
 		expect(getByText(/can not be blank/i)).toBeInTheDocument()
 	})
+
+	it('logs the error message when submit fails with HTTP 500 status', async () => {
+		const user = userEvent.setup()
+		const clusters = { GB: [] } as GroupedStations
+
+		const setClusters = jest.fn()
+		global.fetch = jest.fn(() => Promise.resolve({
+			ok: false,
+			status: 500,
+			text: jest.fn(() => Promise.resolve('Internal Server Error'))
+		}))
+
+		console.error = jest.fn()
+
+		const { getByLabelText, getByText } = render(
+			<Provider store={store}>
+				<MapForm clusters={clusters} setClusters={setClusters} />
+			</Provider>
+		)
+
+		await user.type(getByLabelText(/Name/), '  ')
+
+		const save = getByText('Save')
+		await user.click(save)
+		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(setClusters).not.toHaveBeenCalled()
+
+		const [[url, { headers, method }]] = fetch.mock.calls
+		expect(url).toMatch(/\/stations/)
+		expect(method).toBe('POST')
+		expect(headers).toEqual(expect.objectContaining({
+			'Content-Type': 'application/json',
+		}))
+		expect(console.error).toBeCalledTimes(1)
+		const [[message]] = console.error.mock.calls
+		expect(message).toMatch(/Internal Server Error/)
+	})
 })
