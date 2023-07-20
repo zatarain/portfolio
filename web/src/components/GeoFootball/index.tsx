@@ -50,8 +50,8 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 				<MarkerClusterGroup key={country} chunkedLoading>
 					{(stations as Station[]).map((station: Station, index: number) =>
 						<Marker key={`train-${station.id}`} position={[station.latitude, station.longitude]} icon={train}>
-							<Popup key={`train-popup-${station.id}`}>
-								<div className={styles.popup}>
+							<Popup>
+								<div role="note" className={styles.popup}>
 									<h3>{station.name}</h3>
 									<dl>
 										<dt>Country: </dt><dd>{country} <span className={emoji.className}>{flag(country)}</span></dd>

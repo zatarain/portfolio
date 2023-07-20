@@ -105,6 +105,7 @@ exports[`<GeoFootball ...>...</GeoFootball> renders the component correctly 1`] 
   </form>
   <div
     class="popup"
+    role="note"
   >
     <h3>
       Canary Wharf

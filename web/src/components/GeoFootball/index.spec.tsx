@@ -89,26 +89,28 @@ describe('<GeoFootball ...>...</GeoFootball>', () => {
 			],
 		} as GroupedStations
 
-		global.fetch = jest.fn(() =>
-			Promise.resolve({
-				json: () => Promise.resolve({ ok: true }),
-			})
-		);
+		global.fetch = jest.fn(() => Promise.resolve({ ok: true }))
 
-
-		const { getByText } = render(
+		const { getByRole, getByText } = render(
 			<Provider store={store}>
 				<GeoFootball stationsByCountry={stations} />
 			</Provider>
 		)
 
+		const popup = getByRole('note')
+		expect(popup).toBeInTheDocument()
+
 		const deleteMarker = getByText('Delete')
 		await user.click(deleteMarker)
 		expect(fetch).toHaveBeenCalledTimes(1)
+
 		const [[url, { headers, method }]] = fetch.mock.calls
 		expect(url).toMatch(/\/stations\/1/)
 		expect(method).toBe('DELETE')
-		expect(headers).toEqual(expect.objectContaining({ 'Content-Type': 'application/json' }))
-		console.dir()
+		expect(headers).toEqual(expect.objectContaining({
+			'Content-Type': 'application/json',
+		}))
+		expect(stations).toEqual({ GB: [] })
+		expect(popup).not.toBeInTheDocument()
 	})
 })
