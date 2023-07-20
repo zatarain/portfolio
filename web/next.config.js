@@ -7,13 +7,16 @@ const nextConfig = {
 	images: {
 		domains: [
 			'cdn.instagram.com',
-			'cdn-icons-png.flaticon.com',
 			'i.gifer.com',
 		],
 		remotePatterns: [
 			{
 				protocol: 'https',
 				hostname: '**.cdninstagram.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'cdn-icons-png.flaticon.com',
 			},
 		],
 	},

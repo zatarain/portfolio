@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Stadium, type: :model do
+describe Stadium do
   context 'when all fields are valid' do
     it 'save the stadium with generated location in the datbase' do
       stadium = described_class.create!(

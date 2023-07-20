@@ -66,11 +66,11 @@ global.fetch = jest.fn(() =>
 	Promise.resolve({
 		json: () => Promise.resolve(testData),
 	})
-);
+)
 
 beforeEach(() => {
 	fetch.mockClear()
-});
+})
 
 describe('<IndexPage />', () => {
 	it('renders the home page', () => {

@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic'
 import type { NextPage } from 'next'
-import { getStationsByCountry } from '#components/GeoFootball/slice'
+import { getStations } from '#components/GeoFootball/slice'
 import PageLayout from '#components/PageLayout'
 import styles from '#styles/GeoFootball.module.css'
-import { GroupedStations } from '#components/GeoFootball/types'
+import { GroupedStations, Station } from '#components/GeoFootball/types'
 
 const GeoFootballMap = dynamic(() => import('../components/GeoFootball/index'), { ssr: false })
 interface Properties {
@@ -11,7 +11,18 @@ interface Properties {
 }
 
 export async function getServerSideProps() {
-	const stationsByCountry = await getStationsByCountry() as GroupedStations
+	let stationsByCountry = {}
+	const response = await getStations()
+	if (response.ok) {
+		const stations = await response.json() as Station[]
+
+		stationsByCountry = stations.reduce((clusters: any, station: Station) => {
+			clusters[station.country] = clusters[station.country] || []
+			clusters[station.country].push(station)
+			return clusters
+		}, {}) as GroupedStations
+	}
+
 	return {
 		props: {
 			stationsByCountry,

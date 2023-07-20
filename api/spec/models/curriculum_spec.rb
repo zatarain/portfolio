@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Curriculum, type: :model do
+describe Curriculum do
   let(:assume_role_credentials) { instance_double(Aws::AssumeRoleCredentials) }
   let(:instagram_client) { instance_double(InstagramBasicDisplay::Client) }
   let(:ecs_credentials) { instance_double(Aws::ECSCredentials) }

@@ -1,13 +1,15 @@
-# 👨🏽‍💻 Project: `Geo-Football on Rails` [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+# 👨🏽‍💻 Project: `Geo-Football on Rails`
 
-This prototype project aims to be an exercise to to discuss about software engineering technical topics like software development, security, deployment, databases, spatial data layers, etcetera. More specifically, to discuss the development of an [API (Application Programming Interface)][what-is-api] to **manage spatial data layers** implemented written in Ruby with [Ruby on Rails framework][ror-web] and other open source libraries.
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Front-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/front-end.yml) [![Back-end Continuous Integration](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml/badge.svg)](https://github.com/zatarain/portfolio/actions/workflows/back-end.yml) [![codecov](https://codecov.io/gh/zatarain/portfolio/branch/main/graph/badge.svg?token=CKLB4JPO9T)](https://codecov.io/gh/zatarain/portfolio)
+
+This prototype project aims to be an exercise to discuss about software engineering technical topics like software development, security, deployment, databases, spatial data layers, etcetera. More specifically, to discuss the development of an [API (Application Programming Interface)][what-is-api] to **manage spatial data layers** implemented written in Ruby with [Ruby on Rails framework][ror-web] and other open source libraries.
 
 ## 🗂️ Table of content
 
 * 🔭 [Overview](#-overview)
   * 🎫 [Requirements](#-requirements)
-    * 🖥️ [API Service](#-api-service)
-    * 🖼️ [Web Application](#-web-application)
+    * 🖥️ [API Service](#🖥️-api-service)
+    * 🗺️ [Web Application](#🗺️-web-application)
   * 🤔 [Assumptions](#-assumptions)
 * 📐 [Design](#-design)
   * 📊 [Data model](#-data-model)
@@ -17,12 +19,16 @@ This prototype project aims to be an exercise to to discuss about software engin
     * 📃 [GET `/stations`](#-get-stations)
     * ➕ [POST `/stations`](#-post-stations)
     * ➖ [DELETE `/stations/:id`](#-delete-stationsid)
-* 🏗️ [Implementation details](#-implementation-details)
+* 🏗️ [Implementation details](#🏗️-implementation-details)
   * 📦 [Dependencies](#-dependencies)
+    * 🔙 [Back-End](#-back-end)
+    * 🪟 [Front-End](#-front-end)
+    * 🖼️ [Graphical and data resources](#🖼️-graphical-and-data-resources)
   * 📈 [Data manipulation](#-data-manipulation)
   * ✅ [Testing](#-testing)
   * 🔐 [Security](#-security)
   * ⏩ [Deployment](#-deployment)
+  * 🔀 [Related Pull Requests](#-related-pull-requests)
   * 💭 [Future work](#-future-work)
 * 📚 [References](#-references)
 
@@ -44,7 +50,7 @@ The initial requirements for the API will be following:
 * **Add a new train station.** The API will include an end-point to be able to add a new station with a `POST` request.
 * **Remove an existing train station.** It should provides an end-point to remove an existing station with a `DELETE` request.
 
-### 🖼️ Web Application
+### 🗺️ Web Application
 
 The web application initially should just visualise the data layer in a map. The map
 should allow users to zoom in and zoom out.
@@ -55,7 +61,7 @@ Additionally, it will provide a way to access the API end-points to manipulate t
 
 As this is just a small prototype right now it's not taking care about some corner case scenarios like following:
 
-* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my own portfolio website][zatarain-website] (under **`https://ulises.zatara.in/geo-football`**) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with [PostGIS extension enabled][migrate-enable-postgis] and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
+* In order to deploy the application, I will use the same [repository][zatarain-portfolio] as [my personal website][personal-website] (under [**`https://ulises.zatara.in/geo-football`**][geo-football-on-rails]) as it has all the required infrastructure already and it meets the technical requirements (API in Ruby on Rails, PostgreSQL database with [PostGIS extension enabled][migrate-enable-postgis] and a website in TypeScript and NodeJS using NextJS framework for React). And it also has different environments already: `Development`, `Staging`, `Production`.
 * To provision the infrastructure to [Amazon Web Services][aws-amazon] of that repository I use another of my personal projects called [Lorentz][zatarain-lorenz] which is an Infrastructure as a Code project to provision AWS resources for my personal projects.
 * The website is public an anybody can access to it to read/write spatial data. In the real world, it should be behind an authentication and authorisation system where a user without enough privileges may have read-only access to visualise the data on the map.
 * For now the remove action doesn't require confirmation. In the future it will require confirmation through a modal box asking to the user if they really want to delete a record.
@@ -161,9 +167,9 @@ The end-points implemented (so far) in the class [`StationsController`][stations
 | `POST`    | `/stations`     | Create a station record in the system   | `200 OK`       | `400 Bad Request`, `500 Internal Server Error` |
 | `DELETE`  | `/stations/:id` | Delete a station from the system        | `200 OK`       | `404 Not Found`, `500 Internal Server Error`   |
 
-In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/end-point` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
+In order to hit the end-point of the API we can do it with the URL `https://api.ulises.zatara.in/:end-point-address` either using a web browser or an application like [Postman][postman-website]. Following is how a `POST` request would looks in Postman:
 
-![image](https://github.com/zatarain/portfolio/assets/539783/07f86de0-b354-4a84-a442-8e900ff7c7fd)
+![image](https://github.com/zatarain/portfolio/assets/539783/22224292-b4a1-4344-8aab-28e3599b81f1)
 
 #### 📃 GET `/stations`
 
@@ -298,9 +304,9 @@ The end-point will return the whole new record. For example:
 }
 ```
 
-This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football]) and **double clicking on the map** which looks like following:
+This end-point can be tested in Postman with a POST to `https://api.ulises.zatara.in/stations` or using the web interface ([**`https://ulises.zatara.in/geo-football`**][geo-football-on-rails]) and **double clicking on the map** which looks like following:
 
-![image](https://github.com/zatarain/portfolio/assets/539783/c7592e5d-7715-4850-bb0f-53382351821f)
+![image](https://github.com/zatarain/portfolio/assets/539783/db2dface-4c2c-4e49-a76c-8ee37928d827)
 
 #### ➖ DELETE `/stations/:id`
 
@@ -320,7 +326,7 @@ As it's been mentioned on earlier sections, this prototype is hosted on my perso
 
 In addition to the stack mentioned, the application rely on open source dependencies. Those dependencies are weekly updated trough [Github `dependabot`][github-dependabot]. Following are some examples of them:
 
-#### Back-End
+#### 🔙 Back-End
 
 * **`gem 'pg'`** to use PostgreSQL as the database for Active Record
 * Gems to manipulate PostGIS data:
@@ -328,14 +334,14 @@ In addition to the stack mentioned, the application rely on open source dependen
   * `gem 'rgeo'`
   * `gem 'rgeo-activerecord'`
 
-#### Front-End
+#### 🪟 Front-End
 
 * **[Leaflet][leaflet-website]** is a JavaScript library to present visualise maps in a web browser.
 * **[`react-leaflet`][react-leaflet]** is a package adaptation of Leaflet to use React components.
 * **[`react-leaflet-cluster`][react-leaflet-cluster]** is a plugin to *clusterise* the Markers within a Leaflet map.
 * **[`react-hook-form`][react-hook-forms]** is a package to manage forms and input fields in React style.
 
-#### Graphical and data resources
+#### 🖼️ Graphical and data resources
 
 * I am also using [Open Street Maps][osm-website] Standard Layer to visualise the train stations.
 * The icons for the markers in the map come from [Flat Icon Website][flat-icon].
@@ -349,6 +355,7 @@ The data manipulation for spatial data it could be different than normal relatio
 For instance, we can have following relational tables:
 
 **`countries`**
+
 | `id` | `name`    | `region`       |
 |:--:  | :---      | :---           |
 | 1    | Bhutan    |  Asia          |
@@ -358,6 +365,7 @@ For instance, we can have following relational tables:
 | 5    | Serbia    |  Europe        |
 
 **`occurrences`**
+
 | `id` | `country_id` | `occurrences` |
 |:--:  | :---:        | :---:         |
 | 1    | 1            |  35           |
@@ -410,7 +418,13 @@ However, it's quite frequently NOT possible be able to rewrite a query like this
 
 I added some unit testing on the project, but they are mainly focus on the `INSERT` query for the train stations and the generation of the location `POINT`. They basically test concern and the model.
 
-Unfortunately, the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿.
+Unfortunately, given the test is low (overall for the front-end part), the test coverage of the repository has been damaged producing technical debt that needs to be addressed soon 😭😿. You can follow the test coverage reports of this project in the [CodeCov website][codecov-portfolio]:
+
+| Sun Burst                      | iCicle                    | Grid                  |
+| :----------------------------: | :-----------------------: | :-------------------: |
+| ![Sun Burst][codecov-sunburst] | ![iCicle][codecov-icicle] | ![Grid][codecov-grid] |
+
+**IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions](#-assumptions) and [Future work](#-future-work) sections there are many chances to improve and for sure it may have even more.
 
 ### 🔐 Security
 
@@ -426,6 +440,17 @@ The deployment is performed automatically by a [CI/CD pipelines][portfolio-pipel
 
 The deployment includes the build of the Docker images for the containers and the push those images to [AWS Elastic Container Registry][aws-ecr] of the correspondent account and then reload the services for the front-end and back-end in the cluster within [AWS Elastic Container Service][aws-ecs] which holds the [Fargate][aws-fargate] workers for the service task definitions.
 
+### 🔀 Related Pull Requests
+
+Following are the pull requests related to this project so far (they also include the infrastructure provisioning of the database instance with Lorentz):
+
+* [PORT-018: Addressing some technical debt for Geo-Football on Rails](https://github.com/zatarain/portfolio/pull/59)
+* [PORT-017: Fixing typos and links on the documentation](https://github.com/zatarain/portfolio/pull/57)
+* [PORT-016: PORT-016: Geo-Football API end-points and Webpage](https://github.com/zatarain/portfolio/pull/57)
+* [PORT-015: Initial migrations and seed data](https://github.com/zatarain/portfolio/pull/56)
+* [LRNT-014: Setting up database and permissions](https://github.com/zatarain/lorentz/pull/23)
+* [PORT-012: Adding database configuration](https://github.com/zatarain/portfolio/pull/48)
+
 ### 💭 Future work
 
 As mentioned in the [Assumptions](#-assumptions) and other sections, there are several rooms for improvement:
@@ -436,6 +461,7 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 * Add more end-points to edit stations and leverage the other fields.
 * Actually support the stadiums and compute the closest train stations based-on fastest and shortest paths.
 * Make sure everything also works on mobile devices.
+* Adding more validations based on the selected location (e. g. what would happens if I try to add an station in the middle of the ocean or in a place outside the box boundary?)
 
 ## 📚 References
 
@@ -444,11 +470,14 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 * [GitHub Actions Documentation][github-actions-docs]
 * [Leaflet documentation][leaflet-docs]
 * [Open Street Maps][osm-website]
+* [React Reference][react-reference]
+* [NextJS Documentation][nextjs-docs]
 
 ---
 
 [what-is-api]: aws.amazon.com/what-is/api
-[zatarain-website]: https:/ulises.zatara.in
+[personal-website]: https://ulises.zatara.in
+[geo-football-on-rails]: https://ulises.zatara.in/geo-football
 [zatarain-portfolio]: https://github.com/zatarain/portfolio
 [zatarain-lorenz]: https://github.com/zatarain/lorentz
 [ror-web]: https://rubyonrails.org
@@ -478,4 +507,9 @@ As mentioned in the [Assumptions](#-assumptions) and other sections, there are s
 [aws-ecs]: https://aws.amazon.com/ecs/
 [aws-fargate]: https://aws.amazon.com/fargate/
 [github-dependabot]: https://github.com/dependabot
-[geo-football]: https://ulises.zatara.in/geo-football
+[nextjs-docs]: https://nextjs.org/docs
+[react-reference]: https://react.dev/reference/react
+[codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
+[codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
+[codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T
+[codecov-icicle]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/icicle.svg?token=CKLB4JPO9T
