@@ -118,7 +118,7 @@ describe('<MapForm ...>...</MapForm>', () => {
 		const save = getByText('Save')
 		await user.click(save)
 		expect(fetch).toHaveBeenCalledTimes(1)
-		expect(setClusters).toHaveBeenCalled()
+		expect(setClusters).toHaveBeenCalledTimes(1)
 
 		const [[url, { body, headers, method }]] = fetch.mock.calls
 		expect(url).toMatch(/\/stations/)
@@ -129,5 +129,38 @@ describe('<MapForm ...>...</MapForm>', () => {
 		expect(JSON.parse(body)).toEqual(expect.objectContaining(data))
 		const [[newClusters]] = setClusters.mock.calls
 		expect(newClusters).toEqual({ GB: [...clusters.GB, { id: 2, ...data }] })
+	})
+
+	it('shows error message when submit fails with bad request status', async () => {
+		const user = userEvent.setup()
+		const clusters = { GB: [] } as GroupedStations
+
+		const setClusters = jest.fn()
+		global.fetch = jest.fn(() => Promise.resolve({
+			ok: false,
+			status: 400,
+			json: jest.fn(() => Promise.resolve({ name: 'can not be blank' }))
+		}))
+
+		const { getByLabelText, getByText } = render(
+			<Provider store={store}>
+				<MapForm clusters={clusters} setClusters={setClusters} />
+			</Provider>
+		)
+
+		await user.type(getByLabelText(/Name/), '  ')
+
+		const save = getByText('Save')
+		await user.click(save)
+		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(setClusters).not.toHaveBeenCalled()
+
+		const [[url, { headers, method }]] = fetch.mock.calls
+		expect(url).toMatch(/\/stations/)
+		expect(method).toBe('POST')
+		expect(headers).toEqual(expect.objectContaining({
+			'Content-Type': 'application/json',
+		}))
+		expect(getByText(/can not be blank/i)).toBeInTheDocument()
 	})
 })
