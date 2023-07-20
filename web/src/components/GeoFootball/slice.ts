@@ -1,17 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AppState } from '#store'
 import type { Station } from './types'
 
 export interface GeoFootballState {
 	latitude: number,
 	longitude: number,
 }
-
-const initialState = {
-	latitude: 0,
-	longitude: 50,
-} as GeoFootballState
-
 
 const BASE_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL
 
@@ -62,15 +54,3 @@ export function flag(country: string) {
 		.map((char) => 127397 + char.charCodeAt(0));
 	return String.fromCodePoint(...points);
 }
-
-const slice = createSlice({
-	name: 'responsive',
-	initialState,
-	reducers: {
-		get(state) {
-			return state
-		},
-	}
-})
-
-export default slice.reducer
