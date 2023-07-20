@@ -7,11 +7,15 @@ import userEvent from '@testing-library/user-event'
 import GeoFootball from '.'
 import type { GroupedStations, Station } from './types'
 
+const events = {
+	dblclick: jest.fn()
+}
+
 jest.mock('react-leaflet', () => {
 	return {
 		__esModule: true,
 		MapContainer: jest.fn(({ children }) => {
-			return (<>{children}</>)
+			return (<div onDoubleClick={(event) => events.dblclick(event)} data-testid="test-map">{children}</div>)
 		}),
 		TileLayer: jest.fn(({ children }) => {
 			return (<>{children}</>)
@@ -22,7 +26,15 @@ jest.mock('react-leaflet', () => {
 		Popup: jest.fn(({ children }) => {
 			return (<>{children}</>)
 		}),
-		useMapEvents: jest.fn(),
+		useMapEvents: jest.fn(({ dblclick }: typeof events) => {
+			events.dblclick = jest.fn((event: any) => dblclick({
+				...event,
+				latlng: {
+					lat: 51.5,
+					lng: 1,
+				},
+			}))
+		}),
 	}
 })
 
@@ -63,13 +75,41 @@ describe('<GeoFootball ...>...</GeoFootball>', () => {
 			],
 		} as GroupedStations
 
-		const { asFragment } = render(
+		const { asFragment, getByTestId } = render(
+			<Provider store={store}>
+				<GeoFootball stationsByCountry={stations} />
+			</Provider>
+		)
+		expect(asFragment()).toMatchSnapshot()
+		expect(getByTestId('test-map')).toBeInTheDocument()
+	})
+
+	it('shows form on popup when user double clicks on the map', async () => {
+		const user = userEvent.setup()
+		const stations = {
+			GB: [
+				{
+					id: 1,
+					name: 'Canary Wharf',
+					slug: 'canary-wharf',
+					country: 'GB',
+					time_zone: 'Europe/London',
+					latitude: 51.50361,
+					longitude: -0.01861,
+					info_en: 'London Underground Station',
+				} as Station,
+			],
+		} as GroupedStations
+
+		const { getByTestId } = render(
 			<Provider store={store}>
 				<GeoFootball stationsByCountry={stations} />
 			</Provider>
 		)
 
-		expect(asFragment()).toMatchSnapshot()
+		const spy = jest.spyOn(events, 'dblclick')
+		await user.dblClick(getByTestId('test-map'))
+		expect(spy).toHaveBeenCalledTimes(1)
 	})
 
 	it('deletes a Marker when clicks in the delete button', async () => {
