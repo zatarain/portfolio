@@ -13,11 +13,13 @@ exports[`<MapForm ...>...</MapForm> renders the component correctly 1`] = `
     <label
       for="name"
     >
-      Name: 
+      Name:
     </label>
     <input
+      id="name"
       name="name"
       required=""
+      role="textbox"
       type="text"
     />
     <div
@@ -30,10 +32,11 @@ exports[`<MapForm ...>...</MapForm> renders the component correctly 1`] = `
         <label
           for="latitude"
         >
-          Latitude: 
+          Latitude:
         </label>
         <input
           disabled=""
+          id="latitude"
           name="latitude"
           type="text"
           value="51.47800"
@@ -43,10 +46,11 @@ exports[`<MapForm ...>...</MapForm> renders the component correctly 1`] = `
         <label
           for="longitude"
         >
-          Longitude: 
+          Longitude:
         </label>
         <input
           disabled=""
+          id="longitude"
           name="longitude"
           type="text"
           value="0.00000"
@@ -62,10 +66,11 @@ exports[`<MapForm ...>...</MapForm> renders the component correctly 1`] = `
         <label
           for="country"
         >
-          Country: 
+          Country:
         </label>
         <select
           class="my-font"
+          id="country"
           name="country"
         >
           <option
@@ -78,22 +83,24 @@ exports[`<MapForm ...>...</MapForm> renders the component correctly 1`] = `
       </div>
       <div>
         <label
-          for="time_zone"
+          for="time-zone"
         >
-          Timezone: 
+          Timezone:
         </label>
         <input
+          id="time-zone"
           name="time_zone"
           type="text"
         />
       </div>
     </div>
     <label
-      for="info_en"
+      for="info-en"
     >
-      Additional information: 
+      Additional information:
     </label>
     <input
+      id="info-en"
       name="info_en"
       type="text"
     />
