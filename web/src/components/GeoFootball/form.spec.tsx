@@ -2,7 +2,7 @@ import { Provider } from 'react-redux'
 import store from '#store'
 import { render } from '@testing-library/react'
 import { jest } from '@jest/globals'
-import GeoFootball from '.'
+import MapForm from './form'
 import type { GroupedStations, Station } from './types'
 
 jest.mock('react-leaflet', () => {
@@ -44,9 +44,9 @@ jest.mock('next/font/google', () => {
 	}
 })
 
-describe('<GeoFootball ...>...</GeoFootball>', () => {
+describe('<MapForm ...>...</MapForm>', () => {
 	it('renders the component correctly', async () => {
-		const stations = {
+		const clusters = {
 			GB: [
 				{
 					id: 1,
@@ -61,9 +61,11 @@ describe('<GeoFootball ...>...</GeoFootball>', () => {
 			],
 		} as GroupedStations
 
+		const setClusters = jest.fn()
+
 		const { asFragment } = render(
 			<Provider store={store}>
-				<GeoFootball stationsByCountry={stations} />
+				<MapForm clusters={clusters} setClusters={setClusters} />
 			</Provider>
 		)
 

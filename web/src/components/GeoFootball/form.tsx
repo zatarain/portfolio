@@ -9,6 +9,7 @@ import Loading from './loading'
 import { flag, saveStation } from './slice'
 
 import styles from './index.module.css'
+import { useDispatch } from 'react-redux'
 
 const emoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'], preload: false })
 
@@ -26,6 +27,7 @@ interface Properties {
 
 const MapForm = ({ clusters, setClusters }: Properties) => {
 	const countries = Object.keys(clusters)
+
 	const initialStation = {
 		name: '',
 		slug: '',
@@ -34,8 +36,9 @@ const MapForm = ({ clusters, setClusters }: Properties) => {
 		latitude: 51.478,
 		longitude: 0,
 	} as Station
+
 	const [station, setStation] = useState(initialStation)
-	const [marker, setMarker] = useState(null);
+	const [marker, setMarker] = useState(null)
 
 	const {
 		register,
@@ -128,7 +131,7 @@ const MapForm = ({ clusters, setClusters }: Properties) => {
 					</button>
 				</form>
 			</Popup>
-		</Marker >
+		</Marker>
 	)
 }
 
