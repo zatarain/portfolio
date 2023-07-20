@@ -69,7 +69,6 @@ const GeoFootball = ({ stationsByCountry }: Properties) => {
 					)}
 				</MarkerClusterGroup>
 			)}
-
 		</MapContainer>
 	)
 }
