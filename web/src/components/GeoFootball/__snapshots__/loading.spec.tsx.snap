@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Loading /> renders the component correctly with passed name 1`] = `
+<DocumentFragment>
+  <img
+    alt="Hello World"
+    data-nimg="1"
+    decoding="async"
+    height="16"
+    loading="lazy"
+    src="/_next/image?url=https%3A%2F%2Fi.gifer.com%2FVAyR.gif&w=32&q=75"
+    srcset="/_next/image?url=https%3A%2F%2Fi.gifer.com%2FVAyR.gif&w=16&q=75 1x, /_next/image?url=https%3A%2F%2Fi.gifer.com%2FVAyR.gif&w=32&q=75 2x"
+    style="color: transparent;"
+    width="16"
+  />
+   Hello World
+</DocumentFragment>
+`;
