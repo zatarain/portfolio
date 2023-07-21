@@ -26,11 +26,11 @@ class StationsController < ApplicationController
 
   def destroy
     @station = TrainStation.find(params[:id])
-    if @station.destroy
-      render status: :ok
-    else
-      render status: :bad_request
-    end
+    raise StandardError, 'Unknown error' unless @station.destroy
+
+    render status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render status: :not_found
   rescue StandardError => exception
     Rails.logger.error "Failed to remove data: #{exception.message}"
     render status: :internal_server_error
