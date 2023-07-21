@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Pages', type: :request do
+describe 'Pages' do
   describe 'GET /' do
     data = {
       name: 'My Test Name',
@@ -33,7 +33,7 @@ describe 'Pages', type: :request do
       curriculum = instance_double(Curriculum, find: data)
       allow(Curriculum).to receive(:new).and_return(curriculum)
       get '/'
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
       expect(response.body).to eq(data.to_json)
     end
 
@@ -44,7 +44,7 @@ describe 'Pages', type: :request do
       allow(Curriculum).to receive(:new).and_return(curriculum)
       allow(Rails.logger).to receive(:error)
       get '/'
-      expect(response.status).to eq(500)
+      expect(response).to have_http_status(:internal_server_error)
       expect(Rails.logger).to have_received(:error)
         .with(/Unable to find curriculum data/)
     end

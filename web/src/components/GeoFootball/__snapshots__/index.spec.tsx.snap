@@ -2,157 +2,169 @@
 
 exports[`<GeoFootball ...>...</GeoFootball> renders the component correctly 1`] = `
 <DocumentFragment>
-  <form
-    class="form"
-    id="popup-add-form"
-    method="POST"
+  <div
+    data-testid="test-map"
   >
-    <h3>
-      Add New Marker
-    </h3>
-    <label
-      for="name"
+    <form
+      class="form"
+      id="popup-add-form"
+      method="POST"
     >
-      Name: 
-    </label>
-    <input
-      name="name"
-      required=""
-      type="text"
-    />
-    <div
-      class="error"
-    />
-    <div
-      class="location"
-    >
-      <div>
-        <label
-          for="latitude"
-        >
-          Latitude: 
-        </label>
-        <input
-          disabled=""
-          name="latitude"
-          type="text"
-          value="51.47800"
-        />
-      </div>
-      <div>
-        <label
-          for="longitude"
-        >
-          Longitude: 
-        </label>
-        <input
-          disabled=""
-          name="longitude"
-          type="text"
-          value="0.00000"
-        />
-      </div>
-    </div>
-    <div
-      class="country-time"
-    >
-      <div
-        class="country"
+      <h3>
+        Add New Marker
+      </h3>
+      <label
+        for="name"
       >
-        <label
-          for="country"
+        Name:
+      </label>
+      <input
+        id="name"
+        name="name"
+        required=""
+        role="textbox"
+        type="text"
+      />
+      <div
+        class="error"
+      />
+      <div
+        class="location"
+      >
+        <div>
+          <label
+            for="latitude"
+          >
+            Latitude:
+          </label>
+          <input
+            disabled=""
+            id="latitude"
+            name="latitude"
+            type="text"
+            value="51.47800"
+          />
+        </div>
+        <div>
+          <label
+            for="longitude"
+          >
+            Longitude:
+          </label>
+          <input
+            disabled=""
+            id="longitude"
+            name="longitude"
+            type="text"
+            value="0.00000"
+          />
+        </div>
+      </div>
+      <div
+        class="country-time"
+      >
+        <div
+          class="country"
         >
-          Country: 
-        </label>
-        <select
-          class="my-font"
-          name="country"
-        >
-          <option
+          <label
+            for="country"
+          >
+            Country:
+          </label>
+          <select
             class="my-font"
-            value="GB"
+            id="country"
+            name="country"
+          >
+            <option
+              class="my-font"
+              value="GB"
+            >
+              🇬🇧
+            </option>
+          </select>
+        </div>
+        <div>
+          <label
+            for="time-zone"
+          >
+            Timezone:
+          </label>
+          <input
+            id="time-zone"
+            name="time_zone"
+            type="text"
+          />
+        </div>
+      </div>
+      <label
+        for="info-en"
+      >
+        Additional information:
+      </label>
+      <input
+        id="info-en"
+        name="info_en"
+        type="text"
+      />
+      <button
+        type="submit"
+      >
+        Save
+      </button>
+    </form>
+    <div
+      class="popup"
+      role="note"
+    >
+      <h3>
+        Canary Wharf
+      </h3>
+      <dl>
+        <dt>
+          Country: 
+        </dt>
+        <dd>
+          GB 
+          <span
+            class="my-font"
           >
             🇬🇧
-          </option>
-        </select>
-      </div>
-      <div>
-        <label
-          for="time_zone"
-        >
+          </span>
+        </dd>
+        <dt>
+          Position: 
+        </dt>
+        <dd>
+          51.50361, -0.01861
+        </dd>
+        <dt>
           Timezone: 
-        </label>
-        <input
-          name="time_zone"
-          type="text"
+        </dt>
+        <dd>
+          Europe/London
+        </dd>
+      </dl>
+      <p>
+        London Underground Station
+      </p>
+      <button
+        class="delete"
+      >
+        <img
+          alt="Delete"
+          data-nimg="1"
+          decoding="async"
+          height="16"
+          loading="lazy"
+          src="/_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=32&q=75"
+          srcset="/_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=16&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=32&q=75 2x"
+          style="color: transparent;"
+          width="16"
         />
-      </div>
+        Delete
+      </button>
     </div>
-    <label
-      for="info_en"
-    >
-      Additional information: 
-    </label>
-    <input
-      name="info_en"
-      type="text"
-    />
-    <button
-      type="submit"
-    >
-      Save
-    </button>
-  </form>
-  <div
-    class="popup"
-  >
-    <h3>
-      Canary Wharf
-    </h3>
-    <dl>
-      <dt>
-        Country: 
-      </dt>
-      <dd>
-        GB 
-        <span
-          class="my-font"
-        >
-          🇬🇧
-        </span>
-      </dd>
-      <dt>
-        Position: 
-      </dt>
-      <dd>
-        51.50361, -0.01861
-      </dd>
-      <dt>
-        Timezone: 
-      </dt>
-      <dd>
-        Europe/London
-      </dd>
-    </dl>
-    <p>
-      London Underground Station
-    </p>
-    <button
-      class="delete"
-    >
-      <img
-        alt="Delete"
-        data-nimg="1"
-        decoding="async"
-        height="16"
-        loading="lazy"
-        src="/_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=32&q=75"
-        srcset="/_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=16&q=75 1x, /_next/image?url=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F6711%2F6711573.png&w=32&q=75 2x"
-        style="color: transparent;"
-        width="16"
-      />
-      Delete
-    </button>
   </div>
 </DocumentFragment>
 `;
