@@ -15,6 +15,6 @@ WORKDIR /web
 RUN npm config set fund false -g \
 	&& npm config set audit false -g
 COPY . .
-RUN npm ci --omit=optional && npm run build
+RUN npm ci && npm run build
 ENTRYPOINT ["bin/entrypoint"]
 CMD ["npm", "run", "start"]
