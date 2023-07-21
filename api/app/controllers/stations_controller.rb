@@ -5,7 +5,7 @@ class StationsController < ApplicationController
     @station = TrainStation.new
     render json: TrainStation.within_box(
       @station.point(49.000000, -7.00000),
-      @station.point(60.000000,  7.00000),
+      @station.point(60.000000, 7.00000),
     ), status: :ok
   rescue StandardError => exception
     Rails.logger.error "Failed to find data: #{exception.message}"
