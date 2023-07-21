@@ -444,6 +444,7 @@ The deployment includes the build of the Docker images for the containers and th
 
 Following are the pull requests related to this project so far (they also include the infrastructure provisioning of the database instance with Lorentz):
 
+* [PORT-018: Addressing some technical debt for Geo-Football on Rails](https://github.com/zatarain/portfolio/pull/59)
 * [PORT-017: Fixing typos and links on the documentation](https://github.com/zatarain/portfolio/pull/57)
 * [PORT-016: PORT-016: Geo-Football API end-points and Webpage](https://github.com/zatarain/portfolio/pull/57)
 * [PORT-015: Initial migrations and seed data](https://github.com/zatarain/portfolio/pull/56)
