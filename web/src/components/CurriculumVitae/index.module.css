@@ -48,7 +48,6 @@
 }
 
 .experiences .contributions ul {
-	margin-top: -1rem;
 	padding-left: 1.5rem;
 }
 
@@ -107,6 +106,10 @@
 		position: absolute;
 		left: -1.25rem;
 		top: 0.25rem;
+	}
+
+	.experiences .contributions ul {
+		margin-top: -1rem;
 	}
 }
 
