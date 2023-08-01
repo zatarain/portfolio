@@ -42,7 +42,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown"
+            class="markdown contributions"
           >
             <p>
               dummy contributions paragraph
@@ -70,7 +70,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown"
+            class="markdown contributions"
           >
             <p>
               dummy contributions paragraph as intern
@@ -190,7 +190,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown"
+            class="markdown undefined"
           >
             <p>
               Dummy description paragraph 01
@@ -218,7 +218,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown"
+            class="markdown undefined"
           >
             <p>
               Dummy description paragraph 02
@@ -253,7 +253,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
         Leadership
       </h2>
       <div
-        class="markdown"
+        class="markdown undefined"
       >
         <p>
           Test leadership paragraph
@@ -269,7 +269,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
         Volunteering Activities
       </h2>
       <div
-        class="markdown"
+        class="markdown undefined"
       >
         <p>
           Test volunteering paragraph

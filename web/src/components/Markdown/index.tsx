@@ -2,12 +2,13 @@ import MarkdownIt from 'markdown-it'
 import styles from './index.module.css'
 
 interface Properties {
+	className?: string
 	content?: string
 }
 
 const katex = require('@vscode/markdown-it-katex')
 
-const Markdown = ({ content }: Properties) => {
+const Markdown = ({ content, className }: Properties) => {
 	const markdown = MarkdownIt()
 	markdown.use(katex, {
 		throwOnError: false,
@@ -19,7 +20,7 @@ const Markdown = ({ content }: Properties) => {
 	const output = markdown.render(content || '')
 
 	return (
-		<div className={styles.markdown} dangerouslySetInnerHTML={{ __html: output }}></div>
+		<div className={`${styles.markdown} ${className}`} dangerouslySetInnerHTML={{ __html: output }}></div>
 	)
 }
 

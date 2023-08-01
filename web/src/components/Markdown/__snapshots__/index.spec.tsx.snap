@@ -3,7 +3,7 @@
 exports[`<Markdown /> renders the component correctly with passed name 1`] = `
 <DocumentFragment>
   <div
-    class="markdown"
+    class="markdown undefined"
   >
     <pre>
       <code>

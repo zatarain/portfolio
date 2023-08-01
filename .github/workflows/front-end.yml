@@ -35,7 +35,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: web/package-lock.json
       - name: Install dependencies
-        run: cd web && npm ci --omit=optional
+        run: cd web && npm ci
 
   lint:
     needs: setup
@@ -48,7 +48,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: web/package-lock.json
       - name: Lint source code
-        run: cd web && npm ci --omit=optional && npm run lint
+        run: cd web && npm ci && npm run lint
 
   build:
     needs: setup
@@ -61,7 +61,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: web/package-lock.json
       - name: Build Next App
-        run: cd web && npm ci --omit=optional && npm run build
+        run: cd web && npm ci && npm run build
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
@@ -82,7 +82,7 @@ jobs:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           path: web/.next
       - name: Run unit tests
-        run: cd web && npm ci --omit=optional && npm test -- --coverage --coveragePathIgnorePatterns='.*\.css'
+        run: cd web && npm ci && npm test -- --coverage --coveragePathIgnorePatterns='.*\.css'
       - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v3
         with:
