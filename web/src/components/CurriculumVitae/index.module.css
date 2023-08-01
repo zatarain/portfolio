@@ -45,7 +45,6 @@
 
 .experiences dl {
 	text-align: center;
-	width: 10rem;
 }
 
 .experiences .contributions ul {
@@ -193,6 +192,12 @@
 
 	.ticks li {
 		list-style-type: disc;
+	}
+
+	.experiences li {
+		grid-gap: 0 .5rem;
+		grid-template-columns: 7rem auto;
+		page-break-inside: avoid;
 	}
 
 	.experiences .contributions li {
