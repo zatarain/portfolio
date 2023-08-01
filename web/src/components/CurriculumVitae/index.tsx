@@ -75,7 +75,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 								<dt>Type:</dt><dd>{job.type}</dd>
 								<dt>Duration:</dt><dd>{`${job.start} - ${job.end}`}</dd>
 							</dl>
-							<Markdown content={job.contributions} />
+							<Markdown className={styles.contributions} content={job.contributions} />
 						</li>
 					)}
 				</ul>
