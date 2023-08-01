@@ -80,11 +80,11 @@
 
 .education dt {
 	display: inline-block;
+	margin-right: 1ch;
 }
 
 .education dd {
 	display: inline-block;
-	margin-left: 1ch;
 }
 
 .education .subjects {
