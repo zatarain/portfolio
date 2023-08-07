@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import Markdown from './index'
+import '#styles/math.css'
 
 const meta: Meta<typeof Markdown> = {
   title: 'Example/Markdown',
