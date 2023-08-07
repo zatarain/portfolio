@@ -135,4 +135,4 @@ jobs:
       - name: Restart the service
         if: ${{ github.event_name == 'push' }}
         run: |
-          aws ecs update-service --force-new-deployment --service cv-api --cluster curriculum-vitae
+          aws ecs update-service --force-new-deployment --service cv-website --cluster curriculum-vitae
