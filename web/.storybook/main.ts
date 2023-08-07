@@ -1,4 +1,5 @@
-import type { StorybookConfig } from '@storybook/react-webpack5'
+import * as path from 'path'
+import type { StorybookConfig } from '@storybook/nextjs'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -9,11 +10,13 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
   ],
   framework: {
-    name: '@storybook/react-webpack5',
-    options: {},
+    name: '@storybook/nextjs',
+    options: {
+      nextConfigPath: path.resolve(__dirname, '../next.config.js'),
+    },
   },
   docs: {
-    autodocs: 'tag',
-  },
-}
-export default config
+    autodocs: 'tag'
+  }
+};
+export default config;
