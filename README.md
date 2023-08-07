@@ -19,6 +19,7 @@ This project aims to be [my personal website][ulises-zatarain] and also an inter
 * ✅ [Testing](#-testing)
   * 🤖 [Automated Unit Tests](#-automated-unit-tests)
   * 💯 [Coverage](#-coverage)
+  * 📕 [Storybook](#-storybook)
 * 📚 [References](#-references)
 
 ## 🔭 Overview
@@ -97,19 +98,41 @@ You can follow the test coverage reports of this project in the [CodeCov website
 
 **IMPORTANT NOTE:** Even if we had good coverage, that doesn't mean the API would be flawless, as it was mentioned in the [Assumptions section](#-assumptions-and-disclaimers) there are many chances to improve and for sure it may have even more.
 
+### 📕 Storybook
+
+This project has Storybook to test react components in isolated way. It can be locally executed using following command in your terminal:
+
+```sh
+npm run storybook
+```
+
+That command will run a Storybook server locally on port `5001` and then open a new tab in the browser as following:
+
+![image](https://github.com/zatarain/portfolio/assets/539783/32b1c0ff-a8df-40ae-bf66-803eece3a1c6)
+
+It's highly recommended to proactively add stories for new components and keep the existing ones up to date.
+
 ## 📚 References
 
 * [Ruby On Rails Documentation][ror-docs]
+* [React Reference][react-docs]
 * [Next JS Documentation][next-docs]
+* [Redux Usage Guides][redux-docs]
 * [GitHub Actions Documentation][github-actions-docs]
+* [GitHub Dependabot Documentation][github-dependabot-docs]
+* [Storybook Documentation][storybook-docs]
 
 ---
 
 [ulises-zatarain]: https://ulises.zatara.in
 [lorentz]: https://github.com/zatarain/lorentz
 [ror-docs]: https://api.rubyonrails.org
+[react-docs]: https://react.dev/reference/react
 [next-docs]: https://nextjs.org/docs
+[redux-docs]: https://redux.js.org/usage
 [github-actions-docs]: https://docs.github.com/en/actions
+[github-dependabot-docs]: <https://docs.github.com/en/code-security/dependabot>
+[storybook-docs]: <https://storybook.js.org/docs/react/get-started/install>
 [codecov-portfolio]: https://app.codecov.io/gh/zatarain/portfolio
 [codecov-sunburst]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/sunburst.svg?token=CKLB4JPO9T
 [codecov-grid]: https://codecov.io/gh/zatarain/portfolio/branch/main/graphs/tree.svg?token=CKLB4JPO9T

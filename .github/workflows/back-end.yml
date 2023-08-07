@@ -2,7 +2,6 @@ name: Back-end Continuous Integration
 on:
   push:
     branches: [main, staging, development]
-    paths: ['api/**', '.github/workflows/back-end.yml']
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -136,4 +135,4 @@ jobs:
       - name: Restart the service
         if: ${{ github.event_name == 'push' }}
         run: |
-          aws ecs update-service --force-new-deployment --service cv-api --cluster curriculum-vitae
+          aws ecs update-service --force-new-deployment --service cv-website --cluster curriculum-vitae
