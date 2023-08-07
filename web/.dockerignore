@@ -1,5 +1,8 @@
 **/node_modules/
 **/.next/
+**/.storybook/
+.babelrc
+**.stories.**
 **/api/tmp/
 **/api/log/
 Dockerfile
