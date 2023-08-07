@@ -2,7 +2,6 @@ name: Front-end Continuous Integration
 on:
   push:
     branches: [main, staging, development]
-    paths: ['web/**', '.github/workflows/front-end.yml']
   pull_request:
     branches: [main]
     types: [opened, synchronize]

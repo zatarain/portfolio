@@ -2,7 +2,6 @@ name: Back-end Continuous Integration
 on:
   push:
     branches: [main, staging, development]
-    paths: ['api/**', '.github/workflows/back-end.yml']
   pull_request:
     branches: [main]
     types: [opened, synchronize]
