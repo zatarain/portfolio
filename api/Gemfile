@@ -59,7 +59,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0.3'
   gem 'rubocop', '~> 1.54', require: false
   gem 'rubocop-rails', '~> 2.20'
-  gem 'rubocop-rspec', '~> 2.22.0'
+  gem 'rubocop-rspec', '~> 2.24.0'
   gem 'simplecov', require: false
   gem 'simplecov-cobertura'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
