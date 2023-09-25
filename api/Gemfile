@@ -20,7 +20,7 @@ gem 'rgeo'
 gem 'rgeo-activerecord'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.3'
+gem 'puma', '~> 6.4'
 
 # Use YAML parser
 gem 'safe_yaml', '~> 1.0', '>= 1.0.5'
