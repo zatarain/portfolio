@@ -14,7 +14,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@types/markdown-it": "^12.2.3",
     "@vscode/markdown-it-katex": "^1.0.0",
-    "katex": "^0.16.8",
+    "katex": "^0.16.10",
     "leaflet": "^1.9.4",
     "markdown-it": "^13.0.1",
     "next": "latest",
