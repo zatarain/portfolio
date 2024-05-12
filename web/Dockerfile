@@ -17,4 +17,5 @@ RUN npm config set fund false -g \
 COPY . .
 RUN npm ci && npm run build
 ENTRYPOINT ["bin/entrypoint"]
+# CMD ["/bin/bash"]
 CMD ["npm", "run", "start"]
