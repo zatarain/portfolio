@@ -12,10 +12,10 @@ ENV LANG=C.UTF-8 \
 	NODE_ENV=development \
 	NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 WORKDIR /web
-# RUN npm config set fund false -g \
-# 	&& npm config set audit false -g
+RUN npm config set fund false -g \
+	&& npm config set audit false -g
 COPY . .
-# RUN npm ci && npm run build
+RUN npm ci && npm run build
 ENTRYPOINT ["bin/entrypoint"]
-CMD ["/bin/bash"]
-#CMD ["npm", "run", "start"]
+# CMD ["/bin/bash"]
+CMD ["npm", "run", "start"]
