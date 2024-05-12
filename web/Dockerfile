@@ -16,6 +16,6 @@ WORKDIR /web
 # 	&& npm config set audit false -g
 COPY . .
 # RUN npm ci && npm run build
-CMD ["curl", "-vvv", "https://api.beta.zatara.in/"]
 ENTRYPOINT ["bin/entrypoint"]
+CMD ["/bin/bash"]
 #CMD ["npm", "run", "start"]

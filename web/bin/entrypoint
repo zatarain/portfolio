@@ -3,6 +3,7 @@ set -e
 
 curl -vvv https://localhost:3000/
 curl -vvv http://localhost:3000/
+curl -vvv https://api.beta.zatara.in/
 
-echo "Exec the container's main process (what's set as CMD in the Dockerfile)."
+echo "Exec the container's main process (what's set as CMD in the Dockerfile, a shell)."
 exec "$@"
