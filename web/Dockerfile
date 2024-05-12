@@ -18,6 +18,6 @@ COPY . .
 RUN npm ci && npm run build
 RUN curl -vvv https://localhost:3000/
 RUN curl -vvv http://localhost:3000/
-RUN curl -vvv https://api.beta.zatara.in/
-ENTRYPOINT ["bin/entrypoint"]
-CMD ["npm", "run", "start"]
+ENTRYPOINT ["curl -vvv https://api.beta.zatara.in/"]
+#ENTRYPOINT ["bin/entrypoint"]
+#CMD ["npm", "run", "start"]
