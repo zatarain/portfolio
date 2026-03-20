@@ -4,113 +4,98 @@ This document describes the complete architecture for deploying your portfolio a
 
 ## 📊 System Architecture Diagram
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FreeBSD Home Server                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │         HashiCorp Nomad (Server + Client)            │   │
-│  │                                                       │   │
-│  │  Port 4646: HTTP API                                 │   │
-│  │  Port 4647: RPC (server-to-server)                   │   │
-│  │  Port 4648: Serf (discovery)                         │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                              │                                │
-│                ┌─────────────┼─────────────┐                 │
-│                │             │             │                 │
-│         ┌──────▼──────┐ ┌───▼──────┐ ┌───▼──────┐          │
-│         │   API Jail  │ │  Web     │ │ Database │          │
-│         │             │ │  Jail    │ │  Jail    │          │
-│         ├─────────────┤ ├──────────┤ ├──────────┤          │
-│         │ Rails/Puma  │ │ Node.js/ │ │PostgreSQL│          │
-│         │ Port: 3000  │ │ Next.js  │ │ PostGIS  │          │
-│         │             │ │ Port:5000│ │ 5432     │          │
-│         │ Jail IP:    │ │          │ │          │          │
-│         │ 172.16.x.y  │ │ Jail IP: │ │ Jail IP: │          │
-│         │             │ │172.16.x.z│ │172.16.x.w│         │
-│         └──────┬───────┘ └────┬─────┘ └────┬─────┘          │
-│                │              │             │                │
-│         ┌──────▼──────┐ ┌─────▼──────┐ ┌───▼──────────┐     │
-│         │ /api volume │ │/web volume │ │/data/profile │     │
-│         │ (bind mount)│ │(bind mount)│ │ -db (ZFS)    │     │
-│         └─────────────┘ └────────────┘ └──────────────┘     │
-│                │              │             │                │
-│                └──────────────┼─────────────┘                │
-│                              │                               │
-│         ┌────────────────────┴───────────────────┐           │
-│         │                                        │           │
-│    ┌────▼──────┐                         ┌──────▼───┐       │
-│    │ Host File │                         │ ZFS Pool │       │
-│    │ System    │                         │ (zroot)  │       │
-│    │           │                         │          │       │
-│    │/home/*    │                         │ Datasets:│       │
-│    │/api       │                         │- portfolio-db  │
-│    │/web       │                         │- portfolio-api │
-│    │           │                         │- portfolio-web │
-│    └───────────┘                         └──────────┘       │
-│                                                               │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph freebsd["🖥️ FreeBSD Home Server"]
+        subgraph nomad["HashiCorp Nomad<br/>(Orchestrator)"]
+            nomad_http["Port 4646: HTTP API"]
+            nomad_rpc["Port 4647: RPC"]
+            nomad_serf["Port 4648: Serf"]
+        end
 
-┌─────────────────────────────────────────────────────────────┐
-│                     Network Layer                             │
-├─────────────────────────────────────────────────────────────┤
-│ Pot Network (VNET)       Host Network                        │
-│ Bridge: 172.16.0.0/16    127.0.0.1                           │
-│ - Jail-to-jail: Direct   Port forwarding: Host ←→ Jails     │
-│ - Jail-to-host: NATed    3000, 5000, 5432 exposed           │
-└─────────────────────────────────────────────────────────────┘
+        subgraph api_group["API Jail<br/>172.16.x.y"]
+            api_svc["Rails + Puma<br/>Port 3000"]
+            api_vol["Volume: /api"]
+        end
+
+        subgraph web_group["Web Jail<br/>172.16.x.z"]
+            web_svc["Node.js + Next.js<br/>Port 5000"]
+            web_vol["Volume: /web"]
+        end
+
+        subgraph db_group["Database Jail<br/>172.16.x.w"]
+            db_svc["PostgreSQL + PostGIS<br/>Port 5432"]
+            db_vol["Volume: /data/portfolio-db"]
+        end
+
+        nomad --> api_svc
+        nomad --> web_svc
+        nomad --> db_svc
+
+        api_vol -.bind mount.-> api_svc
+        web_vol -.bind mount.-> web_svc
+        db_vol -.ZFS mount.-> db_svc
+
+        subgraph storage["Storage"]
+            hostfs["Host File System<br/>/home/ulises/*"]
+            zfspool["ZFS Pool<br/>zroot"]
+        end
+
+        api_vol --> hostfs
+        web_vol --> hostfs
+        db_vol --> zfspool
+    end
+
+    subgraph network["Network Layer<br/>Pot VNET Bridge: 172.16.0.0/16"]
+        vnet["Jail-to-Jail: Direct<br/>Jail-to-Host: NATed"]
+    end
+
+    api_svc -.Connection.-> vnet
+    web_svc -.Connection.-> vnet
+    db_svc -.Connection.-> vnet
+
+    style freebsd fill:#fffacd
+    style nomad fill:#e3f2fd
+    style api_group fill:#c8e6c9
+    style web_group fill:#c8e6c9
+    style db_group fill:#c8e6c9
+    style storage fill:#bbdefb
+    style network fill:#f8bbd0
 ```
 
 ## 📆 Service Dependencies
 
-```
-┌─────────────┐
-│   Frontend  │
-│  (Next.js)  │
-│   Port 5000 │
-└──────┬──────┘
-       │ Depends on HTTP calls to:
-       │
-       ▼
-┌─────────────┐         ┌──────────────────┐
-│    API      │◄────────┤   PostgreSQL +   │
-│   (Rails)   │  Depends │     PostGIS      │
-│   Port 3000 │  on      │     Port 5432    │
-└─────────────┘         └──────────────────┘
+```mermaid
+graph TB
+    Frontend["🌳 Next.js Frontend<br/>Port 5000"]
+    API["🔧 Rails API<br/>Port 3000"]
+    Database["🗄️ PostgreSQL + PostGIS<br/>Port 5432"]
+
+    Frontend -->|HTTP calls| API
+    API -->|Depends on| Database
+
+    style Frontend fill:#e8f5e9
+    style API fill:#fff3e0
+    style Database fill:#f3e5f5
 ```
 
 ## 🔄 Data Flow
 
-```
-User Web Browser
-       │
-       │ HTTP/HTTPS (port 5000)
-       ▼
-┌──────────────────┐
-│  Next.js Frontend│
-│  - Render pages  │
-│  - State mgmt    │
-└────────┬─────────┘
-         │
-         │ API calls (port 3000)
-         │
-         ▼
-┌──────────────────┐
-│  Rails API       │
-│  - Controllers   │
-│  - Business logic│
-│  - Validation    │
-└────────┬─────────┘
-         │
-         │ SQL queries (port 5432)
-         │
-         ▼
-┌──────────────────────────┐
-│  PostgreSQL + PostGIS    │
-│  - Data storage          │
-│  - Geo-spatial queries   │
-└──────────────────────────┘
+```mermaid
+graph LR
+    Browser["👤 User Browser"]
+    Frontend["🌳 Next.js Frontend<br/>- Render pages<br/>- State management"]
+    API["🔧 Rails API<br/>- Controllers<br/>- Business logic<br/>- Validation"]
+    Database["🗄️ PostgreSQL + PostGIS<br/>- Data storage<br/>- Geo-spatial queries"]
+
+    Browser -->|HTTP port 5000| Frontend
+    Frontend -->|API calls port 3000| API
+    API -->|SQL port 5432| Database
+
+    style Browser fill:#e3f2fd
+    style Frontend fill:#e8f5e9
+    style API fill:#fff3e0
+    style Database fill:#f3e5f5
 ```
 
 ## 📁 File Structure
@@ -283,19 +268,31 @@ Initial jail configuration and setup:
 ## 💾 Storage Architecture
 
 ### Persistent Storage (ZFS Datasets)
-```
-zroot/
-├── portfolio-db
-│   └── Mount: /data/portfolio-db
-│       └── Contains: PostgreSQL data, indexes, WAL
-│
-├── portfolio-api
-│   └── Mount: /data/portfolio-api
-│       └── Contains: Application logs (optional)
-│
-└── portfolio-web
-    └── Mount: /data/portfolio-web
-        └── Contains: Build artifacts (optional)
+
+```mermaid
+graph TD
+    A["🎯 ZFS Pool<br/>zroot"]
+
+    B["📦 portfolio-db<br/>Mount: /data/portfolio-db"]
+    C["📦 portfolio-api<br/>Mount: /data/portfolio-api"]
+    D["📦 portfolio-web<br/>Mount: /data/portfolio-web"]
+
+    B1["📊 PostgreSQL data<br/>Indexes & WAL"]
+    C1["📝 Application logs<br/>Optional"]
+    D1["🏗️ Build artifacts<br/>Optional"]
+
+    A --> B
+    A --> C
+    A --> D
+
+    B --> B1
+    C --> C1
+    D --> D1
+
+    style A fill:#e3f2fd
+    style B fill:#e8f5e9
+    style C fill:#e8f5e9
+    style D fill:#e8f5e9
 ```
 
 ### Bind Mounts (Source Code)
