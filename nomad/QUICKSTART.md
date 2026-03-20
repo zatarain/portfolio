@@ -12,11 +12,10 @@
 ```sh
 # Run these as root
 sudo pkg update
-sudo pkg install -y nomad pot ruby32 ruby32-gems python3 postgresql14-client
+sudo pkg install -y nomad pot postgresql14-client
 ```
 - [ ] Nomad installed (`which nomad`)
 - [ ] Pot installed (`which pot`)
-- [ ] Ruby installed (`ruby --version`)
 
 ## 🔧 Preparation Phase (Sequential Order)
 

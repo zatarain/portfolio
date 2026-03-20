@@ -14,17 +14,17 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 log() {
-    echo -e "${GREEN}[*]${NC} $1"
+  echo -e "${GREEN}[*]${NC} $1"
 }
 
 error() {
-    echo -e "${RED}[!]${NC} $1"
-    exit 1
+  echo -e "${RED}[!]${NC} $1"
+  exit 1
 }
 
 # Load environment
 if [ -f "$SCRIPT_DIR/../pot/env.sh" ]; then
-    . "$SCRIPT_DIR/../pot/env.sh"
+  . "$SCRIPT_DIR/../pot/env.sh"
 fi
 
 # Check Nomad is running
