@@ -48,12 +48,12 @@ Before starting, ensure you have:
 
 ### 3. Installation (In Order)
 
-```bash
+```sh
 # 1. Navigate to this directory
 cd /home/ulises/projects/portfolio/nomad
 
 # 2. Create jails (one-time setup)
-sudo bash pot/setup-jails.sh
+sudo sh pot/setup-jails.sh
 
 # 3. Configure Nomad
 sudo cp pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
@@ -103,7 +103,7 @@ nomad/
 
 ### Deploy & Manage Services
 
-```bash
+```sh
 # Deploy all services
 ./deploy.sh
 
@@ -125,7 +125,7 @@ nomad job run jobs/api.hcl
 
 ### Manage Jails
 
-```bash
+```sh
 pot list                    # Show all jails
 pot show portfolio-db       # Show jail details
 pot start portfolio-db      # Start jail
@@ -135,7 +135,7 @@ pot exec portfolio-db ls    # Run command in jail
 
 ### Verify Services
 
-```bash
+```sh
 # Check all ports
 sockstat -l | grep -E '3000|5000|5432'
 
@@ -153,7 +153,7 @@ psql -h localhost -U portfolio -d portfolio -c "SELECT 1;"
 
 Edit `~/.env.nomad` to configure:
 
-```bash
+```sh
 # Database credentials (change from defaults!)
 POSTGRES_HOST=portfolio-db
 POSTGRES_PORT=5432
@@ -192,7 +192,7 @@ Each service:
 
 To deploy code changes:
 
-```bash
+```sh
 # 1. Commit and push changes to your repo
 git add .
 git commit -m "Update API"
@@ -216,7 +216,7 @@ Nomad will:
 ## 🔨 Troubleshooting
 
 ### Services won't start
-```bash
+```sh
 nomad alloc logs <allocation-id>  # See error messages
 nomad job plan jobs/postgres.hcl  # Validate job file
 ```
@@ -224,7 +224,7 @@ nomad job plan jobs/postgres.hcl  # Validate job file
 → See [TROUBLESHOOT.md](./TROUBLESHOOT.md) for detailed help
 
 ### Database connection issues
-```bash
+```sh
 # Check PostgreSQL is running
 pot exec portfolio-db ps aux | grep postgres
 
@@ -233,7 +233,7 @@ psql -h localhost -U portfolio -d portfolio
 ```
 
 ### Frontend can't reach API
-```bash
+```sh
 # Check API is responding
 curl http://localhost:3000/health
 
@@ -276,13 +276,13 @@ nomad alloc logs <web-allocation-id> | grep API_URL
 ## 🚀 Deployment Modes
 
 ### Development
-```bash
+```sh
 # Suitable for local testing
 RAILS_ENV=development NODE_ENV=development ./deploy.sh
 ```
 
 ### Production
-```bash
+```sh
 # Current setup (single node, auto-restart)
 RAILS_ENV=production NODE_ENV=production ./deploy.sh
 
@@ -302,7 +302,7 @@ After deployment, you should have:
 
 ## 📊 Quick Reference
 
-```bash
+```sh
 # One-liner to check everything
 echo "=== Nomad ===" && nomad job status && \
 echo "=== Jails ===" && pot list && \

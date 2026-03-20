@@ -32,7 +32,7 @@ All communication flows through jail network interfaces with ZFS datasets for pe
 
 ## 1⃣️⃣ Install Nomad on FreeBSD
 
-```bash
+```sh
 # Install Nomad (as of 2026, install latest stable)
 pkg install nomad
 
@@ -108,7 +108,7 @@ telemetry {
 
 ## 3⃣️⃣ Enable and Start Nomad
 
-```bash
+```sh
 # Enable Nomad in rc.conf
 sysrc nomad_enable="YES"
 sysrc nomad_config="/etc/nomad.d"
@@ -122,7 +122,7 @@ nomad node status
 
 ## 4⃣️⃣ Create ZFS Datasets
 
-```bash
+```sh
 # Determine your ZFS pool (e.g., zroot)
 ZPOOL=$(zfs list -H -o name | grep -E '^[^/]+$' | head -1)
 
@@ -144,7 +144,7 @@ See [pot_setup.sh](./pot_setup.sh) for automated jail creation, or follow manual
 ### Manual Jail Creation
 
 #### PostgreSQL Jail
-```bash
+```sh
 # Create PostgreSQL jail
 pot create -p portfolio-db -b 13.2 -f zfs -t default
 
@@ -162,7 +162,7 @@ pot exec portfolio-db sysrc postgresql_enable=YES
 ```
 
 #### API Jail
-```bash
+```sh
 # Create API jail
 pot create -p portfolio-api -b 13.2 -f zfs -t default
 
@@ -174,7 +174,7 @@ pot exec portfolio-api pkg install -y ruby32 ruby32-gems git
 ```
 
 #### Web Jail
-```bash
+```sh
 # Create Web jail
 pot create -p portfolio-web -b 13.2 -f zfs -t default
 
@@ -189,7 +189,7 @@ pot exec portfolio-web pkg install -y node npm
 
 Deploy your services:
 
-```bash
+```sh
 # Deploy PostgreSQL
 nomad job run jobs/postgres.hcl
 
@@ -206,7 +206,7 @@ nomad alloc status
 
 ## 7⃣️⃣ Verify Services
 
-```bash
+```sh
 # Check PostgreSQL connection
 psql -h <jail-ip> -U portfolio -d portfolio
 
@@ -221,7 +221,7 @@ curl http://localhost:5000
 
 Create `.env.nomad` in the project root with credentials:
 
-```bash
+```sh
 # PostgreSQL
 POSTGRES_HOST=portfolio-db  # Jail hostname or 10.0.0.x IP
 POSTGRES_PORT=5432
@@ -251,7 +251,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 
 Pot jails get network interfaces automatically. To verify:
 
-```bash
+```sh
 # List jails
 pot list
 
@@ -271,7 +271,7 @@ The `jobs/postgres.hcl` mounts `/data/portfolio-db` from the host into the jail 
 ## 🔨 Troubleshooting
 
 ### Services won't connect
-```bash
+```sh
 # Verify jails are running
 pot list
 pot status
@@ -284,7 +284,7 @@ pot exec portfolio-api tail -f /var/log/nomad-portfolio-api.log
 ```
 
 ### Database connection refused
-```bash
+```sh
 # Verify PostgreSQL is listening
 pot exec portfolio-db netstat -an | grep 5432
 
@@ -293,7 +293,7 @@ nomad job inspect postgres
 ```
 
 ### Port conflicts
-```bash
+```sh
 # Find what's using ports
 sockstat -l | grep -E '3000|5000|5432'
 
@@ -303,7 +303,7 @@ nomad alloc status <allocation-id>
 
 ## ↩️ Rollback/Cleanup
 
-```bash
+```sh
 # Stop a job
 nomad job stop portfolio-api
 

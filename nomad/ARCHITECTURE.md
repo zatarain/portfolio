@@ -284,7 +284,7 @@ To scale to multiple nodes:
 ## 📑 Backup Strategy
 
 ### Data Backups (ZFS Snapshots)
-```bash
+```sh
 # Manual snapshot
 zfs snapshot zroot/portfolio-db@backup-$(date +%s)
 
@@ -303,7 +303,7 @@ zfs rollback zroot/portfolio-db@backup-123456789
 - Nomad job definitions versioned (in nomad/ directory)
 
 ### Full System Backup
-```bash
+```sh
 # ZFS send to file
 zfs send -R zroot/portfolio-db | gzip > /backup/portfolio-db.zfs.gz
 
@@ -364,7 +364,7 @@ Consider adding:
 
 #### Complete Jail Failure
 1. Destroy failed jail: `pot destroy portfolio-db`
-2. Recreate from scratch: `sudo bash nomad/pot/setup-jails.sh`
+2. Recreate from scratch: `sudo sh nomad/pot/setup-jails.sh`
 3. Resubmit Nomad job (data persists in ZFS)
 
 #### System Failure / Power Loss

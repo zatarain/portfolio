@@ -4,7 +4,7 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
 JOBS_DIR="$SCRIPT_DIR/jobs"
 
@@ -24,7 +24,7 @@ error() {
 
 # Load environment
 if [ -f "$SCRIPT_DIR/../pot/env.sh" ]; then
-    source "$SCRIPT_DIR/../pot/env.sh"
+    . "$SCRIPT_DIR/../pot/env.sh"
 fi
 
 # Check Nomad is running

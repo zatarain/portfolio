@@ -4,7 +4,7 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_FILE="/tmp/pot-setup.log"
 
 # Colors for output
@@ -95,7 +95,7 @@ create_jail() {
         "web")
             log "Configuring Web (Next.js) jail..."
             pot exec "$jail_name" pkg update -f
-            pot exec "$jail_name" pkg install -y node npm bash
+            pot exec "$jail_name" pkg install -y node npm
             ;;
     esac
 

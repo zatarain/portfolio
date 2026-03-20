@@ -5,7 +5,7 @@
 ### 🌐 Network & Connectivity Issues
 
 #### "Cannot connect to Nomad" or "connection refused"
-```bash
+```sh
 # Check if Nomad is running
 ps aux | grep nomad
 
@@ -29,7 +29,7 @@ tail -f /var/log/nomad/nomad.log
 - Run Nomad with debug logging: `NOMAD_LOG_LEVEL=debug nomad agent -config ...`
 
 #### Database connection refused in API
-```bash
+```sh
 # Check PostgreSQL is running in jail
 pot exec portfolio-db ps aux | grep postgres
 
@@ -51,7 +51,7 @@ echo $POSTGRES_USERNAME
 - Initialize database if not done: `nomad job restart portfolio-postgres`
 
 #### Frontend can't reach API
-```bash
+```sh
 # Check API is actually running
 nomad job status portfolio-api
 
@@ -69,7 +69,7 @@ pot exec portfolio-web env | grep API_URL
 - Check Next.js build includes correct API URL
 
 #### "Cannot reach jail from host"
-```bash
+```sh
 # List jails and check network
 pot list
 pot show portfolio-db
@@ -92,7 +92,7 @@ pfctl -s rules | head -20
 ### 💾 PostgreSQL Specific Issues
 
 #### "psql: error: could not connect to server"
-```bash
+```sh
 # Check PostgreSQL data directory permissions
 ls -la /data/portfolio-db/
 
@@ -109,7 +109,7 @@ pot exec portfolio-db cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep
 - Then restart job: `nomad job restart portfolio-postgres`
 
 #### Database won't initialize
-```bash
+```sh
 # Check Nomad job logs
 nomad alloc logs <postgres-allocation-id>
 
@@ -126,7 +126,7 @@ pot exec portfolio-db su - postgres -c "initdb -D /var/lib/postgresql/data/pgdat
 - Manual initialization may be needed for first setup
 
 #### "FATAL: remaining connection slots are reserved"
-```bash
+```sh
 # Check current connections
 psql -h localhost -U postgres -c "SELECT count(*) FROM pg_stat_activity;"
 
@@ -142,7 +142,7 @@ psql -h localhost -U postgres -c "SELECT count(*) FROM pg_stat_activity;"
 ### 🜠 Rails/API Specific Issues
 
 #### "Rails can't find gem bundler"
-```bash
+```sh
 # Check Ruby version in API jail
 pot exec portfolio-api ruby --version
 
@@ -159,7 +159,7 @@ ls -la /api/Gemfile.lock
 - Regenerate Gemfile.lock: `bundle install` (on host, then commit)
 
 #### "Could not locate Gemfile"
-```bash
+```sh
 # Check source volume is mounted
 pot exec portfolio-api ls -la /api/
 
@@ -173,7 +173,7 @@ nomad job inspect portfolio-api | grep -A5 volume_mount
 - Restart Nomad client or resubmit job
 
 #### Rails migrations fail
-```bash
+```sh
 # Check database connection first
 pot exec portfolio-api psql -h portfolio-db -U portfolio -d portfolio -c "\dt"
 
@@ -192,7 +192,7 @@ pot exec portfolio-api /bin/sh -c "cd /api && bundle exec rake db:migrate:status
 ### 💞 Next.js/Frontend Specific Issues
 
 #### "next: command not found"
-```bash
+```sh
 # Check Node installation
 pot exec portfolio-web node --version
 pot exec portfolio-web npm --version
@@ -206,7 +206,7 @@ pot exec portfolio-web npm list next
 - Install npm dependencies: `pot exec portfolio-web npm ci --only=production`
 
 #### Frontend shows 404 for API calls
-```bash
+```sh
 # Check environment variables in next job
 nomad alloc logs <web-allocation-id>
 
@@ -225,7 +225,7 @@ pot exec portfolio-web ls -la /web/.next/
 ### 🚀 Nomad Job Submission Issues
 
 #### "Job failed to validate"
-```bash
+```sh
 # Validate job file syntax
 nomad job validate jobs/postgres.hcl
 nomad job validate jobs/api.hcl
@@ -241,7 +241,7 @@ nomad job plan jobs/postgres.hcl
 - Verify all required fields are present
 
 #### "No suitable nodes"
-```bash
+```sh
 # Check available nodes
 nomad node status
 
@@ -258,7 +258,7 @@ nomad job inspect portfolio-api | grep -A3 constraint
 - Remove restrictive constraints if testing
 
 #### Jobs pending/stuck
-```bash
+```sh
 # Check job status in detail
 nomad job status portfolio-api
 nomad alloc status <allocation-id>
@@ -278,7 +278,7 @@ nomad job restart portfolio-api
 ### 💾 Storage & Persistence Issues
 
 #### "No such file or directory" for volumes
-```bash
+```sh
 # Verify ZFS datasets created
 zfs list | grep portfolio
 
@@ -295,7 +295,7 @@ cat /etc/nomad.d/nomad.hcl | grep -A5 host_volume
 - Ensure Nomad client has been restarted after config changes
 
 #### Data disappears after restart
-```bash
+```sh
 # Check if data persists in ZFS
 zfs list -s creation -r zroot/portfolio
 zfs get mounted zroot/portfolio-db
@@ -312,7 +312,7 @@ zfs list -t snapshot | grep portfolio
 ### ⚡ Performance Issues
 
 #### High CPU/Memory usage
-```bash
+```sh
 # Monitor real-time usage
 top
 
@@ -329,7 +329,7 @@ nomad alloc status -verbose <allocation-id>
 - Reduce worker count or thread pool size
 
 #### Slow database queries
-```bash
+```sh
 # Check PostgreSQL slow query log
 pot exec portfolio-db tail -f /var/log/postgresql/postgresql.log
 
@@ -348,7 +348,7 @@ pot exec portfolio-api /bin/sh -c "psql -h portfolio-db -U portfolio -d portfoli
 ### 🔍 Logging & Debugging
 
 #### Enable debug logging
-```bash
+```sh
 # Nomad debug logging
 export NOMAD_LOG_LEVEL=debug
 nomad job status
@@ -361,8 +361,8 @@ tail -f /var/log/messages
 ```
 
 #### Capture full diagnostic information
-```bash
-#!/bin/bash
+```sh
+#!/bin/sh
 echo "=== Nomad Status ===" > /tmp/diagnostics.txt
 nomad node status >> /tmp/diagnostics.txt
 nomad job status >> /tmp/diagnostics.txt

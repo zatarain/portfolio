@@ -9,7 +9,7 @@
 - [ ] Network connectivity confirmed
 
 ### Package Installation
-```bash
+```sh
 # Run these as root
 sudo pkg update
 sudo pkg install -y nomad pot ruby32 ruby32-gems python3 postgresql14-client
@@ -21,16 +21,16 @@ sudo pkg install -y nomad pot ruby32 ruby32-gems python3 postgresql14-client
 ## 🔧 Preparation Phase (Sequential Order)
 
 ### 1. Setup Pot Jails
-```bash
+```sh
 cd /home/ulises/projects/portfolio/nomad/pot
-sudo bash setup-jails.sh
+sudo sh setup-jails.sh
 ```
 - [ ] All three jails created (portfolio-db, portfolio-api, portfolio-web)
 - [ ] ZFS datasets created at /data/portfolio-*
 - [ ] Jails can be listed: `pot list`
 
 ### 2. Configure Nomad Agent
-```bash
+```sh
 # Copy example config
 sudo cp /home/ulises/projects/portfolio/nomad/pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
 
@@ -43,7 +43,7 @@ ls -la /etc/nomad.d/
 - [ ] raw_exec driver enabled
 
 ### 3. Start Nomad
-```bash
+```sh
 # Option A: Using service (if rc.d script exists)
 sudo sysrc nomad_enable="YES"
 sudo sysrc nomad_config="/etc/nomad.d"
@@ -62,7 +62,7 @@ nomad node status
 - [ ] Nomad UI accessible at http://localhost:4646
 
 ### 4. Prepare Environment
-```bash
+```sh
 # Copy and edit environment file
 cp /home/ulises/projects/portfolio/nomad/pot/env.sh ~/.env.nomad
 # Edit ~/.env.nomad with your credentials
@@ -74,7 +74,7 @@ source ~/.env.nomad
 - [ ] Instagram tokens configured (if needed)
 
 ### 5. Deploy Applications
-```bash
+```sh
 cd /home/ulises/projects/portfolio
 
 # Make deploy script executable
@@ -92,7 +92,7 @@ chmod +x nomad/deploy.sh
 ## ✅ Post-Deployment Verification
 
 ### Check Job Status
-```bash
+```sh
 nomad job status
 nomad job status portfolio-postgres
 nomad job status portfolio-api
@@ -102,7 +102,7 @@ nomad job status portfolio-web
 - [ ] No failed allocations
 
 ### Check Service Ports
-```bash
+```sh
 # From host
 sockstat -l | grep -E '3000|5000|5432'
 
@@ -116,7 +116,7 @@ psql -h localhost -U portfolio -d portfolio
 - [ ] Next.js frontend listening on 5000
 
 ### Check Jail Connectivity
-```bash
+```sh
 pot list
 pot show portfolio-db
 pot show portfolio-api
@@ -132,7 +132,7 @@ pot exec portfolio-web ps aux | grep node
 - [ ] Network interfaces assigned
 
 ### Check Logs
-```bash
+```sh
 # View Nomad logs
 tail -f /var/log/nomad/nomad.log
 
@@ -147,7 +147,7 @@ pot exec portfolio-api tail -f /var/log/production.log
 - [ ] Database migrations completed (API logs)
 
 ### Database Verification
-```bash
+```sh
 # Connect to database
 psql -h localhost -U portfolio -d portfolio
 
@@ -175,7 +175,7 @@ psql -h localhost -U portfolio -d portfolio
 
 If anything goes wrong:
 
-```bash
+```sh
 # Stop all jobs gracefully
 nomad job stop portfolio-web
 nomad job stop portfolio-api
@@ -218,7 +218,7 @@ service nomad restart
 
 ## 📚 Useful Commands Reference
 
-```bash
+```sh
 # Nomad
 nomad node status                           # View all nodes
 nomad job status                            # View all jobs
