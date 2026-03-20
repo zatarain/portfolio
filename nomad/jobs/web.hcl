@@ -32,34 +32,14 @@ job "portfolio-web" {
 
       # Template for API URL and runtime configuration
       template {
-        data        = <<EOH
-API_URL = "http://{{ env "PORTFOLIO_API_HOST" }}:3000"
-NEXT_PUBLIC_API_URL = "{{ env "NEXT_PUBLIC_API_URL" }}"
-PORT = "${PORT}"
-EOH
+        data        = file("${NOMAD_TASKDIR}/../scripts/web.env")
         destination = "secrets/web.env"
         env         = true
       }
 
       # Pre-start setup script
       template {
-        data        = <<EOH
-#!/bin/sh
-set -e
-
-WEB_DIR="/web"
-cd "$WEB_DIR"
-
-# Install Node dependencies
-echo "Installing Node dependencies..."
-npm ci --only=production || npm install --production
-
-# Build Next.js application
-echo "Building Next.js application..."
-npm run build
-
-echo "Web application build complete"
-EOH
+        data        = file("${NOMAD_TASKDIR}/../scripts/web-setup.sh")
         destination = "local/setup-web.sh"
       }
 

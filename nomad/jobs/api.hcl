@@ -47,43 +47,14 @@ job "portfolio-api" {
 
       # Template for sensitive environment variables
       template {
-        data        = <<EOH
-POSTGRES_PASSWORD = "{{ env "POSTGRES_PASSWORD" }}"
-POSTGRES_HOST = "{{ env "POSTGRES_HOST" }}"
-AWS_ACCESS_KEY_ID = "{{ env "AWS_ACCESS_KEY_ID" }}"
-AWS_SECRET_ACCESS_KEY = "{{ env "AWS_SECRET_ACCESS_KEY" }}"
-AWS_REGION = "{{ env "AWS_REGION" }}"
-AWS_ASSUME_ROLE = "{{ env "AWS_ASSUME_ROLE" }}"
-INSTAGRAM_CLIENT_ID = "{{ env "INSTAGRAM_CLIENT_ID" }}"
-INSTAGRAM_CLIENT_SECRET = "{{ env "INSTAGRAM_CLIENT_SECRET" }}"
-INSTAGRAM_REDIRECT_URI = "{{ env "INSTAGRAM_REDIRECT_URI" }}"
-INSTAGRAM_ACCESS_TOKEN = "{{ env "INSTAGRAM_ACCESS_TOKEN" }}"
-EOH
+        data        = file("${NOMAD_TASKDIR}/../scripts/api.env")
         destination = "secrets/api.env"
         env         = true
       }
 
       # Pre-start setup script
       template {
-        data        = <<EOH
-#!/bin/sh
-set -e
-
-API_DIR="/api"
-cd "$API_DIR"
-
-# Install Ruby dependencies
-echo "Installing Ruby dependencies..."
-bundle config set deployment 'true'
-bundle install --path vendor/bundle --without test development
-
-# Prepare database
-echo "Preparing database..."
-bundle exec rake db:create || true
-bundle exec rake db:migrate || true
-
-echo "API setup complete"
-EOH
+        data        = file("${NOMAD_TASKDIR}/../scripts/api-setup.sh")
         destination = "local/setup-api.sh"
       }
 
