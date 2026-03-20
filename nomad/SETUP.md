@@ -22,6 +22,33 @@ Nomad Server/Client (FreeBSD Host)
 
 All communication flows through jail network interfaces with ZFS datasets for persistent storage.
 
+## 📁 File Structure & Scripts
+
+The deployment uses external files instead of inline scripts for maintainability:
+
+### Job Files (`jobs/`)
+Each Nomad job definition references external scripts and templates:
+- `postgres.hcl` → References `scripts/postgres-init.sh` and templates
+- `api.hcl` → References `scripts/api-setup.sh`
+- `web.hcl` → References `scripts/web-setup.sh`
+
+### Setup Scripts (`scripts/`)
+These scripts run during task initialization:
+- `postgres-init.sh` - Initializes PostgreSQL database, creates user/DB, enables PostGIS
+- `api-setup.sh` - Installs Ruby dependencies, runs migrations
+- `web-setup.sh` - Installs Node dependencies, builds Next.js
+
+### Environment Templates (`scripts/*.env`)
+These are populated with Nomad env variables at runtime:
+- `postgres.env` - PostgreSQL credentials
+- `api.env` - Rails credentials and AWS/Instagram config
+- `web.env` - Next.js API URL configuration
+
+### Configuration Templates (`scripts/templates/`)
+Static configuration files copied into PostgreSQL:
+- `postgresql.conf` - PostgreSQL server settings
+- `pg_hba.conf` - Host-based authentication rules
+
 ## ✅ Prerequisites
 
 - FreeBSD 12.4+ or 13+ (tested on 13.2+)

@@ -8,10 +8,13 @@ This directory contains everything needed to deploy your portfolio application (
 
 ### What's Included
 
-- **Nomad job definitions** (.hcl files) for all three services
-- **Pot jail setup** scripts and configuration
-- **Complete documentation** with guides and troubleshooting
-- **Deployment automation** scripts
+- **Nomad job definitions** (`jobs/*.hcl`) - Service orchestration
+- **Deployment scripts** (`scripts/*.sh`) - Setup and automation
+- **Configuration templates** (`scripts/templates/*`) - PostgreSQL config files
+- **Environment configuration** (`scripts/*.env`) - Credentials and URLs
+- **Pot jail setup** (`pot/*.sh`) - Jail initialization
+- **Complete documentation** - Guides, architecture, troubleshooting
+- **Deployment automation** - One-command deployment
 
 ### Key Benefits
 
@@ -22,7 +25,39 @@ This directory contains everything needed to deploy your portfolio application (
 ✅ **Easy Updates** - Redeploy updated code without manual intervention
 ✅ **Resource Management** - CPU and memory limits per service
 
-## 🚀 Getting Started
+## � Project Structure
+
+```
+nomad/
+├── jobs/                          # Nomad job definitions
+│   ├── postgres.hcl              # PostgreSQL + PostGIS
+│   ├── api.hcl                   # Rails API service
+│   └── web.hcl                   # Next.js frontend
+├── scripts/                        # Deployment & initialization scripts
+│   ├── postgres-init.sh          # Database setup
+│   ├── api-setup.sh              # API initialization
+│   ├── web-setup.sh              # Frontend build
+│   ├── postgres.env              # PostgreSQL env template
+│   ├── api.env                   # API env template
+│   ├── web.env                   # Web env template
+│   └── templates/                # Static configuration
+│       ├── postgresql.conf       # PostgreSQL settings
+│       └── pg_hba.conf           # Auth rules
+├── pot/                            # Pot jail configuration
+│   ├── setup-jails.sh            # Jail creation
+│   ├── env.sh                    # Environment setup
+│   ├── nomad-config-example.hcl
+│   └── pot-config-example.conf
+├── deploy.sh                       # Main deployment script
+└── Documentation
+    ├── README.md       (this file)
+    ├── SETUP.md                  # Detailed setup guide
+    ├── QUICKSTART.md             # Quick deployment
+    ├── ARCHITECTURE.md           # System design
+    └── TROUBLESHOOT.md           # Issue resolution
+```
+
+## �🚀 Getting Started
 
 ### 1. Choose Your Path
 

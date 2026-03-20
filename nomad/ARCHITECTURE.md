@@ -131,16 +131,27 @@ User Web Browser
 │   ├── next.config.js
 │   └── ...
 ├── nomad/                        # Nomad orchestration (NEW)
+│   ├── README.md                 # Quick overview
 │   ├── SETUP.md                  # Complete setup guide
 │   ├── QUICKSTART.md             # Quick-start checklist
 │   ├── TROUBLESHOOT.md           # Troubleshooting guide
 │   ├── ARCHITECTURE.md           # This file
-│   ├── deploy.sh                 # Deployment script
-│   ├── jobs/
+│   ├── deploy.sh                 # Main deployment orchestrator
+│   ├── jobs/                     # Nomad job definitions
 │   │   ├── postgres.hcl          # PostgreSQL job
 │   │   ├── api.hcl               # Rails API job
 │   │   └── web.hcl               # Next.js job
-│   └── pot/
+│   ├── scripts/                  # Setup & initialization scripts
+│   │   ├── postgres-init.sh      # Database initialization
+│   │   ├── api-setup.sh          # API setup
+│   │   ├── web-setup.sh          # Web build
+│   │   ├── postgres.env          # PostgreSQL env template
+│   │   ├── api.env               # API env template
+│   │   ├── web.env               # Web env template
+│   │   └── templates/            # Static configuration files
+│   │       ├── postgresql.conf   # PostgreSQL server settings
+│   │       └── pg_hba.conf       # PostgreSQL auth config
+│   └── pot/                      # Pot jail configuration
 │       ├── setup-jails.sh        # Jail creation script
 │       ├── env.sh                # Environment variables
 │       ├── nomad-config-example.hcl
@@ -185,6 +196,52 @@ Every 10s ─► Health checks run ─► If fail 3x ─► Restart process
 4. If not stopped, SIGKILL sent
 5. Databases maintain persistent data (ZFS dataset)
 6. Jails remain at OS level but tasks stop
+
+## 🛠️ Script Organization & Files
+
+The deployment uses external files instead of inline scripts for clarity and maintainability:
+
+### Nomad Job Definitions (`jobs/`)
+Each job file references external scripts and templates:
+- **postgres.hcl** - References `scripts/postgres-init.sh` and config templates
+- **api.hcl** - References `scripts/api-setup.sh`
+- **web.hcl** - References `scripts/web-setup.sh`
+
+### Setup & Initialization Scripts (`scripts/`)
+These execute during task startup:
+
+| Script | Purpose | Runs In |
+|--------|---------|---------|
+| `postgres-init.sh` | Create database, user, enable PostGIS | PostgreSQL jail |
+| `api-setup.sh` | Install gems, run migrations | API jail |
+| `web-setup.sh` | Install npm deps, build Next.js | Web jail |
+
+### Configuration Templates (`scripts/templates/`)
+Static files copied to appropriate locations:
+
+| File | Destination | Purpose |
+|------|-------------|---------|
+| `postgresql.conf` | `/data/portfolio-db/pgdata/postgresql.conf` | PostgreSQL settings |
+| `pg_hba.conf` | `/data/portfolio-db/pgdata/pg_hba.conf` | Connection auth rules |
+
+### Environment Templates (`scripts/*.env`)
+Nomad-aware templates with variable substitution:
+
+| File | Variables | Destination |
+|------|-----------|-------------|
+| `postgres.env` | POSTGRES_PASSWORD, USERNAME | Task env |
+| `api.env` | AWS_*, INSTAGRAM_*, POSTGRES_* | Task secrets |
+| `web.env` | API_URL, NEXT_PUBLIC_API_URL | Task env |
+
+### Jail Setup (`pot/`)
+Initial jail configuration and setup:
+
+| File | Purpose |
+|------|---------|
+| `setup-jails.sh` | Creates 3 jails, installs packages, sets up networking |
+| `env.sh` | Sources environment variables |
+| `nomad-config-example.hcl` | Example Nomad agent configuration |
+| `pot-config-example.conf` | Example Pot configuration |
 
 ## 🛠️ Technology Stack
 
