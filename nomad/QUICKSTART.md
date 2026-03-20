@@ -1,6 +1,6 @@
-# Quick-Start Checklist for Nomad + Pot + Jails Deployment
+# ⚡ Quick-Start Checklist for Nomad + Pot + Jails Deployment
 
-## Pre-Deployment Checklist
+## 📋 Pre-Deployment Checklist
 
 ### System Requirements
 - [ ] FreeBSD 13.2+ installed and updated
@@ -18,7 +18,7 @@ sudo pkg install -y nomad pot ruby32 ruby32-gems python3 postgresql14-client
 - [ ] Pot installed (`which pot`)
 - [ ] Ruby installed (`ruby --version`)
 
-## Preparation Phase (Sequential Order)
+## 🔧 Preparation Phase (Sequential Order)
 
 ### 1. Setup Pot Jails
 ```bash
@@ -89,7 +89,7 @@ chmod +x nomad/deploy.sh
 - [ ] Web job submitted
 - [ ] All allocations running: `nomad job status`
 
-## Post-Deployment Verification
+## ✅ Post-Deployment Verification
 
 ### Check Job Status
 ```bash
@@ -160,7 +160,7 @@ psql -h localhost -U portfolio -d portfolio
 - [ ] Tables exist (if database was initialized)
 - [ ] PostGIS extension loaded
 
-## Troubleshooting Quick Reference
+## 🔍 Troubleshooting Quick Reference
 
 | Issue | Solution |
 |-------|----------|
@@ -171,7 +171,7 @@ psql -h localhost -U portfolio -d portfolio
 | Port already in use | Check for conflicts: `sockstat -l \| grep 3000` |
 | Out of memory | Increase Nomad memory allocation or reduce resource requirements in .hcl files |
 
-## Rollback Plan
+## ↩️ Rollback Plan
 
 If anything goes wrong:
 
@@ -192,7 +192,7 @@ pot destroy portfolio-web portfolio-api portfolio-db
 service nomad restart
 ```
 
-## Next Steps After Successful Deployment
+## 🎯 Next Steps After Successful Deployment
 
 1. **Set up monitoring**
    - Install Prometheus + Grafana for metrics
@@ -216,7 +216,7 @@ service nomad restart
    - Set up health checks and auto-restarts
    - Monitor disk usage and clean up periodically
 
-## Useful Commands Reference
+## 📚 Useful Commands Reference
 
 ```bash
 # Nomad
@@ -243,7 +243,7 @@ psql -h <host> -U <user> -d <dbname>      # Connect to PostgreSQL
 pg_dump -h <host> -U <user> <db>          # Backup database
 ```
 
-## Support Resources
+## 🆘 Support Resources
 
 - [Nomad Documentation](https://www.nomadproject.io/docs)
 - [Pot Documentation](https://pot.pizzamig.dev/)

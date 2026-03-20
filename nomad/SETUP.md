@@ -1,8 +1,8 @@
-# Nomad + Pot + Jails Setup Guide for Portfolio Application
+# 🚀 Nomad + Pot + Jails Setup Guide for Portfolio Application
 
 This guide covers deploying your portfolio application (Rails API, Next.js frontend, PostgreSQL) on FreeBSD using HashiCorp Nomad with Pot and Jails.
 
-## Architecture Overview
+## 📋 Architecture Overview
 
 ```
 Nomad Server/Client (FreeBSD Host)
@@ -22,7 +22,7 @@ Nomad Server/Client (FreeBSD Host)
 
 All communication flows through jail network interfaces with ZFS datasets for persistent storage.
 
-## Prerequisites
+## ✅ Prerequisites
 
 - FreeBSD 12.4+ or 13+ (tested on 13.2+)
 - Pot 0.15.0+ installed (`pkg install pot`)
@@ -30,7 +30,7 @@ All communication flows through jail network interfaces with ZFS datasets for pe
 - Root/sudo access
 - Internet connectivity to download binaries/packages
 
-## Step 1: Install Nomad on FreeBSD
+## 1⃣️⃣ Install Nomad on FreeBSD
 
 ```bash
 # Install Nomad (as of 2026, install latest stable)
@@ -46,7 +46,7 @@ chown -R nomad:nomad /var/lib/nomad /var/log/nomad
 chmod 750 /var/lib/nomad
 ```
 
-## Step 2: Configure Nomad
+## 2⃣️⃣ Configure Nomad
 
 Create `/etc/nomad.d/nomad.hcl` for agent configuration:
 
@@ -106,7 +106,7 @@ telemetry {
 }
 ```
 
-## Step 3: Enable and Start Nomad
+## 3⃣️⃣ Enable and Start Nomad
 
 ```bash
 # Enable Nomad in rc.conf
@@ -120,7 +120,7 @@ service nomad start
 nomad node status
 ```
 
-## Step 4: Create ZFS Datasets
+## 4⃣️⃣ Create ZFS Datasets
 
 ```bash
 # Determine your ZFS pool (e.g., zroot)
@@ -137,7 +137,7 @@ chmod 755 /data/portfolio-api
 chmod 755 /data/portfolio-web
 ```
 
-## Step 5: Create Pot Jails for Your Services
+## 5⃣️⃣ Create Pot Jails for Your Services
 
 See [pot_setup.sh](./pot_setup.sh) for automated jail creation, or follow manual steps below.
 
@@ -185,7 +185,7 @@ pot start portfolio-web
 pot exec portfolio-web pkg install -y node npm
 ```
 
-## Step 6: Submit Nomad Jobs
+## 6⃣️⃣ Submit Nomad Jobs
 
 Deploy your services:
 
@@ -204,7 +204,7 @@ nomad job status
 nomad alloc status
 ```
 
-## Step 7: Verify Services
+## 7⃣️⃣ Verify Services
 
 ```bash
 # Check PostgreSQL connection
@@ -217,7 +217,7 @@ curl http://localhost:3000/health
 curl http://localhost:5000
 ```
 
-## Environment Variables
+## 📄 Environment Variables
 
 Create `.env.nomad` in the project root with credentials:
 
@@ -247,7 +247,7 @@ NODE_ENV=production
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
-## Networking
+## 🌐 Networking
 
 Pot jails get network interfaces automatically. To verify:
 
@@ -261,14 +261,14 @@ pot show portfolio-db
 
 For inter-jail communication, add to Nomad job DNS resolution or use jail IPs directly (10.0.0.x range typically).
 
-## Persisting PostgreSQL Data
+## 💾 Persisting PostgreSQL Data
 
 The `jobs/postgres.hcl` mounts `/data/portfolio-db` from the host into the jail at `/var/lib/postgresql/data/pgdata`. This ensures:
 - Data persists across job failures
 - Backups can be taken from host ZFS dataset
 - Easy restore by deploying the job again
 
-## Troubleshooting
+## 🔨 Troubleshooting
 
 ### Services won't connect
 ```bash
@@ -301,7 +301,7 @@ sockstat -l | grep -E '3000|5000|5432'
 nomad alloc status <allocation-id>
 ```
 
-## Rollback/Cleanup
+## ↩️ Rollback/Cleanup
 
 ```bash
 # Stop a job
@@ -318,7 +318,7 @@ pot stop portfolio-db
 pot destroy portfolio-db
 ```
 
-## Next Steps
+## 🎯 Next Steps
 
 1. Implement health checks in Nomad jobs
 2. Set up log aggregation (Loki/Promtail or CloudWatch)
@@ -327,7 +327,7 @@ pot destroy portfolio-db
 5. Implement auto-scaling based on metrics
 6. Configure Consul for service discovery (optional)
 
-## References
+## 📈 References
 
 - [Nomad Documentation](https://www.nomadproject.io/docs)
 - [Pot Documentation](https://pot.pizzamig.dev/)

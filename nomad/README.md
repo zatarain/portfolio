@@ -1,8 +1,8 @@
-# README - Nomad Deployment
+# 📖 README - Nomad Deployment
 
 Complete orchestration setup for portfolio application on FreeBSD using HashiCorp Nomad, Pot, and Jails.
 
-## Quick Overview
+## 👀 Quick Overview
 
 This directory contains everything needed to deploy your portfolio application (Rails API, Next.js frontend, PostgreSQL database) on FreeBSD using Nomad as the orchestrator.
 
@@ -22,7 +22,7 @@ This directory contains everything needed to deploy your portfolio application (
 ✅ **Easy Updates** - Redeploy updated code without manual intervention
 ✅ **Resource Management** - CPU and memory limits per service
 
-## Getting Started
+## 🚀 Getting Started
 
 ### 1. Choose Your Path
 
@@ -75,7 +75,7 @@ chmod +x deploy.sh
 
 That's it! Services should be running.
 
-## File Organization
+## 📋 File Organization
 
 ```
 nomad/
@@ -99,7 +99,7 @@ nomad/
 └── deploy.sh             # 🚀 Deploy all services
 ```
 
-## Common Commands
+## 🎮 Common Commands
 
 ### Deploy & Manage Services
 
@@ -149,7 +149,7 @@ curl http://localhost:5000/
 psql -h localhost -U portfolio -d portfolio -c "SELECT 1;"
 ```
 
-## Environment Configuration
+## 📄 Environment Configuration
 
 Edit `~/.env.nomad` to configure:
 
@@ -169,7 +169,7 @@ AWS_SECRET_ACCESS_KEY=your_secret_here
 # ... etc
 ```
 
-## Architecture Overview
+## 📋 Architecture Overview
 
 ```
 FreeBSD Host
@@ -188,7 +188,7 @@ Each service:
 - Auto-restarted on failure
 - Logs tracked by Nomad
 
-## Updating Code
+## 🛙 Updating Code
 
 To deploy code changes:
 
@@ -213,7 +213,7 @@ Nomad will:
 4. Verify it's responding
 5. Complete deployment
 
-## Troubleshooting
+## 🔨 Troubleshooting
 
 ### Services won't start
 ```bash
@@ -241,7 +241,7 @@ curl http://localhost:3000/health
 nomad alloc logs <web-allocation-id> | grep API_URL
 ```
 
-## Next Steps
+## 🎯 Next Steps
 
 1. **Monitor your deployment** - Check logs and metrics regularly
 2. **Set up backups** - Create ZFS snapshots periodically
@@ -249,14 +249,14 @@ nomad alloc logs <web-allocation-id> | grep API_URL
 4. **Scale up** - Add more Nomad clients for redundancy (future)
 5. **Configure security** - Set up TLS and firewall rules (future)
 
-## Support & Resources
+## 🆘 Support & Resources
 
 - **Nomad Docs**: https://www.nomadproject.io/docs
 - **Pot Docs**: https://pot.pizzamig.dev/
 - **FreeBSD Handbook**: https://docs.freebsd.org/
 - **PostgreSQL Docs**: https://www.postgresql.org/docs/
 
-## File Descriptions
+## 📝 File Descriptions
 
 | File | Purpose |
 |------|---------|
@@ -273,7 +273,7 @@ nomad alloc logs <web-allocation-id> | grep API_URL
 | `pot/pot-config-example.conf` | Pot configuration template |
 | `deploy.sh` | Automatic deployment script |
 
-## Deployment Modes
+## 🚀 Deployment Modes
 
 ### Development
 ```bash
@@ -289,7 +289,7 @@ RAILS_ENV=production NODE_ENV=production ./deploy.sh
 # Future: Add monitoring, TLS, clustering, backups
 ```
 
-## Success Criteria
+## ✅ Success Criteria
 
 After deployment, you should have:
 
@@ -300,7 +300,7 @@ After deployment, you should have:
 - ✅ All services showing "running" in `nomad job status`
 - ✅ Health checks passing for all services
 
-## Quick Reference
+## 📊 Quick Reference
 
 ```bash
 # One-liner to check everything

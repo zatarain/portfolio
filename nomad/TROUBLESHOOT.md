@@ -1,8 +1,8 @@
-# Troubleshooting Guide for Nomad + Pot + Jails Deployment
+# 🔧 Troubleshooting Guide for Nomad + Pot + Jails Deployment
 
-## Common Issues and Solutions
+## ⚠️ Common Issues and Solutions
 
-### Network & Connectivity Issues
+### 🌐 Network & Connectivity Issues
 
 #### "Cannot connect to Nomad" or "connection refused"
 ```bash
@@ -89,7 +89,7 @@ pfctl -s rules | head -20
 - Check if firewall (pf) is blocking traffic: `pfctl -d` to disable temporarily
 - Ensure host volumes are mounted inside jails: `pot exec <jail> ls -la /data`
 
-### PostgreSQL Specific Issues
+### 💾 PostgreSQL Specific Issues
 
 #### "psql: error: could not connect to server"
 ```bash
@@ -139,7 +139,7 @@ psql -h localhost -U postgres -c "SELECT count(*) FROM pg_stat_activity;"
 - Increase PostgreSQL `max_connections` in postgresql.conf
 - Close idle connections and restart
 
-### Rails/API Specific Issues
+### 🜠 Rails/API Specific Issues
 
 #### "Rails can't find gem bundler"
 ```bash
@@ -189,7 +189,7 @@ pot exec portfolio-api /bin/sh -c "cd /api && bundle exec rake db:migrate:status
 - Check database credentials in POSTGRES_* environment variables
 - Run migrations manually before starting API if needed
 
-### Next.js/Frontend Specific Issues
+### 💞 Next.js/Frontend Specific Issues
 
 #### "next: command not found"
 ```bash
@@ -222,7 +222,7 @@ pot exec portfolio-web ls -la /web/.next/
 - Rebuild Next.js: `npm run build`
 - Check API is actually accessible at that URL
 
-### Nomad Job Submission Issues
+### 🚀 Nomad Job Submission Issues
 
 #### "Job failed to validate"
 ```bash
@@ -275,7 +275,7 @@ nomad job restart portfolio-api
 - Verify resources available: `nomad node status -self`
 - Increase job resource requests or add nodes
 
-### Storage & Persistence Issues
+### 💾 Storage & Persistence Issues
 
 #### "No such file or directory" for volumes
 ```bash
@@ -309,7 +309,7 @@ zfs list -t snapshot | grep portfolio
 - Use `read_only = false` for volumes that need writes
 - Consider ZFS snapshots for backups before troubleshooting
 
-### Performance Issues
+### ⚡ Performance Issues
 
 #### High CPU/Memory usage
 ```bash
@@ -345,7 +345,7 @@ pot exec portfolio-api /bin/sh -c "psql -h portfolio-db -U portfolio -d portfoli
 - Create indexes on frequently queried columns
 - Increase shared_buffers in postgresql.conf
 
-### Logging & Debugging
+### 🔍 Logging & Debugging
 
 #### Enable debug logging
 ```bash
@@ -378,7 +378,7 @@ cat /tmp/diagnostics.txt
 
 ---
 
-## When to Seek Help
+## 🆘 When to Seek Help
 
 If issues persist, gather this information:
 
@@ -390,7 +390,7 @@ If issues persist, gather this information:
 6. Nomad configuration: `/etc/nomad.d/nomad.hcl`
 7. Job file being submitted: `jobs/*.hcl`
 
-## Additional Resources
+## 📈 Additional Resources
 
 - FreeBSD Handbook: https://docs.freebsd.org/en/books/handbook/
 - Nomad Troubleshooting: https://www.nomadproject.io/docs/troubleshoot

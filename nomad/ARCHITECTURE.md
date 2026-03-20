@@ -1,8 +1,8 @@
-# Architecture Overview
+# 📋 Architecture Overview
 
 This document describes the complete architecture for deploying your portfolio application on FreeBSD using Nomad, Pot, and Jails.
 
-## System Architecture Diagram
+## 📊 System Architecture Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -62,7 +62,7 @@ This document describes the complete architecture for deploying your portfolio a
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Service Dependencies
+## 📆 Service Dependencies
 
 ```
 ┌─────────────┐
@@ -80,7 +80,7 @@ This document describes the complete architecture for deploying your portfolio a
 └─────────────┘         └──────────────────┘
 ```
 
-## Data Flow
+## 🔄 Data Flow
 
 ```
 User Web Browser
@@ -113,7 +113,7 @@ User Web Browser
 └──────────────────────────┘
 ```
 
-## File Structure
+## 📁 File Structure
 
 ```
 /home/ulises/projects/portfolio/
@@ -150,7 +150,7 @@ User Web Browser
 └── ...
 ```
 
-## Process Lifecycle
+## ⚡ Process Lifecycle
 
 ### On System Boot
 1. FreeBSD kernel starts
@@ -186,7 +186,7 @@ Every 10s ─► Health checks run ─► If fail 3x ─► Restart process
 5. Databases maintain persistent data (ZFS dataset)
 6. Jails remain at OS level but tasks stop
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 | Component | Technology | Version | Purpose |
 |-----------|-----------|---------|---------|
@@ -202,7 +202,7 @@ Every 10s ─► Health checks run ─► If fail 3x ─► Restart process
 | GIS | PostGIS | 3.x | Geographic data |
 | Language | Ruby | 3.2 | Backend language |
 
-## Networking Details
+## 🌐 Networking Details
 
 ### Jail Network (VNET)
 - **Bridge Network**: 172.16.0.0/16 (Pot default)
@@ -223,7 +223,7 @@ Every 10s ─► Health checks run ─► If fail 3x ─► Restart process
 - Browser → Web: Host port 5000 forwarded to jail
 - Browser → API: Host port 3000 forwarded to jail (if direct)
 
-## Storage Architecture
+## 💾 Storage Architecture
 
 ### Persistent Storage (ZFS Datasets)
 ```
@@ -248,7 +248,7 @@ Host                                Jail
 /home/ulises/projects/portfolio/web → /web
 ```
 
-## Security Considerations
+## 🔐 Security Considerations
 
 ### Network Isolation
 - Jails provide OS-level isolation (like containers)
@@ -265,7 +265,7 @@ Host                                Jail
 - PostgreSQL requires authentication (md5/scram-sha-256)
 - Rails environment variables restrict data access
 
-## High Availability Considerations
+## 🚀 High Availability Considerations
 
 ### Current Setup (Single Node)
 - Single Nomad server/client
@@ -281,7 +281,7 @@ To scale to multiple nodes:
 4. Configure persistent PostgreSQL replication
 5. Set up load balancing (reverse proxy)
 
-## Backup Strategy
+## 📑 Backup Strategy
 
 ### Data Backups (ZFS Snapshots)
 ```bash
@@ -311,7 +311,7 @@ zfs send -R zroot/portfolio-db | gzip > /backup/portfolio-db.zfs.gz
 zfs send -R zroot/portfolio-db | ssh remote "zfs recv tank/backups/..."
 ```
 
-## Performance Tuning
+## ⚡ Performance Tuning
 
 ### PostgreSQL Optimization
 In `postgres.hcl`, the initialization script sets:
@@ -335,7 +335,7 @@ In `web.hcl`:
 - CPU: 500 millicores
 - Memory: 512 MB
 
-## Monitoring & Logging
+## 📊 Monitoring & Logging
 
 ### Nomad Metrics (Built-in)
 - Accessible at `http://localhost:4646/v1/agent/metrics`
@@ -353,7 +353,7 @@ Consider adding:
 - EFK stack (more features)
 - CloudWatch/Datadog (external service)
 
-## Disaster Recovery
+## 🚶 Disaster Recovery
 
 ### Failure Scenarios
 
@@ -373,7 +373,7 @@ Consider adding:
 3. Nomad agent starts and resumes jobs
 4. Services come back online automatically
 
-## Documentation Map
+## 📇 Documentation Map
 
 - **SETUP.md** - Complete installation and configuration guide
 - **QUICKSTART.md** - Step-by-step deployment checklist
