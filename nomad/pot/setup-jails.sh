@@ -137,7 +137,7 @@ create_jail() {
       ;;
     "nginx")
       log "Configuring Nginx (Reverse Proxy) jail..."
-      pot exec -p "$jail_name" pkg install -y nginx certbot python3
+      pot exec -p "$jail_name" pkg install -y nginx
 
       # Stop Nginx (Nomad will manage it)
       pot exec -p "$jail_name" sysrc nginx_enable=NO
