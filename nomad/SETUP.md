@@ -6,7 +6,7 @@ This guide covers deploying your portfolio application (Rails API, Next.js front
 
 ```
 Nomad Server/Client (FreeBSD Host)
-├── Nginx Jail (portfolio-nginx)
+├── Nginx Jail (reverse-proxy)
 │   ├── Nginx Reverse Proxy
 │   ├── SSL/TLS Termination
 │   └── Ports: 80 (HTTP) & 443 (HTTPS)
@@ -18,7 +18,7 @@ Nomad Server/Client (FreeBSD Host)
 │   ├── Next.js
 │   ├── Port: 5000
 │   └── Process: raw_exec
-└── PostgreSQL Jail (portfolio-db)
+└── PostgreSQL Jail (databases)
     ├── PostgreSQL 14 + PostGIS
     ├── Port: 5432 (internal only)
     └── Process: raw_exec
@@ -115,7 +115,7 @@ client {
 
   # Host volume for persistent data
   host_volume "db_data" {
-    path = "/data/portfolio-db"
+    path = "/data/databases"
   }
 
   host_volume "api_source" {
@@ -172,7 +172,7 @@ sudo sh setup-jails.sh
 ```
 
 This script will:
-- Create 4 jails: portfolio-nginx, portfolio-db, portfolio-api, portfolio-web
+- Create 4 jails: reverse-proxy, databases, portfolio-api, portfolio-web
 - Setup ZFS datasets at `/data/portfolio-*`
 - Install required packages in each jail
 
@@ -254,14 +254,14 @@ Pot jails get network interfaces automatically. To verify:
 pot list
 
 # Check jail IP
-pot show portfolio-db
+pot show databases
 ```
 
 For inter-jail communication, add to Nomad job DNS resolution or use jail IPs directly (10.0.0.x range typically).
 
 ## 💾 Persisting PostgreSQL Data
 
-The `jobs/postgres.hcl` mounts `/data/portfolio-db` from the host into the jail at `/var/lib/postgresql/data/pgdata`. This ensures:
+The `jobs/postgres.hcl` mounts `/data/databases` from the host into the jail at `/var/lib/postgresql/data/pgdata`. This ensures:
 - Data persists across job failures
 - Backups can be taken from host ZFS dataset
 - Easy restore by deploying the job again
@@ -310,7 +310,7 @@ nomad alloc logs -f <nginx-allocation-id>
 
 ```sh
 # Inside nginx jail, request certificate
-pot exec portfolio-nginx certbot certonly \
+pot exec reverse-proxy certbot certonly \
   --standalone \
   -d zatara.duckdns.org \
   -d api.zatara.duckdns.org \
@@ -372,7 +372,7 @@ pot exec portfolio-api tail -f /var/log/nomad-portfolio-api.log
 ### Database connection refused
 ```sh
 # Verify PostgreSQL is listening
-pot exec portfolio-db netstat -an | grep 5432
+pot exec databases netstat -an | grep 5432
 
 # Check credentials in Nomad job
 nomad job inspect postgres
@@ -400,8 +400,8 @@ nomad job run -detach=false portfolio-api
 nomad node drain -enable
 
 # Destroy jails (careful!)
-pot stop portfolio-db
-pot destroy portfolio-db
+pot stop databases
+pot destroy databases
 ```
 
 ## 🎯 Next Steps

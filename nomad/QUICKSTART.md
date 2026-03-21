@@ -24,7 +24,7 @@ sudo pkg install -y nomad pot postgresql14-client
 cd portfolio/nomad/pot
 sudo sh setup-jails.sh
 ```
-- [ ] All four jails created (portfolio-nginx, portfolio-db, portfolio-api, portfolio-web)
+- [ ] All four jails created (reverse-proxy, databases, portfolio-api, portfolio-web)
 - [ ] ZFS datasets created at /data/portfolio-*
 - [ ] Jails can be listed: `pot list`
 
@@ -123,12 +123,12 @@ psql -h localhost -U portfolio -d portfolio
 ### Check Jail Connectivity
 ```sh
 pot list
-pot show portfolio-db
+pot show databases
 pot show portfolio-api
 pot show portfolio-web
 
 # Execute commands in jails
-pot exec portfolio-db ps aux | grep postgres
+pot exec databases ps aux | grep postgres
 pot exec portfolio-api ps aux | grep ruby
 pot exec portfolio-web ps aux | grep node
 ```
@@ -172,7 +172,7 @@ psql -h localhost -U portfolio -d portfolio
 | Nomad won't start | Check `/etc/nomad.d/nomad.hcl` syntax: `nomad config validate /etc/nomad.d/nomad.hcl` |
 | Jobs won't submit | Ensure Nomad is running: `nomad server members` |
 | Services can't connect to database | Check jail networking, verify POSTGRES_HOST in env |
-| Database won't initialize | Check PostgreSQL is running in jail: `pot exec portfolio-db service postgresql status` |
+| Database won't initialize | Check PostgreSQL is running in jail: `pot exec databases service postgresql status` |
 | Port already in use | Check for conflicts: `sockstat -l \| grep 80` or `sockstat -l \| grep 443` |
 | SSL certificate not valid | Using self-signed for testing. Use Let's Encrypt for production |
 | Out of memory | Increase Nomad memory allocation or reduce resource requirements in .hcl files |
@@ -188,8 +188,8 @@ nomad job stop portfolio-api
 nomad job stop portfolio-postgres
 
 # Destroy jails (WARNING: deletes all data)
-pot stop portfolio-web portfolio-api portfolio-db
-pot destroy portfolio-web portfolio-api portfolio-db
+pot stop portfolio-web portfolio-api databases
+pot destroy portfolio-web portfolio-api databases
 
 # Clean up ZFS datasets (WARNING: deletes all data)
 # zfs destroy zroot/portfolio-db (if needed)
@@ -206,7 +206,7 @@ service nomad restart
 
 2. **Configure backups**
    - Schedule PostgreSQL backups via ZFS snapshots
-   - `zfs snapshot zroot/portfolio-db@backup-$(date +%s)`
+   - `zfs snapshot zroot/databases@backup-$(date +%s)`
 
 3. **Set up TLS/Security**
    - Configure Nomad TLS

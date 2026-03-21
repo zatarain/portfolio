@@ -28,7 +28,7 @@ error() {
 # Check that jails exist
 check_jails() {
   log "Checking jails..."
-  for jail in portfolio-db portfolio-api portfolio-web portfolio-nginx; do
+  for jail in databases portfolio-api portfolio-web reverse-proxy; do
     if ! pot list | grep -q "^$jail$"; then
       error "Jail $jail does not exist. Run setup-jails.sh first."
     fi

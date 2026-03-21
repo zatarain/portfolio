@@ -5,7 +5,7 @@
 # ============================================
 # PostgreSQL Configuration
 # ============================================
-export POSTGRES_HOST="${POSTGRES_HOST:-portfolio-db}"
+export POSTGRES_HOST="${POSTGRES_HOST:-databases}"
 export POSTGRES_PORT="${POSTGRES_PORT:-5432}"
 export POSTGRES_USERNAME="${POSTGRES_USERNAME:-portfolio}"
 export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-changeme}"

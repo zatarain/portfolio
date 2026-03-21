@@ -79,7 +79,7 @@ create_zfs_datasets() {
   log "Using ZFS pool: $ZPOOL"
 
   # Create datasets if they don't exist
-  for dataset in portfolio-nginx portfolio-db portfolio-api portfolio-web; do
+  for dataset in reverse-proxy databases portfolio-api portfolio-web; do
     if zfs list "$ZPOOL/$dataset" >/dev/null 2>&1; then
       warn "Dataset $ZPOOL/$dataset already exists, skipping"
     else
@@ -89,8 +89,8 @@ create_zfs_datasets() {
   done
 
   # Set mountpoints
-  zfs set mountpoint=/data/portfolio-nginx "$ZPOOL/portfolio-nginx" 2>/dev/null || true
-  zfs set mountpoint=/data/portfolio-db "$ZPOOL/portfolio-db" 2>/dev/null || true
+  zfs set mountpoint=/data/reverse-proxy "$ZPOOL/reverse-proxy" 2>/dev/null || true
+  zfs set mountpoint=/data/databases "$ZPOOL/databases" 2>/dev/null || true
   zfs set mountpoint=/data/portfolio-api "$ZPOOL/portfolio-api" 2>/dev/null || true
   zfs set mountpoint=/data/portfolio-web "$ZPOOL/portfolio-web" 2>/dev/null || true
 }
@@ -123,7 +123,7 @@ create_jail() {
   log "Mounting ZFS dataset for jail $jail_name..."
   case $jail_type in
     "postgres")
-      pot mount-in -p "$jail_name" -z zroot/portfolio-db -m /var/db
+      pot mount-in -p "$jail_name" -z zroot/databases -m /var/db
       ;;
     "api")
       pot mount-in -p "$jail_name" -z zroot/portfolio-api -m /var/app
@@ -132,7 +132,7 @@ create_jail() {
       pot mount-in -p "$jail_name" -z zroot/portfolio-web -m /var/web
       ;;
     "nginx")
-      pot mount-in -p "$jail_name" -z zroot/portfolio-nginx -m /etc/nginx/conf
+      pot mount-in -p "$jail_name" -z zroot/reverse-proxy -m /etc/nginx/conf
       ;;
   esac
 
@@ -231,16 +231,16 @@ print_summary() {
   log "=========================================="
   log ""
   log "Created jails:"
-  log "  - portfolio-db (PostgreSQL 14 + PostGIS)"
+  log "  - databases (PostgreSQL 14 + PostGIS)"
   log "  - portfolio-api (Ruby 3.2 + Rails)"
   log "  - portfolio-web (Node.js + npm)"
-  log "  - portfolio-nginx (Nginx reverse proxy)"
+  log "  - reverse-proxy (Nginx reverse proxy)"
   log ""
   log "ZFS Datasets (ready for app code):"
-  log "  - zroot/portfolio-db → /data/portfolio-db"
+  log "  - zroot/databases → /data/databases"
   log "  - zroot/portfolio-api → /data/portfolio-api"
   log "  - zroot/portfolio-web → /data/portfolio-web"
-  log "  - zroot/portfolio-nginx → /data/portfolio-nginx"
+  log "  - zroot/reverse-proxy → /data/reverse-proxy"
   log ""
   log "IMPORTANT: Next Steps"
   log "======================================"
@@ -278,8 +278,8 @@ main() {
   initialize_pot
   create_zfs_datasets
   configure_networking
-  create_jail "portfolio-nginx" "nginx"
-  create_jail "portfolio-db" "postgres"
+  create_jail "reverse-proxy" "nginx"
+  create_jail "databases" "postgres"
   create_jail "portfolio-api" "api"
   create_jail "portfolio-web" "web"
   create_health_checks

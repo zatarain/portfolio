@@ -12,7 +12,7 @@ job "portfolio-postgres" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p portfolio-db su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"
+          "exec sudo pot exec -p databases su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"
         ]
       }
 
