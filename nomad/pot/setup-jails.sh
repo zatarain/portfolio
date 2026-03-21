@@ -111,6 +111,11 @@ create_jail() {
   # Start the jail so we can execute commands inside it
   pot start "$jail_name" || error "Failed to start jail $jail_name"
 
+  # Configure DNS inside the jail
+  log "Configuring DNS for jail $jail_name..."
+  pot exec -p "$jail_name" sh -c "echo 'nameserver 8.8.8.8' > /etc/resolv.conf"
+  pot exec -p "$jail_name" sh -c "echo 'nameserver 8.8.4.4' >> /etc/resolv.conf"
+
   # Allocate resources
   case $jail_type in
     "postgres")
