@@ -4,13 +4,13 @@ Complete orchestration setup for portfolio application on FreeBSD using HashiCor
 
 ## 👀 Quick Overview
 
-This directory contains everything needed to deploy your portfolio application (Rails API, Next.js frontend, PostgreSQL database) on FreeBSD using Nomad as the orchestrator.
+This directory contains everything needed to deploy your portfolio application (Rails API, Next.js frontend, PostgreSQL database, and Nginx reverse proxy) on FreeBSD using Nomad as the orchestrator.
 
 ### What's Included
 
-- **Nomad job definitions** (`jobs/*.hcl`) - Service orchestration
+- **Nomad job definitions** (`jobs/*.hcl`) - Service orchestration (Nginx, PostgreSQL, Rails, Next.js)
 - **Deployment scripts** (`scripts/*.sh`) - Setup and automation
-- **Configuration templates** (`scripts/templates/*`) - PostgreSQL config files
+- **Configuration templates** (`scripts/templates/*`, `scripts/*.conf`) - Nginx and PostgreSQL config files
 - **Environment configuration** (`scripts/*.env`) - Credentials and URLs
 - **Pot jail setup** (`pot/*.sh`) - Jail initialization
 - **Complete documentation** - Guides, architecture, troubleshooting
@@ -18,6 +18,7 @@ This directory contains everything needed to deploy your portfolio application (
 
 ### Key Benefits
 
+✅ **Public Access** - Nginx reverse proxy for external internet access
 ✅ **Isolated Services** - Each service runs in separate FreeBSD jail
 ✅ **Persistent Storage** - PostgreSQL data survives restarts (ZFS-backed)
 ✅ **Automatic Restarts** - Nomad monitors and restarts failed services
@@ -30,10 +31,13 @@ This directory contains everything needed to deploy your portfolio application (
 ```
 nomad/
 ├── jobs/                          # Nomad job definitions
+│   ├── nginx.hcl                 # Nginx reverse proxy
 │   ├── postgres.hcl              # PostgreSQL + PostGIS
 │   ├── api.hcl                   # Rails API service
 │   └── web.hcl                   # Next.js frontend
 ├── scripts/                        # Deployment & initialization scripts
+│   ├── nginx-setup.sh            # Nginx configuration setup
+│   ├── nginx.conf                # Nginx reverse proxy config
 │   ├── postgres-init.sh          # Database setup
 │   ├── api-setup.sh              # API initialization
 │   ├── web-setup.sh              # Frontend build

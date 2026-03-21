@@ -48,7 +48,7 @@ create_zfs_datasets() {
   log "Using ZFS pool: $ZPOOL"
 
   # Create datasets if they don't exist
-  for dataset in portfolio-db portfolio-api portfolio-web; do
+  for dataset in portfolio-nginx portfolio-db portfolio-api portfolio-web; do
     if zfs list "$ZPOOL/$dataset" &>/dev/null; then
       warn "Dataset $ZPOOL/$dataset already exists, skipping"
     else
@@ -58,6 +58,7 @@ create_zfs_datasets() {
   done
 
   # Set mountpoints
+  zfs set mountpoint=/data/portfolio-nginx "$ZPOOL/portfolio-nginx" 2>/dev/null || true
   zfs set mountpoint=/data/portfolio-db "$ZPOOL/portfolio-db" 2>/dev/null || true
   zfs set mountpoint=/data/portfolio-api "$ZPOOL/portfolio-api" 2>/dev/null || true
   zfs set mountpoint=/data/portfolio-web "$ZPOOL/portfolio-web" 2>/dev/null || true
@@ -96,6 +97,14 @@ create_jail() {
       log "Configuring Web (Next.js) jail..."
       pot exec "$jail_name" pkg update -f
       pot exec "$jail_name" pkg install -y node npm
+      ;;
+    "nginx")
+      log "Configuring Nginx (Reverse Proxy) jail..."
+      pot exec "$jail_name" pkg update -f
+      pot exec "$jail_name" pkg install -y nginx certbot python3
+
+      # Stop Nginx (Nomad will manage it)
+      pot exec "$jail_name" sysrc nginx_enable=NO
       ;;
   esac
 

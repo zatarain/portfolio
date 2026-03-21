@@ -34,7 +34,11 @@ nomad server members >/dev/null 2>&1 || error "Cannot connect to Nomad. Is it ru
 # Check jobs directory
 [ -d "$JOBS_DIR" ] || error "Jobs directory not found: $JOBS_DIR"
 
-# Deploy jobs in order
+# Deploy jobs in order (nginx first for routing)
+log "Deploying Nginx Reverse Proxy..."
+nomad job run "$JOBS_DIR/nginx.hcl" || error "Failed to deploy Nginx job"
+sleep 5
+
 log "Deploying PostgreSQL..."
 nomad job run "$JOBS_DIR/postgres.hcl" || error "Failed to deploy PostgreSQL job"
 sleep 5

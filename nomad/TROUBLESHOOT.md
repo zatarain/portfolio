@@ -376,9 +376,90 @@ zfs list >> /tmp/diagnostics.txt
 cat /tmp/diagnostics.txt
 ```
 
----
+### 🔀 Nginx Reverse Proxy Issues
 
-## 🆘 When to Seek Help
+#### "Connection refused" from external access
+```sh
+# Check Nginx is running in jail
+nomad job status portfolio-nginx
+pot exec portfolio-nginx ps aux | grep nginx
+
+# Check ports are listening
+pot exec portfolio-nginx sockstat -l | grep -E '80|443'
+
+# Test Nginx configuration
+pot exec portfolio-nginx nginx -t
+
+# Check Nginx logs
+pot exec portfolio-nginx tail -f /var/log/nginx/access.log
+pot exec portfolio-nginx tail -f /var/log/nginx/error.log
+```
+
+**Solution:**
+- Ensure Nginx job is deployed: `nomad job run jobs/nginx.hcl`
+- Verify Nginx configuration: `nomad alloc logs -f <nginx-allocation-id>`
+- Check firewall isn't blocking ports 80/443
+- Verify router port forwarding is configured
+
+#### SSL certificate errors
+```sh
+# Check certificate files exist
+pot exec portfolio-nginx ls -la /etc/letsencrypt/live/zatara.duckdns.org/
+
+# Check certificate expiration
+pot exec portfolio-nginx openssl x509 -in /etc/letsencrypt/live/zatara.duckdns.org/fullchain.pem -text -noout | grep -i valid
+
+# Renew certificate manually
+pot exec portfolio-nginx certbot renew --standalone --non-interactive
+```
+
+**Solution:**
+- Ensure Let's Encrypt certificate is obtained: `certbot certonly --standalone -d zatara.duckdns.org`
+- Check Nginx config references correct certificate paths
+- Renew certificate if expired: `certbot renew`
+
+#### "502 Bad Gateway" or "503 Service Unavailable"
+```sh
+# Check backend services are running
+nomad job status portfolio-api
+nomad job status portfolio-web
+
+# Check backend ports
+pot exec portfolio-api netstat -an | grep 3000
+pot exec portfolio-web netstat -an | grep 5000
+
+# Check Nginx logs for errors
+pot exec portfolio-nginx tail -f /var/log/nginx/error.log
+
+# Verify Nginx backend configuration
+pot exec portfolio-nginx cat /etc/nginx/conf.d/default.conf | grep upstream
+```
+
+**Solution:**
+- Ensure API and Web services are running: `nomad job run jobs/api.hcl` and `nomad job run jobs/web.hcl`
+- Verify backend IPs in nginx.conf match actual jail IPs
+- Check API/Web services are listening: `curl http://localhost:3000` and `curl http://localhost:5000`
+- Increase upstream connect timeout if services slow to respond
+
+#### Domain not resolving
+```sh
+# Check DuckDNS is updated
+curl "https://www.duckdns.org/update?domains=zatara&token=YOUR_TOKEN&verbose=true"
+
+# Test DNS resolution
+nslookup zatara.duckdns.org
+dig zatara.duckdns.org
+
+# Check router port forwarding
+# From external network: curl https://zatara.duckdns.org -k
+```
+
+**Solution:**
+- Verify DuckDNS token is correct
+- Run DuckDNS update manually if cron failed
+- Wait for DNS propagation (usually 5-15 minutes)
+- Check router port forwarding is enabled for ports 80 and 443
+
 
 If issues persist, gather this information:
 

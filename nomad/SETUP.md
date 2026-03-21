@@ -6,6 +6,10 @@ This guide covers deploying your portfolio application (Rails API, Next.js front
 
 ```
 Nomad Server/Client (FreeBSD Host)
+├── Nginx Jail (portfolio-nginx)
+│   ├── Nginx Reverse Proxy
+│   ├── SSL/TLS Termination
+│   └── Ports: 80 (HTTP) & 443 (HTTPS)
 ├── API Jail (portfolio-api)
 │   ├── Rails + Puma
 │   ├── Port: 3000
@@ -16,7 +20,7 @@ Nomad Server/Client (FreeBSD Host)
 │   └── Process: raw_exec
 └── PostgreSQL Jail (portfolio-db)
     ├── PostgreSQL 14 + PostGIS
-    ├── Port: 5432
+    ├── Port: 5432 (internal only)
     └── Process: raw_exec
 ```
 
@@ -28,12 +32,14 @@ The deployment uses external files instead of inline scripts for maintainability
 
 ### Job Files (`jobs/`)
 Each Nomad job definition references external scripts and templates:
+- `nginx.hcl` → References `scripts/nginx-setup.sh` and `scripts/nginx.conf`
 - `postgres.hcl` → References `scripts/postgres-init.sh` and templates
 - `api.hcl` → References `scripts/api-setup.sh`
 - `web.hcl` → References `scripts/web-setup.sh`
 
 ### Setup Scripts (`scripts/`)
 These scripts run during task initialization:
+- `nginx-setup.sh` - Configures Nginx reverse proxy with SSL
 - `postgres-init.sh` - Initializes PostgreSQL database, creates user/DB, enables PostGIS
 - `api-setup.sh` - Installs Ruby dependencies, runs migrations
 - `web-setup.sh` - Installs Node dependencies, builds Next.js
@@ -295,7 +301,95 @@ The `jobs/postgres.hcl` mounts `/data/portfolio-db` from the host into the jail 
 - Backups can be taken from host ZFS dataset
 - Easy restore by deploying the job again
 
-## 🔨 Troubleshooting
+## � Setting Up Nginx Reverse Proxy & External Access
+
+### Deploy Nginx Job
+
+```sh
+# Deploy nginx reverse proxy (deploys with priority 100, starts first)
+nomad job run jobs/nginx.hcl
+
+# Verify deployment
+nomad job status portfolio-nginx
+nomad alloc logs -f <nginx-allocation-id>
+```
+
+### Configure External DNS with DuckDNS
+
+[DuckDNS](https://www.duckdns.org/) provides free dynamic DNS:
+
+1. **Create DuckDNS Account**
+   - Go to https://www.duckdns.org/
+   - Sign in with GitHub/Google
+   - Add a subdomain (e.g., `zatara`)
+   - Note your token
+
+2. **Test DuckDNS Update**
+   ```sh
+   # Test updating your domain
+   curl "https://www.duckdns.org/update?domains=zatara&token=YOUR_TOKEN&verbose=true"
+
+   # Should return "OK"
+   ```
+
+3. **Automate DuckDNS Updates**
+   ```sh
+   # Create cron job to update every 5 minutes
+   echo "*/5 * * * * curl 'https://www.duckdns.org/update?domains=zatara&token=YOUR_TOKEN' > /dev/null 2>&1" | crontab -
+
+   # Verify
+   crontab -l
+   ```
+
+### Configure SSL Certificate with Let's Encrypt
+
+```sh
+# Inside nginx jail, request certificate
+pot exec portfolio-nginx certbot certonly \
+  --standalone \
+  -d zatara.duckdns.org \
+  -d api.zatara.duckdns.org \
+  --email your_email@example.com \
+  --agree-tos \
+  --non-interactive
+
+# Certificate will be at /etc/letsencrypt/live/zatara.duckdns.org/
+```
+
+### Configure Router Port Forwarding
+
+Forward ports from your router to your FreeBSD host:
+
+1. **Access Router Admin Panel**
+   - Usually at `192.168.1.1` or `192.168.0.1`
+   - Login with router credentials
+
+2. **Add Port Forwarding Rules**
+   - HTTP: External 80 → Internal 80 (FreeBSD host)
+   - HTTPS: External 443 → Internal 443 (FreeBSD host)
+
+3. **Test External Access**
+   ```sh
+   # From a machine outside your network
+   curl https://zatara.duckdns.org/          # Should show your site
+   curl https://api.zatara.duckdns.org       # Should show API
+   ```
+
+### Nginx Configuration for External Access
+
+The `scripts/nginx.conf` file is configured for:
+- HTTP → HTTPS redirect (automatically upgrades connections)
+- SSL/TLS 1.2 & 1.3 support
+- Security headers (HSTS, X-Frame-Options, etc.)
+- Rate limiting to prevent abuse
+- API routing to Rails backend
+- Frontend routing to Next.js
+
+Routing:
+- `zatara.duckdns.org` → Next.js frontend (port 5000)
+- `api.zatara.duckdns.org` → Rails API (port 3000)
+
+## �🔨 Troubleshooting
 
 ### Services won't connect
 ```sh

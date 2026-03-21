@@ -6,11 +6,20 @@ This document describes the complete architecture for deploying your portfolio a
 
 ```mermaid
 graph TB
+    subgraph internet["🌐 Internet"]
+        users["👥 External Users<br/>Port 80/443"]
+    end
+
     subgraph freebsd["🖥️ FreeBSD Home Server"]
         subgraph nomad["HashiCorp Nomad<br/>(Orchestrator)"]
             nomad_http["Port 4646: HTTP API"]
             nomad_rpc["Port 4647: RPC"]
             nomad_serf["Port 4648: Serf"]
+        end
+
+        subgraph nginx_group["Nginx Jail<br/>172.16.x.a"]
+            nginx_svc["Nginx Reverse Proxy<br/>Port 80/443"]
+            nginx_vol["Volume: /etc/nginx/conf.d"]
         end
 
         subgraph api_group["API Jail<br/>172.16.x.y"]
@@ -28,10 +37,12 @@ graph TB
             db_vol["Volume: /data/portfolio-db"]
         end
 
+        nomad --> nginx_svc
         nomad --> api_svc
         nomad --> web_svc
         nomad --> db_svc
 
+        nginx_vol -.bind mount.-> nginx_svc
         api_vol -.bind mount.-> api_svc
         web_vol -.bind mount.-> web_svc
         db_vol -.ZFS mount.-> db_svc
@@ -41,6 +52,7 @@ graph TB
             zfspool["ZFS Pool<br/>zroot"]
         end
 
+        nginx_vol --> hostfs
         api_vol --> hostfs
         web_vol --> hostfs
         db_vol --> zfspool
@@ -50,17 +62,25 @@ graph TB
         vnet["Jail-to-Jail: Direct<br/>Jail-to-Host: NATed"]
     end
 
+    users -->|HTTPS/HTTP| nginx_svc
+    nginx_svc -->|Reverse proxy| api_svc
+    nginx_svc -->|Reverse proxy| web_svc
+    api_svc -->|SQL| db_svc
+
+    nginx_svc -.Connection.-> vnet
     api_svc -.Connection.-> vnet
     web_svc -.Connection.-> vnet
     db_svc -.Connection.-> vnet
 
     style freebsd fill:#fffacd
     style nomad fill:#e3f2fd
+    style nginx_group fill:#ffccbc
     style api_group fill:#c8e6c9
     style web_group fill:#c8e6c9
     style db_group fill:#c8e6c9
     style storage fill:#bbdefb
     style network fill:#f8bbd0
+    style internet fill:#e1f5fe
 ```
 
 ## 📆 Service Dependencies
@@ -83,16 +103,29 @@ graph TB
 
 ```mermaid
 graph LR
-    Browser["👤 User Browser"]
-    Frontend["🌳 Next.js Frontend<br/>- Render pages<br/>- State management"]
-    API["🔧 Rails API<br/>- Controllers<br/>- Business logic<br/>- Validation"]
-    Database["🗄️ PostgreSQL + PostGIS<br/>- Data storage<br/>- Geo-spatial queries"]
+    Internet["👤 External Users<br/>(via Internet)"]
+    DuckDNS["🌐 DuckDNS<br/>Dynamic DNS"]
+    LetEncrypt["🔒 Let's Encrypt<br/>SSL Certificate"]
+    Router["🔌 Home Router<br/>(Port Forward 80/443)"]
+    Nginx["🔀 Nginx Reverse Proxy<br/>- HTTP/HTTPS termination<br/>- Routing<br/>- Rate limiting<br/>- Security headers"]
+    Frontend["🌳 Next.js Frontend<br/>Port 5000<br/>- Render pages<br/>- State management"]
+    API["🔧 Rails API<br/>Port 3000<br/>- Controllers<br/>- Business logic<br/>- Validation"]
+    Database["🗄️ PostgreSQL + PostGIS<br/>Port 5432<br/>- Data storage<br/>- Geo-spatial queries"]
 
-    Browser -->|HTTP port 5000| Frontend
-    Frontend -->|API calls port 3000| API
-    API -->|SQL port 5432| Database
+    Internet -->|zatara.duckdns.org:443| DuckDNS
+    DuckDNS -->|DNS resolution| Router
+    Router -->|Port 80/443| Nginx
+    Nginx -->|SSL/TLS termination| LetEncrypt
+    Nginx -->|api.zatara.duckdns.org| API
+    Nginx -->|zatara.duckdns.org| Frontend
+    Frontend -->|API calls| API
+    API -->|SQL| Database
 
-    style Browser fill:#e3f2fd
+    style Internet fill:#e3f2fd
+    style DuckDNS fill:#f1f8e9
+    style LetEncrypt fill:#fff3e0
+    style Router fill:#f3e5f5
+    style Nginx fill:#ffccbc
     style Frontend fill:#e8f5e9
     style API fill:#fff3e0
     style Database fill:#f3e5f5
@@ -123,10 +156,13 @@ graph LR
 │   ├── ARCHITECTURE.md           # This file
 │   ├── deploy.sh                 # Main deployment orchestrator
 │   ├── jobs/                     # Nomad job definitions
+│   │   ├── nginx.hcl             # Nginx reverse proxy job
 │   │   ├── postgres.hcl          # PostgreSQL job
 │   │   ├── api.hcl               # Rails API job
 │   │   └── web.hcl               # Next.js job
 │   ├── scripts/                  # Setup & initialization scripts
+│   │   ├── nginx-setup.sh        # Nginx configuration setup
+│   │   ├── nginx.conf            # Nginx reverse proxy config
 │   │   ├── postgres-init.sh      # Database initialization
 │   │   ├── api-setup.sh          # API setup
 │   │   ├── web-setup.sh          # Web build

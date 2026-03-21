@@ -24,7 +24,7 @@ sudo pkg install -y nomad pot postgresql14-client
 cd /home/ulises/projects/portfolio/nomad/pot
 sudo sh setup-jails.sh
 ```
-- [ ] All three jails created (portfolio-db, portfolio-api, portfolio-web)
+- [ ] All four jails created (portfolio-nginx, portfolio-db, portfolio-api, portfolio-web)
 - [ ] ZFS datasets created at /data/portfolio-*
 - [ ] Jails can be listed: `pot list`
 
@@ -79,10 +79,10 @@ cd /home/ulises/projects/portfolio
 # Make deploy script executable
 chmod +x nomad/deploy.sh
 
-# Run deployment
-# This will deploy postgres, then api, then web
+# Run deployment (Nginx → PostgreSQL → API → Web)
 ./nomad/deploy.sh
 ```
+- [ ] Nginx reverse proxy deployed
 - [ ] PostgreSQL job submitted
 - [ ] API job submitted
 - [ ] Web job submitted
@@ -93,26 +93,32 @@ chmod +x nomad/deploy.sh
 ### Check Job Status
 ```sh
 nomad job status
+nomad job status portfolio-nginx
 nomad job status portfolio-postgres
 nomad job status portfolio-api
 nomad job status portfolio-web
 ```
+- [ ] All jobs listed
+- [ ] All jobs show as "running"
+- [ ] No failed allocations
 - [ ] All jobs show as "running"
 - [ ] No failed allocations
 
 ### Check Service Ports
 ```sh
 # From host
-sockstat -l | grep -E '3000|5000|5432'
+sockstat -l | grep -E '80|443|3000|5000|5432'
 
 # Verify connectivity
-curl http://localhost:3000/health
-curl http://localhost:5000/
+curl http://localhost/                    # Redirects to HTTPS
+curl https://localhost/ -k                # Frontend (self-signed cert)
+curl https://localhost/api -k             # API (self-signed cert)
 psql -h localhost -U portfolio -d portfolio
 ```
+- [ ] Nginx listening on 80 & 443
+- [ ] Rails API listening on 3000 (via Nginx)
+- [ ] Next.js frontend listening on 5000 (via Nginx)
 - [ ] PostgreSQL listening on 5432
-- [ ] Rails API listening on 3000
-- [ ] Next.js frontend listening on 5000
 
 ### Check Jail Connectivity
 ```sh
@@ -167,7 +173,8 @@ psql -h localhost -U portfolio -d portfolio
 | Jobs won't submit | Ensure Nomad is running: `nomad server members` |
 | Services can't connect to database | Check jail networking, verify POSTGRES_HOST in env |
 | Database won't initialize | Check PostgreSQL is running in jail: `pot exec portfolio-db service postgresql status` |
-| Port already in use | Check for conflicts: `sockstat -l \| grep 3000` |
+| Port already in use | Check for conflicts: `sockstat -l \| grep 80` or `sockstat -l \| grep 443` |
+| SSL certificate not valid | Using self-signed for testing. Use Let's Encrypt for production |
 | Out of memory | Increase Nomad memory allocation or reduce resource requirements in .hcl files |
 
 ## ↩️ Rollback Plan
