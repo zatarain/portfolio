@@ -99,7 +99,7 @@ create_jail() {
   local jail_name=$1
   local jail_type=$2
 
-  if pot show "$jail_name" >/dev/null 2>&1; then
+  if pot list | grep -q "^$jail_name$"; then
     warn "Jail $jail_name already exists, skipping"
     return
   fi
