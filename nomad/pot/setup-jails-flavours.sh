@@ -110,8 +110,8 @@ create_jails() {
   log "Creating jails with flavours"
   log "========================================"
 
-  create_jail_with_flavour "reverse-proxy" "portfolio-reverse-proxy" "Nginx" "reverse-proxy"
-  create_jail_with_flavour "databases" "portfolio-databases" "PostgreSQL" "databases"
+  create_jail_with_flavour "reverse-proxy" "reverse-proxy" "Nginx" "reverse-proxy"
+  create_jail_with_flavour "databases" "databases" "PostgreSQL" "databases"
   create_jail_with_flavour "portfolio-api" "portfolio-api" "Rails API" "portfolio-api"
   create_jail_with_flavour "portfolio-web" "portfolio-web" "Next.js Web" "portfolio-web"
 

@@ -6,36 +6,34 @@ This is a **distinguished engineering approach** using Pot flavours—the proper
 
 ## Architecture
 
+```mermaid
+architecture-beta
+    group flavours(disk)[Pot Flavours]
+        service db(database)[databases] in flavours
+        service api(server)[portfolio-api] in flavours
+        service web(server)[portfolio-web] in flavours
+        service proxy(internet)[reverse-proxy] in flavours
+
+    group setup(cloud)[Setup Phase]
+        service setup_script(server)[setup-jails-flavours.sh] in setup
+
+    group deploy(cloud)[Deploy Phase]
+        service deploy_script(server)[deploy-flavours.sh] in deploy
+
+    group nomad(cloud)[Nomad Orchestration]
+        service nomad_jobs(server)[*.hcl jobs] in nomad
+
+    flavours:R --> L:setup
+    setup:R --> L:deploy
+    deploy:R --> L:nomad
 ```
-┌─────────────────────────────────────────────────┐
-│ Pot Flavours (/usr/local/etc/pot/flavours/)     │
-├─────────────────────────────────────────────────┤
-│ • portfolio-databases & bootstrap                │
-│ • portfolio-api & bootstrap                      │
-│ • portfolio-web & bootstrap                      │
-│ • portfolio-reverse-proxy & bootstrap            │
-└─────────────────────────────────────────────────┘
-           ↓
-┌─────────────────────────────────────────────────┐
-│ Setup Script (setup-jails-flavours.sh)          │
-│ Creates jails using flavours                    │
-│ • pot create -f portfolio-databases ...         │
-│ • pot create -f portfolio-api ...               │
-│ • Mounts ZFS datasets                           │
-└─────────────────────────────────────────────────┘
-           ↓
-┌─────────────────────────────────────────────────┐
-│ Deploy Script (deploy-flavours.sh)              │
-│ • Copies application code                       │
-│ • Runs bundle install, npm install, etc.        │
-│ • Ready for Nomad orchestration                 │
-└─────────────────────────────────────────────────┘
-           ↓
-┌─────────────────────────────────────────────────┐
-│ Nomad Jobs (nomad/jobs/*.hcl)                   │
-│ Orchestrates service startup/management         │
-└─────────────────────────────────────────────────┘
-```
+
+### Deployment Flow
+
+1. **Flavours Definition** - Declarative Pot configurations in `/usr/local/etc/pot/flavours/`
+2. **Setup Phase** - Creates jails using flavours, mounts ZFS datasets
+3. **Deploy Phase** - Copies application code, runs initialization
+4. **Nomad Phase** - Orchestrates service startup and management
 
 ## Flavour Structure
 
@@ -47,7 +45,7 @@ Contains Pot commands:
 - `set-environment` - Environment variables
 - `set-resource-set` - Resource limits
 
-Example: `portfolio-databases`
+Example: `databases`
 ```
 set-attribute -A no-rc-script -V YES
 set-attribute -A persistent -V YES
@@ -61,7 +59,7 @@ Shell script executed inside jail during creation:
 - Performs initial configuration
 - **No pot commands** - just shell
 
-Example: `portfolio-databases.sh`
+Example: `databases.sh`
 ```bash
 #!/bin/sh
 ASSUME_ALWAYS_YES=yes pkg bootstrap
@@ -73,7 +71,7 @@ su postgres -c "/usr/local/bin/initdb -D /var/lib/postgresql/data/pgdata"
 ### 3. Command File (-cmd)
 Sets the main startup command:
 
-Example: `portfolio-databases-cmd`
+Example: `databases-cmd`
 ```
 set-cmd -c "su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"
 ```
@@ -127,18 +125,18 @@ nomad job run nomad/jobs/web.hcl
 nomad/
 ├── pot/
 │   ├── flavours/                    ← Pot flavour definitions
-│   │   ├── portfolio-databases
-│   │   ├── portfolio-databases.sh
-│   │   ├── portfolio-databases-cmd
+│   │   ├── databases
+│   │   ├── databases.sh
+│   │   ├── databases-cmd
 │   │   ├── portfolio-api
 │   │   ├── portfolio-api.sh
 │   │   ├── portfolio-api-cmd
 │   │   ├── portfolio-web
 │   │   ├── portfolio-web.sh
 │   │   ├── portfolio-web-cmd
-│   │   ├── portfolio-reverse-proxy
-│   │   ├── portfolio-reverse-proxy.sh
-│   │   └── portfolio-reverse-proxy-cmd
+│   │   ├── reverse-proxy
+│   │   ├── reverse-proxy.sh
+│   │   └── reverse-proxy-cmd
 │   ├── setup-jails-flavours.sh      ← Infrastructure setup
 │   ├── deploy-flavours.sh            ← Code deployment
 │   └── install-flavours.sh           ← Flavour installation
@@ -165,7 +163,7 @@ nomad/
 ### Flavour not found
 ```bash
 # Verify installation
-ssh root@server ls /usr/local/etc/pot/flavours/portfolio-*
+ssh root@server ls /usr/local/etc/pot/flavours/{databases,reverse-proxy,portfolio-*}
 
 # Re-install
 ./install-flavours.sh root@freebsd-server
@@ -192,7 +190,7 @@ pot exec -p databases cat /var/log/manifest.log
 # Re-run bootstrap (if needed)
 pot stop databases
 pot destroy databases
-pot create -p databases -b 14.3 -t multi -f portfolio-databases -f portfolio-databases-cmd
+pot create -p databases -b 14.3 -t multi -f databases -f databases-cmd
 ```
 
 ## Future Enhancements

@@ -1,262 +1,157 @@
-# ⚡ Quick-Start Checklist for Nomad + Pot + Jails Deployment
+# Quick Start - Pot Flavours Approach
 
-## 📋 Pre-Deployment Checklist
+## Prerequisites
 
-### System Requirements
-- [ ] FreeBSD 13.2+ installed and updated
-- [ ] Root/sudo access verified
-- [ ] ZFS pool available (`zfs list`)
-- [ ] Network connectivity confirmed
+- FreeBSD 14.3 server with Pot 0.15.0+ installed
+- ZFS pool initialized (`zfs list`)
+- Nomad 1.9.6+ running
+- SSH access to FreeBSD server
 
-### Package Installation
-```sh
-# Run these as root
-sudo pkg update
-sudo pkg install -y nomad pot postgresql14-client
+## Step 1: Install Pot Flavours (Linux)
+
+```bash
+cd /path/to/portfolio
+./nomad/pot/install-flavours.sh root@your-freebsd-server
 ```
-- [ ] Nomad installed (`which nomad`)
-- [ ] Pot installed (`which pot`)
 
-## 🔧 Preparation Phase (Sequential Order)
+Verifies and copies all flavours to `/usr/local/etc/pot/flavours/` on the server.
 
-### 1. Setup Pot Jails
-```sh
-cd portfolio/nomad/pot
-sudo sh setup-jails.sh
+## Step 2: Create Infrastructure (FreeBSD)
+
+```bash
+ssh root@your-freebsd-server
+cd /path/to/portfolio
+
+sudo ./nomad/pot/setup-jails-flavours.sh
 ```
-- [ ] All four jails created (reverse-proxy, databases, portfolio-api, portfolio-web)
-- [ ] ZFS datasets created at /data/portfolio-*
-- [ ] Jails can be listed: `pot list`
 
-### 2. Configure Nomad Agent
-```sh
-# Copy example config
-sudo cp portfolio/nomad/pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
-
-# Verify paths
-ls -la /var/lib/nomad
-ls -la /etc/nomad.d/
+**Output:**
 ```
-- [ ] Nomad config file exists at `/etc/nomad.d/nomad.hcl`
-- [ ] Host volumes configured correctly
-- [ ] raw_exec driver enabled
-
-### 3. Start Nomad
-```sh
-# Option A: Using service (if rc.d script exists)
-sudo sysrc nomad_enable="YES"
-sudo sysrc nomad_config="/etc/nomad.d"
-sudo service nomad start
-
-# Option B: Manual startup
-sudo mkdir -p /var/log/nomad
-sudo nomad agent -config /etc/nomad.d/nomad.hcl &
-
-# Verify startup
-sleep 3
-nomad node status
+✓ Pot framework initialized
+✓ ZFS datasets created:
+  • zroot/reverse-proxy → /data/reverse-proxy
+  • zroot/databases → /data/databases
+  • zroot/portfolio-api → /data/portfolio-api
+  • zroot/portfolio-web → /data/portfolio-web
+✓ Jails created:
+  • reverse-proxy (Nginx)
+  • databases (PostgreSQL 14)
+  • portfolio-api (Rails 7)
+  • portfolio-web (Next.js)
 ```
-- [ ] Nomad agent started without errors
-- [ ] Node appears in `nomad node status`
-- [ ] Nomad UI accessible at http://localhost:4646
 
-### 4. Prepare Environment
-```sh
-# Copy and edit environment file
-cp portfolio/nomad/pot/env.sh ~/.env.nomad
-# Edit ~/.env.nomad with your credentials
-source ~/.env.nomad
+## Step 3: Deploy Application Code (from Linux or FreeBSD)
+
+```bash
+# Copy code to server (if not already there)
+scp -r api/ web/ root@freebsd-server:/path/to/portfolio/
+
+# Then on server:
+ssh root@your-freebsd-server
+cd /path/to/portfolio
+
+sudo ./nomad/pot/deploy-flavours.sh
 ```
-- [ ] Environment variables set (`echo $POSTGRES_PASSWORD`)
-- [ ] Database password configured (don't use 'changeme')
-- [ ] AWS credentials configured (if needed for CV upload)
-- [ ] Instagram tokens configured (if needed)
 
-### 5. Deploy Applications
-```sh
-cd portfolio
-
-# Make deploy script executable
-chmod +x nomad/deploy.sh
-
-# Run deployment (Nginx → PostgreSQL → API → Web)
-./nomad/deploy.sh
+**Output:**
 ```
-- [ ] Nginx reverse proxy deployed
-- [ ] PostgreSQL job submitted
-- [ ] API job submitted
-- [ ] Web job submitted
-- [ ] All allocations running: `nomad job status`
+✓ Application code deployed
+✓ Rails dependencies installed
+✓ Next.js dependencies installed and built
+✓ Ready for Nomad orchestration
+```
 
-## ✅ Post-Deployment Verification
+## Step 4: Start Services with Nomad (FreeBSD)
 
-### Check Job Status
-```sh
+```bash
+# From portfolio directory:
+nomad job run nomad/jobs/postgres.hcl
+nomad job run nomad/jobs/nginx.hcl
+nomad job run nomad/jobs/api.hcl
+nomad job run nomad/jobs/web.hcl
+
+# Monitor
 nomad job status
-nomad job status portfolio-nginx
-nomad job status portfolio-postgres
-nomad job status portfolio-api
-nomad job status portfolio-web
+nomad alloc logs -f <alloc-id>
 ```
-- [ ] All jobs listed
-- [ ] All jobs show as "running"
-- [ ] No failed allocations
-- [ ] All jobs show as "running"
-- [ ] No failed allocations
 
-### Check Service Ports
-```sh
-# From host
-sockstat -l | grep -E '80|443|3000|5000|5432'
+## Verification
 
-# Verify connectivity
-curl http://localhost/                    # Redirects to HTTPS
-curl https://localhost/ -k                # Frontend (self-signed cert)
-curl https://localhost/api -k             # API (self-signed cert)
-psql -h localhost -U portfolio -d portfolio
-```
-- [ ] Nginx listening on 80 & 443
-- [ ] Rails API listening on 3000 (via Nginx)
-- [ ] Next.js frontend listening on 5000 (via Nginx)
-- [ ] PostgreSQL listening on 5432
-
-### Check Jail Connectivity
-```sh
+### Check jails are running
+```bash
 pot list
 pot show databases
+pot show reverse-proxy
 pot show portfolio-api
-pot show portfolio-web
-
-# Execute commands in jails
-pot exec databases ps aux | grep postgres
-pot exec portfolio-api ps aux | grep ruby
-pot exec portfolio-web ps aux | grep node
-```
-- [ ] All jails running
-- [ ] Services active inside jails
-- [ ] Network interfaces assigned
-
-### Check Logs
-```sh
-# View Nomad logs
-tail -f /var/log/nomad/nomad.log
-
-# View allocation logs
-nomad alloc logs -f <allocation-id>
-
-# View from inside jail
-pot exec portfolio-api tail -f /var/log/production.log
-```
-- [ ] No errors in Nomad logs
-- [ ] Services starting correctly
-- [ ] Database migrations completed (API logs)
-
-### Database Verification
-```sh
-# Connect to database
-psql -h localhost -U portfolio -d portfolio
-
-# In psql:
-> SELECT 1;
-> \dt
-> SELECT PostGIS_Version();
-```
-- [ ] Database connection successful
-- [ ] Tables exist (if database was initialized)
-- [ ] PostGIS extension loaded
-
-## 🔍 Troubleshooting Quick Reference
-
-| Issue | Solution |
-|-------|----------|
-| Nomad won't start | Check `/etc/nomad.d/nomad.hcl` syntax: `nomad config validate /etc/nomad.d/nomad.hcl` |
-| Jobs won't submit | Ensure Nomad is running: `nomad server members` |
-| Services can't connect to database | Check jail networking, verify POSTGRES_HOST in env |
-| Database won't initialize | Check PostgreSQL is running in jail: `pot exec databases service postgresql status` |
-| Port already in use | Check for conflicts: `sockstat -l \| grep 80` or `sockstat -l \| grep 443` |
-| SSL certificate not valid | Using self-signed for testing. Use Let's Encrypt for production |
-| Out of memory | Increase Nomad memory allocation or reduce resource requirements in .hcl files |
-
-## ↩️ Rollback Plan
-
-If anything goes wrong:
-
-```sh
-# Stop all jobs gracefully
-nomad job stop portfolio-web
-nomad job stop portfolio-api
-nomad job stop portfolio-postgres
-
-# Destroy jails (WARNING: deletes all data)
-pot stop portfolio-web portfolio-api databases
-pot destroy portfolio-web portfolio-api databases
-
-# Clean up ZFS datasets (WARNING: deletes all data)
-# zfs destroy zroot/portfolio-db (if needed)
-
-# Restart Nomad
-service nomad restart
 ```
 
-## 🎯 Next Steps After Successful Deployment
+### Check services inside jails
+```bash
+# PostgreSQL
+pot exec -p databases psql -U postgres -d postgres -c "SELECT 1;"
 
-1. **Set up monitoring**
-   - Install Prometheus + Grafana for metrics
-   - Configure Nomad telemetry endpoints
+# Rails
+pot exec -p portfolio-api ps aux | grep puma
 
-2. **Configure backups**
-   - Schedule PostgreSQL backups via ZFS snapshots
-   - `zfs snapshot zroot/databases@backup-$(date +%s)`
+# Next.js
+pot exec -p portfolio-web ps aux | grep node
 
-3. **Set up TLS/Security**
-   - Configure Nomad TLS
-   - Set up ACLs
-
-4. **Load testing**
-   - Test API endpoints
-   - Verify frontend renders correctly
-   - Load test with tools like wrk or ab
-
-5. **Production hardening**
-   - Configure resource limits more strictly
-   - Set up health checks and auto-restarts
-   - Monitor disk usage and clean up periodically
-
-## 📚 Useful Commands Reference
-
-```sh
-# Nomad
-nomad node status                           # View all nodes
-nomad job status                            # View all jobs
-nomad alloc status <id>                     # View allocation details
-nomad alloc logs -f <id>                    # Follow allocation logs
-nomad job stop <job>                        # Stop a job
-
-# Pot
-pot list                                    # List all jails
-pot show <name>                             # Show jail details
-pot exec <name> <cmd>                       # Run command in jail
-pot start <name>                            # Start jail
-pot stop <name>                             # Stop jail
-pot console <name>                          # Interactive jail shell
-
-# FreeBSD
-jls                                         # List all jails (native)
-jexec <jid> <cmd>                          # Run command in jail (native)
-
-# Database
-psql -h <host> -U <user> -d <dbname>      # Connect to PostgreSQL
-pg_dump -h <host> -U <user> <db>          # Backup database
+# Nginx
+pot exec -p reverse-proxy ps aux | grep nginx
 ```
 
-## 🆘 Support Resources
+### Check logs
+```bash
+# Nomad logs
+nomad alloc logs -stderr <alloc-id>
 
-- [Nomad Documentation](https://www.nomadproject.io/docs)
+# Inside jails
+pot exec -p portfolio-api tail -f /var/app/log/production.log
+pot exec -p portfolio-web tail -f /var/web/.next/...
+```
+
+## Next Steps
+
+- Configure SSL/TLS with Let's Encrypt
+- Set up monitoring and alerting
+- Configure external DNS (DuckDNS)
+- Set up CI/CD pipeline
+
+## Troubleshooting
+
+**Q: "Flavour not found" error**
+```bash
+# Check flavours are installed
+ssh root@server ls /usr/local/etc/pot/flavours/portfolio-*
+
+# Re-install if needed
+./nomad/pot/install-flavours.sh root@server
+```
+
+**Q: Jail creation fails**
+```bash
+# Check detailed log
+tail -f /tmp/portfolio-setup.log
+
+# Verify Pot configuration
+ssh root@server sudo pot config
+```
+
+**Q: PostgreSQL won't start**
+```bash
+# Check inside jail
+pot exec -p databases service postgresql status
+
+# Initialize manually if needed
+pot exec -p databases su postgres -c "/usr/local/bin/initdb -D /var/lib/postgresql/data/pgdata"
+```
+
+## Additional Resources
+
+- [Pot Flavours Guide](../FLAVOURS.md)
 - [Pot Documentation](https://pot.pizzamig.dev/)
-- [FreeBSD Jails Handbook](https://docs.freebsd.org/en/books/handbook/jails/)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Nomad Integration](../jobs/)
 
 ---
 
-**Last Updated:** March 2026
-**Created for:** Portfolio Application (Rails API + Next.js Frontend)
+**This is the distinguished engineering approach.** Flavours are declarative, reusable, version-controlled configurations—not imperative workarounds.
