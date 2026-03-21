@@ -132,7 +132,7 @@ create_jail() {
       ;;
     "api")
       log "Configuring API (Rails) jail..."
-      pot exec -p "$jail_name" pkg install -y ruby32 ruby32-gems git gmake readline-library
+      pot exec -p "$jail_name" pkg install -y ruby32 git gmake readline
       ;;
     "web")
       log "Configuring Web (Next.js) jail..."
