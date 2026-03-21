@@ -115,13 +115,13 @@ create_jail() {
   log "Configuring DNS for jail $jail_name..."
   pot exec -p "$jail_name" sh -c "echo 'nameserver 8.8.8.8' > /etc/resolv.conf"
   pot exec -p "$jail_name" sh -c "echo 'nameserver 8.8.4.4' >> /etc/resolv.conf"
+  pot exec -p "$jail_name" pkg install -y pkg
+  pot exec -p "$jail_name" pkg update -f
 
   # Allocate resources
   case $jail_type in
     "postgres")
       log "Configuring PostgreSQL jail..."
-      pot exec -p "$jail_name" pkg install -y pkg
-      pot exec -p "$jail_name" pkg update -f
       pot exec -p "$jail_name" pkg install -y postgresql14-server postgresql14-contrib postgis3
 
       # Stop PostgreSQL (Nomad will manage it)
@@ -129,20 +129,14 @@ create_jail() {
       ;;
     "api")
       log "Configuring API (Rails) jail..."
-      pot exec -p "$jail_name" pkg install -y pkg
-      pot exec -p "$jail_name" pkg update -f
       pot exec -p "$jail_name" pkg install -y ruby32 ruby32-gems git gmake readline-library
       ;;
     "web")
       log "Configuring Web (Next.js) jail..."
-      pot exec -p "$jail_name" pkg install -y pkg
-      pot exec -p "$jail_name" pkg update -f
       pot exec -p "$jail_name" pkg install -y node npm
       ;;
     "nginx")
       log "Configuring Nginx (Reverse Proxy) jail..."
-      pot exec -p "$jail_name" pkg install -y pkg
-      pot exec -p "$jail_name" pkg update -f
       pot exec -p "$jail_name" pkg install -y nginx certbot python3
 
       # Stop Nginx (Nomad will manage it)
