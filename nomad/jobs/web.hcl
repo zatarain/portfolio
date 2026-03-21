@@ -37,27 +37,6 @@ job "portfolio-web" {
         destination = "local/setup-web.sh"
       }
 
-      # Service registration
-      service {
-        name = "portfolio-web"
-        port = "web"
-        tags = ["web", "nextjs", "frontend", "production"]
-
-        check {
-          type     = "http"
-          path     = "/"
-          port     = "web"
-          interval = "10s"
-          timeout  = "5s"
-        }
-
-        # Deregistration on critical
-        check_restart {
-          limit           = 3
-          grace           = "10s"
-        }
-      }
-
       # Resource requirements
       resources {
         cpu    = 500
@@ -97,7 +76,6 @@ job "portfolio-web" {
   # Update strategy
   update {
     max_parallel      = 1
-    health_check      = "checks"
     min_healthy_time  = "30s"
     healthy_deadline  = "5m"
     progress_deadline = "10m"

@@ -52,27 +52,6 @@ job "portfolio-api" {
         destination = "local/setup-api.sh"
       }
 
-      # Health check
-      service {
-        name = "portfolio-api"
-        port = "api"
-        tags = ["api", "rails", "production"]
-
-        check {
-          type     = "http"
-          path     = "/health"
-          port     = "api"
-          interval = "10s"
-          timeout  = "5s"
-        }
-
-        # Deregistration on critical
-        check_restart {
-          limit           = 3
-          grace           = "10s"
-        }
-      }
-
       # Resource requirements
       resources {
         cpu    = 1000
@@ -112,7 +91,6 @@ job "portfolio-api" {
   # Update strategy
   update {
     max_parallel      = 1
-    health_check      = "checks"
     min_healthy_time  = "30s"
     healthy_deadline  = "5m"
     progress_deadline = "10m"

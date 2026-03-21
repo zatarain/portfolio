@@ -23,21 +23,6 @@ job "portfolio-nginx" {
         NGINX_WORKER_CONNECTIONS = "1024"
       }
 
-      # Service registration
-      service {
-        name = "nginx"
-        port = "http"
-        tags = ["reverse-proxy", "web", "production"]
-
-        check {
-          type     = "http"
-          path     = "/"
-          port     = "http"
-          interval = "10s"
-          timeout  = "5s"
-        }
-      }
-
       # Resource allocation
       resources {
         cpu    = 250
@@ -72,7 +57,6 @@ job "portfolio-nginx" {
   # Update strategy
   update {
     max_parallel      = 1
-    health_check      = "checks"
     min_healthy_time  = "10s"
     healthy_deadline  = "3m"
     progress_deadline = "10m"

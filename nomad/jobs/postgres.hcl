@@ -40,19 +40,6 @@ job "portfolio-postgres" {
       # Note: this runs on the Nomad client, not inside the jail
       # You may need to run initialization manually or adjust for jail context
 
-      # Service registration with Nomad
-      service {
-        name = "postgres"
-        port = "db"
-        tags = ["database", "postgresql"]
-        check {
-          type     = "tcp"
-          port     = "db"
-          interval = "10s"
-          timeout  = "5s"
-        }
-      }
-
       # Resource allocation
       resources {
         cpu    = 500
@@ -84,7 +71,6 @@ job "portfolio-postgres" {
   # Update strategy
   update {
     max_parallel      = 1
-    health_check      = "checks"
     min_healthy_time  = "10s"
     healthy_deadline  = "3m"
     progress_deadline = "10m"
@@ -95,7 +81,6 @@ job "portfolio-postgres" {
   # Migration strategy
   migrate {
     max_parallel     = 1
-    health_check     = "checks"
     min_healthy_time = "10s"
     healthy_deadline = "3m"
   }
