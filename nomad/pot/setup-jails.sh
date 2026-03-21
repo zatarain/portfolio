@@ -147,9 +147,9 @@ create_jail() {
 
       # Copy and run PostgreSQL initialization script
       log "Running PostgreSQL initialization..."
-      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/postgres-init.sh" -m /tmp/postgres-init.sh
-      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/templates/postgresql.conf" -m /tmp/postgresql.conf
-      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/templates/pg_hba.conf" -m /tmp/pg_hba.conf
+      pot copy-in -p "$jail_name" -s "${JOBS_SCRIPTS_DIR}/postgres-init.sh" -d /tmp/postgres-init.sh
+      pot copy-in -p "$jail_name" -s "${JOBS_SCRIPTS_DIR}/templates/postgresql.conf" -d /tmp/postgresql.conf
+      pot copy-in -p "$jail_name" -s "${JOBS_SCRIPTS_DIR}/templates/pg_hba.conf" -d /tmp/pg_hba.conf
       pot exec -p "$jail_name" sh /tmp/postgres-init.sh || warn "PostgreSQL init script had issues"
       pot exec -p "$jail_name" rm /tmp/postgres-init.sh /tmp/postgresql.conf /tmp/pg_hba.conf
 
@@ -162,7 +162,7 @@ create_jail() {
 
       # Copy Rails setup script (will run after code is deployed)
       log "Copying Rails setup script..."
-      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/api-setup.sh" -m /tmp/api-setup.sh
+      pot copy-in -p "$jail_name" -s "${JOBS_SCRIPTS_DIR}/api-setup.sh" -d /tmp/api-setup.sh
       pot exec -p "$jail_name" chmod +x /tmp/api-setup.sh
 
       # Note: Will run init-api.sh after code is deployed
@@ -174,7 +174,7 @@ create_jail() {
 
       # Copy Next.js setup script (will run after code is deployed)
       log "Copying Next.js setup script..."
-      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/web-setup.sh" -m /tmp/web-setup.sh
+      pot copy-in -p "$jail_name" -s "${JOBS_SCRIPTS_DIR}/web-setup.sh" -d /tmp/web-setup.sh
       pot exec -p "$jail_name" chmod +x /tmp/web-setup.sh
 
       # Note: Will run init-web.sh after code is deployed
