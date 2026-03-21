@@ -12,7 +12,7 @@ job "portfolio-web" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p portfolio-web sh -c 'cd /web && node src/server.ts'"
+          "exec sudo pot exec -p portfolio-web sh -c 'cd /var/web && node src/server.ts'"
         ]
       }
 
