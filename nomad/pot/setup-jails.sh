@@ -5,6 +5,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+JOBS_SCRIPTS_DIR="$(cd "$SCRIPT_DIR/../jobs/scripts" && pwd)"
 LOG_FILE="/tmp/pot-setup.log"
 
 # Colors for output
@@ -100,7 +101,7 @@ create_jail() {
   local jail_type=$2
 
   if pot list | grep -q "^$jail_name$"; then
-    warn "Jail $jail_name already exists, skipping"
+    warn "Jail $jail_name already exists, skipping initialization"
     return
   fi
 
@@ -118,7 +119,24 @@ create_jail() {
   pot exec -p "$jail_name" pkg install -y pkg
   pot exec -p "$jail_name" pkg update -f
 
-  # Allocate resources
+  # Mount ZFS datasets for persistent storage
+  log "Mounting ZFS dataset for jail $jail_name..."
+  case $jail_type in
+    "postgres")
+      pot mount-in -p "$jail_name" -z zroot/portfolio-db -m /var/db
+      ;;
+    "api")
+      pot mount-in -p "$jail_name" -z zroot/portfolio-api -m /var/app
+      ;;
+    "web")
+      pot mount-in -p "$jail_name" -z zroot/portfolio-web -m /var/web
+      ;;
+    "nginx")
+      pot mount-in -p "$jail_name" -z zroot/portfolio-nginx -m /etc/nginx/conf
+      ;;
+  esac
+
+  # Install packages and run initialization
   case $jail_type in
     "postgres")
       log "Configuring PostgreSQL jail..."
@@ -127,16 +145,40 @@ create_jail() {
       pot exec -p "$jail_name" pkg install -y pgsql14-postgis 2>/dev/null \
         || log "Note: PostGIS not installed. It may need manual installation with correct package name."
 
+      # Copy and run PostgreSQL initialization script
+      log "Running PostgreSQL initialization..."
+      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/postgres-init.sh" -m /tmp/postgres-init.sh
+      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/templates/postgresql.conf" -m /tmp/postgresql.conf
+      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/templates/pg_hba.conf" -m /tmp/pg_hba.conf
+      pot exec -p "$jail_name" sh /tmp/postgres-init.sh || warn "PostgreSQL init script had issues"
+      pot exec -p "$jail_name" rm /tmp/postgres-init.sh /tmp/postgresql.conf /tmp/pg_hba.conf
+
       # Stop PostgreSQL (Nomad will manage it)
       pot exec -p "$jail_name" sysrc postgresql_enable=NO
       ;;
     "api")
       log "Configuring API (Rails) jail..."
-      pot exec -p "$jail_name" pkg install -y ruby32 git gmake readline
+      pot exec -p "$jail_name" pkg install -y ruby32 git gmake readline postgresql14-client
+
+      # Copy Rails setup script (will run after code is deployed)
+      log "Copying Rails setup script..."
+      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/api-setup.sh" -m /tmp/api-setup.sh
+      pot exec -p "$jail_name" chmod +x /tmp/api-setup.sh
+
+      # Note: Will run init-api.sh after code is deployed
+      warn "Rails init will run after code deployment to jails"
       ;;
     "web")
       log "Configuring Web (Next.js) jail..."
       pot exec -p "$jail_name" pkg install -y node npm
+
+      # Copy Next.js setup script (will run after code is deployed)
+      log "Copying Next.js setup script..."
+      pot copy-in -p "$jail_name" -d "${JOBS_SCRIPTS_DIR}/web-setup.sh" -m /tmp/web-setup.sh
+      pot exec -p "$jail_name" chmod +x /tmp/web-setup.sh
+
+      # Note: Will run init-web.sh after code is deployed
+      warn "Next.js init will run after code deployment to jails"
       ;;
     "nginx")
       log "Configuring Nginx (Reverse Proxy) jail..."
@@ -192,24 +234,38 @@ print_summary() {
   log "  - portfolio-db (PostgreSQL 14 + PostGIS)"
   log "  - portfolio-api (Ruby 3.2 + Rails)"
   log "  - portfolio-web (Node.js + npm)"
+  log "  - portfolio-nginx (Nginx reverse proxy)"
   log ""
-  log "ZFS Datasets:"
-  log "  - $ZPOOL/portfolio-db → /data/portfolio-db"
-  log "  - $ZPOOL/portfolio-api → /data/portfolio-api"
-  log "  - $ZPOOL/portfolio-web → /data/portfolio-web"
+  log "ZFS Datasets (ready for app code):"
+  log "  - zroot/portfolio-db → /data/portfolio-db"
+  log "  - zroot/portfolio-api → /data/portfolio-api"
+  log "  - zroot/portfolio-web → /data/portfolio-web"
+  log "  - zroot/portfolio-nginx → /data/portfolio-nginx"
   log ""
-  log "Next steps:"
-  log "  1. Configure Nomad: /etc/nomad.d/nomad.hcl"
-  log "  2. Start Nomad: service nomad start"
-  log "  3. Submit jobs: nomad job run /path/to/portfolio/nomad/jobs/*.hcl (from portfolio directory)"
-  log "  4. Configure environment: Create .env.nomad with secrets"
-  log "  5. Monitor: nomad job status"
+  log "IMPORTANT: Next Steps"
+  log "======================================"
+  log "1. Copy application code to FreeBSD server:"
+  log "   From Linux: scp -r api/ web/ user@freebsd-server:"
   log ""
-  log "Jail commands:"
-  log "  - List jails: pot list"
-  log "  - Start jail: pot start <name>"
-  log "  - Execute in jail: pot exec <name> <command>"
-  log "  - Show jail info: pot show <name>"
+  log "2. On FreeBSD, run deployment script:"
+  log "   cd /path/to/portfolio"
+  log "   ./nomad/pot/deploy.sh"
+  log ""
+  log "   This will:"
+  log "   - Mount ZFS datasets in jails"
+  log "   - Copy code to jails"
+  log "   - Initialize PostgreSQL"
+  log "   - Install Rails and Next.js dependencies"
+  log "   - Build Next.js application"
+  log ""
+  log "3. After deployment, start services:"
+  log "   nomad job run nomad/jobs/postgres.hcl"
+  log "   nomad job run nomad/jobs/nginx.hcl"
+  log "   nomad job run nomad/jobs/api.hcl"
+  log "   nomad job run nomad/jobs/web.hcl"
+  log ""
+  log "4. Monitor:"
+  log "   nomad job status"
   log "=========================================="
 }
 

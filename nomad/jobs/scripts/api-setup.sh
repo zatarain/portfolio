@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-API_DIR="/api"
+API_DIR="/var/app"
 cd "$API_DIR"
 
 # Install Ruby dependencies
