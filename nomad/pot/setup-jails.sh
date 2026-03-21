@@ -106,7 +106,7 @@ create_jail() {
 
   log "Creating $jail_type jail: $jail_name"
 
-  pot create -p "$jail_name" -b 13.2 -f zfs -t default
+  pot create -p "$jail_name" -b 14.3 -t multi -N public-bridge
 
   # Allocate resources
   case $jail_type in
