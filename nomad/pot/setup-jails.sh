@@ -108,6 +108,9 @@ create_jail() {
 
   pot create -p "$jail_name" -b 14.3 -t multi -N public-bridge
 
+  # Start the jail so we can execute commands inside it
+  pot start "$jail_name" || error "Failed to start jail $jail_name"
+
   # Allocate resources
   case $jail_type in
     "postgres")
