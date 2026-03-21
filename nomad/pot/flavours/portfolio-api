@@ -1,0 +1,6 @@
+set-attribute -A no-rc-script -V YES
+set-attribute -A persistent -V YES
+set-env -e RAILS_ENV=production
+set-env -e RAILS_LOG_TO_STDOUT=true
+set-env -e RAILS_MAX_THREADS=5
+set-env -e RAILS_MIN_THREADS=2

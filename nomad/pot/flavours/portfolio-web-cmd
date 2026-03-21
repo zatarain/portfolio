@@ -1,0 +1,1 @@
+set-cmd -c "sh -c 'cd /var/web && node src/server.ts'"

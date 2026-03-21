@@ -1,0 +1,4 @@
+set-attribute -A no-rc-script -V YES
+set-attribute -A persistent -V YES
+set-env -e NGINX_WORKER_PROCESSES=auto
+set-env -e NGINX_WORKER_CONNECTIONS=1024
