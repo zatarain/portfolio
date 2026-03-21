@@ -14,11 +14,11 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 log() {
-  echo -e "${GREEN}[*]${NC} $1"
+  printf "%s[*]%s %s\n" "$GREEN" "$NC" "$1"
 }
 
 error() {
-  echo -e "${RED}[!]${NC} $1"
+  printf "%s[!]%s %s\n" "$RED" "$NC" "$1"
   exit 1
 }
 

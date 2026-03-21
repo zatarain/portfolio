@@ -15,16 +15,16 @@ NC='\033[0m' # No Color
 
 # Logging function
 log() {
-  echo -e "${GREEN}[$(date +'%Y-%m-%d %H:%M:%S')]${NC} $1" | tee -a "$LOG_FILE"
+  printf "%s[%s]%s %s\n" "$GREEN" "$(date +'%Y-%m-%d %H:%M:%S')" "$NC" "$1" | tee -a "$LOG_FILE"
 }
 
 error() {
-  echo -e "${RED}[ERROR]${NC} $1" | tee -a "$LOG_FILE"
+  printf "%s[ERROR]%s %s\n" "$RED" "$NC" "$1" | tee -a "$LOG_FILE"
   exit 1
 }
 
 warn() {
-  echo -e "${YELLOW}[WARNING]${NC} $1" | tee -a "$LOG_FILE"
+  printf "%s[WARNING]%s %s\n" "$YELLOW" "$NC" "$1" | tee -a "$LOG_FILE"
 }
 
 # Check prerequisites
@@ -33,7 +33,7 @@ check_prerequisites() {
 
   [ -x "$(command -v pot)" ] || error "pot is not installed. Run: pkg install pot"
   [ -x "$(command -v zfs)" ] || error "ZFS is not available"
-  [ "$EUID" -eq 0 ] || error "This script must be run as root"
+  [ "$(id -u)" -eq 0 ] || error "This script must be run as root"
 
   log "Prerequisites check passed"
 }
@@ -49,7 +49,7 @@ create_zfs_datasets() {
 
   # Create datasets if they don't exist
   for dataset in portfolio-nginx portfolio-db portfolio-api portfolio-web; do
-    if zfs list "$ZPOOL/$dataset" &>/dev/null; then
+    if zfs list "$ZPOOL/$dataset" >/dev/null 2>&1; then
       warn "Dataset $ZPOOL/$dataset already exists, skipping"
     else
       log "Creating dataset: $ZPOOL/$dataset"
@@ -69,7 +69,7 @@ create_jail() {
   local jail_name=$1
   local jail_type=$2
 
-  if pot show "$jail_name" &>/dev/null; then
+  if pot show "$jail_name" >/dev/null 2>&1; then
     warn "Jail $jail_name already exists, skipping"
     return
   fi
