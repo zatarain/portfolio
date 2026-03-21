@@ -36,16 +36,6 @@ check_jails() {
   log "All jails found"
 }
 
-# Mount ZFS datasets
-mount_datasets() {
-  log "Mounting ZFS datasets..."
-
-  pot mount-in -p portfolio-api -z zroot/portfolio-api -m /var/app || warn "API dataset may already be mounted"
-  pot mount-in -p portfolio-web -z zroot/portfolio-web -m /var/web || warn "Web dataset may already be mounted"
-
-  log "ZFS datasets mounted"
-}
-
 # Copy code to ZFS datasets
 copy_code() {
   log "Copying application code..."
@@ -115,7 +105,6 @@ main() {
   log "Starting application deployment..."
 
   check_jails
-  mount_datasets
   copy_code
   init_api
   init_web
