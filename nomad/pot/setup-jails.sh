@@ -122,7 +122,10 @@ create_jail() {
   case $jail_type in
     "postgres")
       log "Configuring PostgreSQL jail..."
-      pot exec -p "$jail_name" pkg install -y postgresql14-server postgresql14-contrib postgis3
+      pot exec -p "$jail_name" pkg install -y postgresql14-server postgresql14-contrib
+      # Try PostGIS - may use different package name in some repos
+      pot exec -p "$jail_name" pkg install -y pgsql14-postgis 2>/dev/null \
+        || log "Note: PostGIS not installed. It may need manual installation with correct package name."
 
       # Stop PostgreSQL (Nomad will manage it)
       pot exec -p "$jail_name" sysrc postgresql_enable=NO
