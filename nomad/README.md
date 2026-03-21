@@ -51,7 +51,11 @@ nomad/
 │   ├── setup-jails.sh            # Jail creation
 │   ├── env.sh                    # Environment setup
 │   ├── nomad-config-example.hcl
-│   └── pot-config-example.conf
+│   ├── pot-config-example.conf
+│   └── health-checks/            # Service health check scripts
+│       ├── postgres.sh           # Database health check
+│       ├── api.sh                # API health check
+│       └── web.sh                # Frontend health check
 ├── deploy.sh                       # Main deployment script
 └── Documentation
     ├── README.md       (this file)
@@ -88,14 +92,14 @@ Before starting, ensure you have:
 ### 3. Installation (In Order)
 
 ```sh
-# 1. Navigate to this directory
-cd /home/ulises/projects/portfolio/nomad
+# 1. Navigate to portfolio directory
+cd portfolio
 
 # 2. Create jails (one-time setup)
-sudo sh pot/setup-jails.sh
+sudo sh nomad/pot/setup-jails.sh
 
 # 3. Configure Nomad
-sudo cp pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
+sudo cp nomad/pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
 # Edit if needed: sudo ee /etc/nomad.d/nomad.hcl
 
 # 4. Start Nomad
@@ -238,7 +242,7 @@ git commit -m "Update API"
 git push
 
 # 2. Pull latest on server
-cd /home/ulises/projects/portfolio
+cd portfolio
 git pull
 
 # 3. Redeploy via Nomad

@@ -130,77 +130,63 @@ create_health_checks() {
 
   mkdir -p /usr/local/etc/pot/hooks
 
-  # PostgreSQL health check
-  cat > /usr/local/etc/pot/hooks/postgres-health.sh <<'EOF'
-#!/bin/sh
-# Check if PostgreSQL is accepting connections
-su - postgres -c "psql -U postgres -d postgres -c 'SELECT 1;'" >/dev/null 2>&1
-EOF
-  chmod +x /usr/local/etc/pot/hooks/postgres-health.sh
+  # Copy health check scripts
+  cp "${SCRIPT_DIR}/health-checks/postgres.sh" /usr/local/etc/pot/hooks/postgres.sh
+  cp "${SCRIPT_DIR}/health-checks/api.sh" /usr/local/etc/pot/hooks/api.sh
+  cp "${SCRIPT_DIR}/health-checks/web.sh" /usr/local/etc/pot/hooks/web.sh
 
-  # API health check
-  cat > /usr/local/etc/pot/hooks/api-health.sh <<'EOF'
-#!/bin/sh
-# Check if Rails API is responding
-curl -f http://127.0.0.1:3000/health >/dev/null 2>&1
-EOF
-  chmod +x /usr/local/etc/pot/hooks/api-health.sh
+  # Make executable
+  chmod +x /usr/local/etc/pot/hooks/postgres.sh
+  chmod +x /usr/local/etc/pot/hooks/api.sh
+  chmod +x /usr/local/etc/pot/hooks/web.sh
 
-  # Web health check
-  cat > /usr/local/etc/pot/hooks/web-health.sh <<'EOF'
-#!/bin/sh
-# Check if Next.js frontend is responding
-curl -f http://127.0.0.1:5000/ >/dev/null 2>&1
-EOF
-  chmod +x /usr/local/etc/pot/hooks/web-health.sh
-
-  log "Health check scripts created"
+  log "Health check scripts installed"
 }
 
 # Summary
 print_summary() {
-    log "=========================================="
-    log "Pot Jails Setup Complete!"
-    log "=========================================="
-    log ""
-    log "Created jails:"
-    log "  - portfolio-db (PostgreSQL 14 + PostGIS)"
-    log "  - portfolio-api (Ruby 3.2 + Rails)"
-    log "  - portfolio-web (Node.js + npm)"
-    log ""
-    log "ZFS Datasets:"
-    log "  - $ZPOOL/portfolio-db → /data/portfolio-db"
-    log "  - $ZPOOL/portfolio-api → /data/portfolio-api"
-    log "  - $ZPOOL/portfolio-web → /data/portfolio-web"
-    log ""
-    log "Next steps:"
-    log "  1. Configure Nomad: /etc/nomad.d/nomad.hcl"
-    log "  2. Start Nomad: service nomad start"
-    log "  3. Submit jobs: nomad job run /home/ulises/projects/portfolio/nomad/jobs/*.hcl"
-    log "  4. Configure environment: Create .env.nomad with secrets"
-    log "  5. Monitor: nomad job status"
-    log ""
-    log "Jail commands:"
-    log "  - List jails: pot list"
-    log "  - Start jail: pot start <name>"
-    log "  - Execute in jail: pot exec <name> <command>"
-    log "  - Show jail info: pot show <name>"
-    log "=========================================="
+  log "=========================================="
+  log "Pot Jails Setup Complete!"
+  log "=========================================="
+  log ""
+  log "Created jails:"
+  log "  - portfolio-db (PostgreSQL 14 + PostGIS)"
+  log "  - portfolio-api (Ruby 3.2 + Rails)"
+  log "  - portfolio-web (Node.js + npm)"
+  log ""
+  log "ZFS Datasets:"
+  log "  - $ZPOOL/portfolio-db → /data/portfolio-db"
+  log "  - $ZPOOL/portfolio-api → /data/portfolio-api"
+  log "  - $ZPOOL/portfolio-web → /data/portfolio-web"
+  log ""
+  log "Next steps:"
+  log "  1. Configure Nomad: /etc/nomad.d/nomad.hcl"
+  log "  2. Start Nomad: service nomad start"
+  log "  3. Submit jobs: nomad job run /path/to/portfolio/nomad/jobs/*.hcl (from portfolio directory)"
+  log "  4. Configure environment: Create .env.nomad with secrets"
+  log "  5. Monitor: nomad job status"
+  log ""
+  log "Jail commands:"
+  log "  - List jails: pot list"
+  log "  - Start jail: pot start <name>"
+  log "  - Execute in jail: pot exec <name> <command>"
+  log "  - Show jail info: pot show <name>"
+  log "=========================================="
 }
 
 # Main execution
 main() {
-    log "Starting Pot and FreeBSD Jails setup for Portfolio"
-    log "Logging to: $LOG_FILE"
+  log "Starting Pot and FreeBSD Jails setup for Portfolio"
+  log "Logging to: $LOG_FILE"
 
-    check_prerequisites
-    create_zfs_datasets
-    configure_networking
-    create_jail "portfolio-db" "postgres"
-    create_jail "portfolio-api" "api"
-    create_jail "portfolio-web" "web"
-    create_health_checks
-    print_summary
+  check_prerequisites
+  create_zfs_datasets
+  configure_networking
+  create_jail "portfolio-db" "postgres"
+  create_jail "portfolio-api" "api"
+  create_jail "portfolio-web" "web"
+  create_health_checks
+  print_summary
 }
 
 main "$@"

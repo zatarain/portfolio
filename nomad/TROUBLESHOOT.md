@@ -168,7 +168,7 @@ nomad job inspect portfolio-api | grep -A5 volume_mount
 ```
 
 **Solution:**
-- Verify `api_source` host volume points to `/home/ulises/projects/portfolio/api`
+- Verify `api_source` host volume points to the actual portfolio directory + `/api` (e.g., `/home/user/portfolio/api`)
 - Check Nomad client configuration has host_volume defined
 - Restart Nomad client or resubmit job
 

@@ -41,12 +41,14 @@ client {
   }
 
   host_volume "api_source" {
-    path      = "/home/ulises/projects/portfolio/api"
+    # UPDATE THIS: Set to your actual portfolio directory
+    path      = "/path/to/portfolio/api"
     read_only = false
   }
 
   host_volume "web_source" {
-    path      = "/home/ulises/projects/portfolio/web"
+    # UPDATE THIS: Set to your actual portfolio directory
+    path      = "/path/to/portfolio/web"
     read_only = false
   }
 }

@@ -63,23 +63,31 @@ Static configuration files copied into PostgreSQL:
 - Root/sudo access
 - Internet connectivity to download binaries/packages
 
-## 1⃣️⃣ Install Nomad on FreeBSD
+## 1⃣️⃣ Navigate to Portfolio Directory
+
+```sh
+# Assume portfolio/ is your working directory
+cd portfolio
+pwd  # Verify you're in the right place
+```
+
+## 2⃣️⃣ Install Nomad on FreeBSD
 
 ```sh
 # Install Nomad (as of 2026, install latest stable)
-pkg install nomad
+sudo pkg install nomad
 
 # Verify installation
 nomad version
 
 # Create nomad user and directories
-pw useradd nomad -d /var/lib/nomad -m
-mkdir -p /var/lib/nomad /etc/nomad.d /var/log/nomad
-chown -R nomad:nomad /var/lib/nomad /var/log/nomad
-chmod 750 /var/lib/nomad
+sudo pw useradd nomad -d /var/lib/nomad -m
+sudo mkdir -p /var/lib/nomad /etc/nomad.d /var/log/nomad
+sudo chown -R nomad:nomad /var/lib/nomad /var/log/nomad
+sudo chmod 750 /var/lib/nomad
 ```
 
-## 2⃣️⃣ Configure Nomad
+## 3⃣️⃣ Configure Nomad
 
 Create `/etc/nomad.d/nomad.hcl` for agent configuration:
 
@@ -142,102 +150,59 @@ telemetry {
 ## 3⃣️⃣ Enable and Start Nomad
 
 ```sh
-# Enable Nomad in rc.conf
-sysrc nomad_enable="YES"
-sysrc nomad_config="/etc/nomad.d"
+# Enable Nomad in rc.conf (use sudo)
+sudo sysrc nomad_enable="YES"
+sudo sysrc nomad_config="/etc/nomad.d"
 
-# Start Nomad
-service nomad start
+# Start Nomad service
+sudo service nomad start
 
 # Verify Nomad is running
+sleep 2
 nomad node status
 ```
 
-## 4⃣️⃣ Create ZFS Datasets
+## 4⃣️⃣ Create Pot Jails and ZFS Datasets
+
+The `portfolio/nomad/pot/setup-jails.sh` script automates this entire step:
 
 ```sh
-# Determine your ZFS pool (e.g., zroot)
-ZPOOL=$(zfs list -H -o name | grep -E '^[^/]+$' | head -1)
-
-# Create datasets for persistent storage
-zfs create -o mountpoint=/data/$ZPOOL/$POOL/portfolio-db $ZPOOL/portfolio-db
-zfs create -o mountpoint=/data/portfolio-api $ZPOOL/portfolio-api
-zfs create -o mountpoint=/data/portfolio-web $ZPOOL/portfolio-web
-
-# Set permissions
-chmod 755 /data/portfolio-db
-chmod 755 /data/portfolio-api
-chmod 755 /data/portfolio-web
+cd portfolio/nomad/pot
+sudo sh setup-jails.sh
 ```
 
-## 5⃣️⃣ Create Pot Jails for Your Services
+This script will:
+- Create 4 jails: portfolio-nginx, portfolio-db, portfolio-api, portfolio-web
+- Setup ZFS datasets at `/data/portfolio-*`
+- Install required packages in each jail
 
-See [pot_setup.sh](./pot_setup.sh) for automated jail creation, or follow manual steps below.
-
-### Manual Jail Creation
-
-#### PostgreSQL Jail
+Verify creation:
 ```sh
-# Create PostgreSQL jail
-pot create -p portfolio-db -b 13.2 -f zfs -t default
-
-# Start jail
-pot start portfolio-db
-
-# Install PostgreSQL 14 inside jail
-pot exec portfolio-db pkg install -y postgresql14-server postgresql14-contrib postgis3
-
-# Initialize PostgreSQL
-pot exec portfolio-db /usr/local/etc/rc.d/postgresql initdb
-
-# Configure PostgreSQL to listen on 0.0.0.0 inside jail (for Nomad to connect)
-pot exec portfolio-db sysrc postgresql_enable=YES
+sudo pot list
 ```
 
-#### API Jail
-```sh
-# Create API jail
-pot create -p portfolio-api -b 13.2 -f zfs -t default
+## 5⃣️⃣ Submit Nomad Jobs
 
-# Start jail
-pot start portfolio-api
-
-# Install dependencies
-pot exec portfolio-api pkg install -y ruby32 ruby32-gems git
-```
-
-#### Web Jail
-```sh
-# Create Web jail
-pot create -p portfolio-web -b 13.2 -f zfs -t default
-
-# Start jail
-pot start portfolio-web
-
-# Install Node.js
-pot exec portfolio-web pkg install -y node npm
-```
-
-## 6⃣️⃣ Submit Nomad Jobs
-
-Deploy your services:
+Navigate to portfolio root and deploy services:
 
 ```sh
+cd portfolio
+
 # Deploy PostgreSQL
-nomad job run jobs/postgres.hcl
+nomad job run nomad/jobs/postgres.hcl
 
 # Deploy API
-nomad job run jobs/api.hcl
+nomad job run nomad/jobs/api.hcl
 
 # Deploy Web frontend
-nomad job run jobs/web.hcl
+nomad job run nomad/jobs/web.hcl
 
 # Verify deployments
 nomad job status
 nomad alloc status
 ```
 
-## 7⃣️⃣ Verify Services
+## 6⃣️⃣ Verify Services
 
 ```sh
 # Check PostgreSQL connection

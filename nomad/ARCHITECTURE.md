@@ -134,7 +134,7 @@ graph LR
 ## 📁 File Structure
 
 ```
-/home/ulises/projects/portfolio/
+portfolio/                         # Your project root (any location)
 ├── api/                          # Rails backend
 │   ├── app/
 │   ├── config/
@@ -176,11 +176,17 @@ graph LR
 │       ├── setup-jails.sh        # Jail creation script
 │       ├── env.sh                # Environment variables
 │       ├── nomad-config-example.hcl
-│       └── pot-config-example.conf
+│       ├── pot-config-example.conf
+│       └── health-checks/        # Service health check scripts
+│           ├── postgres.sh       # Database health check
+│           ├── api.sh            # API health check
+│           └── web.sh            # Frontend health check
 ├── compose.yml                   # Original Docker Compose (for reference)
 ├── README.md
 └── ...
 ```
+
+(Replace `portfolio/` with your actual portfolio directory path)
 
 ## ⚡ Process Lifecycle
 
@@ -334,8 +340,8 @@ graph TD
 ### Bind Mounts (Source Code)
 ```
 Host                                Jail
-/home/ulises/projects/portfolio/api → /api
-/home/ulises/projects/portfolio/web → /web
+`portfolio/api` → `/api` (inside jail)
+`portfolio/web` → `/web` (inside jail)
 ```
 
 ## 🔐 Security Considerations

@@ -21,7 +21,7 @@ sudo pkg install -y nomad pot postgresql14-client
 
 ### 1. Setup Pot Jails
 ```sh
-cd /home/ulises/projects/portfolio/nomad/pot
+cd portfolio/nomad/pot
 sudo sh setup-jails.sh
 ```
 - [ ] All four jails created (portfolio-nginx, portfolio-db, portfolio-api, portfolio-web)
@@ -31,7 +31,7 @@ sudo sh setup-jails.sh
 ### 2. Configure Nomad Agent
 ```sh
 # Copy example config
-sudo cp /home/ulises/projects/portfolio/nomad/pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
+sudo cp portfolio/nomad/pot/nomad-config-example.hcl /etc/nomad.d/nomad.hcl
 
 # Verify paths
 ls -la /var/lib/nomad
@@ -63,7 +63,7 @@ nomad node status
 ### 4. Prepare Environment
 ```sh
 # Copy and edit environment file
-cp /home/ulises/projects/portfolio/nomad/pot/env.sh ~/.env.nomad
+cp portfolio/nomad/pot/env.sh ~/.env.nomad
 # Edit ~/.env.nomad with your credentials
 source ~/.env.nomad
 ```
@@ -74,7 +74,7 @@ source ~/.env.nomad
 
 ### 5. Deploy Applications
 ```sh
-cd /home/ulises/projects/portfolio
+cd portfolio
 
 # Make deploy script executable
 chmod +x nomad/deploy.sh
