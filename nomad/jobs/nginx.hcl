@@ -13,7 +13,7 @@ job "portfolio-nginx" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec nginx -g 'daemon off;'"
+          "exec sudo pot exec -p portfolio-nginx nginx -g 'daemon off;'"
         ]
       }
 

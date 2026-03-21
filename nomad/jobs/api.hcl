@@ -14,7 +14,7 @@ job "portfolio-api" {
         command = "/bin/sh"
         args = [
           "-c",
-          "cd /api && bundle exec puma -b tcp://0.0.0.0:${PORT}"
+          "exec sudo pot exec -p portfolio-api sh -c 'cd /api && bundle exec puma -b tcp://0.0.0.0:3000'"
         ]
       }
 
