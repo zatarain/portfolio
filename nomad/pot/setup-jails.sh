@@ -38,6 +38,36 @@ check_prerequisites() {
   log "Prerequisites check passed"
 }
 
+# Initialize Pot if not already done
+initialize_pot() {
+  if [ -d "/opt/pot" ]; then
+    log "Pot already initialized, skipping"
+    return
+  fi
+
+  log "Initializing Pot framework..."
+  pot init -m || error "Failed to initialize Pot"
+
+  log "Configuring Pot network interface..."
+
+  # Detect the primary network interface (not loopback)
+  EXT_IF=$(route -4 get default 2>/dev/null | grep "interface:" | awk '{print $2}')
+
+  if [ -z "$EXT_IF" ]; then
+    EXT_IF=$(ifconfig -l | awk '{print $1}')
+  fi
+
+  log "Using network interface: $EXT_IF"
+
+  # Update pot config with detected interface
+  if [ -f "/usr/local/etc/pot/pot.conf" ]; then
+    sed -i '' "s/^POT_EXTIF=.*/POT_EXTIF=$EXT_IF/" /usr/local/etc/pot/pot.conf
+    log "Updated pot.conf to use interface: $EXT_IF"
+  fi
+
+  log "Pot initialization complete"
+}
+
 # Create ZFS datasets for persistent storage
 create_zfs_datasets() {
   log "Creating ZFS datasets..."
@@ -180,8 +210,10 @@ main() {
   log "Logging to: $LOG_FILE"
 
   check_prerequisites
+  initialize_pot
   create_zfs_datasets
   configure_networking
+  create_jail "portfolio-nginx" "nginx"
   create_jail "portfolio-db" "postgres"
   create_jail "portfolio-api" "api"
   create_jail "portfolio-web" "web"
