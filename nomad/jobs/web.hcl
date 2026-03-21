@@ -16,12 +16,6 @@ job "portfolio-web" {
         ]
       }
 
-      # Mount source code
-      volume_mount {
-        volume      = "web_source"
-        destination = "/web"
-        read_only   = false
-      }
 
       # Environment variables for Next.js
       env {
@@ -32,14 +26,14 @@ job "portfolio-web" {
 
       # Template for API URL and runtime configuration
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/web.env")
+        data        = file("nomad/jobs/scripts/web.env")
         destination = "secrets/web.env"
         env         = true
       }
 
       # Pre-start setup script
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/web-setup.sh")
+        data        = file("nomad/jobs/scripts/web-setup.sh")
         destination = "local/setup-web.sh"
       }
 
@@ -93,11 +87,6 @@ job "portfolio-web" {
   }
 
   # Host volume for source code
-  volume "web_source" {
-    type      = "host"
-    source    = "web_source"
-    read_only = false
-  }
 
   # Constraint: Must run on FreeBSD
   constraint {
@@ -113,7 +102,7 @@ job "portfolio-web" {
     healthy_deadline  = "5m"
     progress_deadline = "10m"
     auto_revert       = true
-    auto_promote      = true
+    auto_promote      = false
   }
 
   # Spread load

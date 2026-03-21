@@ -16,13 +16,6 @@ job "portfolio-postgres" {
         ]
       }
 
-      # Volume mount for persistent data
-      volume_mount {
-        volume      = "db_data"
-        destination = "/var/lib/postgresql/data"
-        read_only   = false
-      }
-
       # Environment variables
       env {
         POSTGRES_HOST_AUTH_METHOD = "md5"
@@ -31,7 +24,7 @@ job "portfolio-postgres" {
 
       # Read secrets from Nomad or local file
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/postgres.env")
+        data        = file("nomad/jobs/scripts/postgres.env")
         destination = "local/postgres.env"
         env         = true
       }
@@ -39,7 +32,7 @@ job "portfolio-postgres" {
       # Host initialization script
       # This sets up the database on first run
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/postgres-init.sh")
+        data        = file("nomad/jobs/scripts/postgres-init.sh")
         destination = "local/init-postgres.sh"
       }
 
@@ -87,13 +80,7 @@ job "portfolio-postgres" {
     }
   }
 
-  # Use host volume for database persistence
-  volume "db_data" {
-    type      = "host"
-    source    = "db_data"
-    read_only = false
-  }
-
+  # Note: Data persistence is handled by ZFS datasets configured in Pot during jail setup
   # Update strategy
   update {
     max_parallel      = 1
@@ -102,7 +89,7 @@ job "portfolio-postgres" {
     healthy_deadline  = "3m"
     progress_deadline = "10m"
     auto_revert       = true
-    auto_promote      = true
+    auto_promote      = false
   }
 
   # Migration strategy

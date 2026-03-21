@@ -18,12 +18,6 @@ job "portfolio-api" {
         ]
       }
 
-      # Mount source code
-      volume_mount {
-        volume      = "api_source"
-        destination = "/api"
-        read_only   = false
-      }
 
       # Environment variables for Rails
       env {
@@ -47,14 +41,14 @@ job "portfolio-api" {
 
       # Template for sensitive environment variables
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/api.env")
+        data        = file("nomad/jobs/scripts/api.env")
         destination = "secrets/api.env"
         env         = true
       }
 
       # Pre-start setup script
       template {
-        data        = file("${NOMAD_TASKDIR}/../scripts/api-setup.sh")
+        data        = file("nomad/jobs/scripts/api-setup.sh")
         destination = "local/setup-api.sh"
       }
 
@@ -107,12 +101,6 @@ job "portfolio-api" {
     }
   }
 
-  # Host volume for source code
-  volume "api_source" {
-    type      = "host"
-    source    = "api_source"
-    read_only = false
-  }
 
   # Constraint: API must run on same host as PostgreSQL
   # (or adjust based on your networking setup)
@@ -129,7 +117,7 @@ job "portfolio-api" {
     healthy_deadline  = "5m"
     progress_deadline = "10m"
     auto_revert       = true
-    auto_promote      = true
+    auto_promote      = false
   }
 
   # Spread jobs across available clients

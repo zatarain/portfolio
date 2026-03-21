@@ -17,19 +17,6 @@ job "portfolio-nginx" {
         ]
       }
 
-      # Volume mount for nginx config and SSL certs
-      volume_mount {
-        volume      = "nginx_config"
-        destination = "/usr/local/etc/nginx/conf.d"
-        read_only   = false
-      }
-
-      volume_mount {
-        volume      = "letsencrypt"
-        destination = "/usr/local/etc/letsencrypt"
-        read_only   = false
-      }
-
       # Environment variables
       env {
         NGINX_WORKER_PROCESSES = "auto"
@@ -81,19 +68,7 @@ job "portfolio-nginx" {
     }
   }
 
-  # Host volumes
-  volume "nginx_config" {
-    type      = "host"
-    source    = "nginx_config"
-    read_only = false
-  }
-
-  volume "letsencrypt" {
-    type      = "host"
-    source    = "letsencrypt"
-    read_only = false
-  }
-
+  # Note: Config and certificates are managed within the Pot jail filesystem
   # Update strategy
   update {
     max_parallel      = 1
@@ -102,7 +77,7 @@ job "portfolio-nginx" {
     healthy_deadline  = "3m"
     progress_deadline = "10m"
     auto_revert       = true
-    auto_promote      = true
+    auto_promote      = false
   }
 
   # Spread across nodes
