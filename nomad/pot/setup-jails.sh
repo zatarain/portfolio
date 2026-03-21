@@ -112,29 +112,29 @@ create_jail() {
   case $jail_type in
     "postgres")
       log "Configuring PostgreSQL jail..."
-      pot exec "$jail_name" pkg update -f
-      pot exec "$jail_name" pkg install -y postgresql14-server postgresql14-contrib postgis3
+      pot exec -p "$jail_name" pkg update -f
+      pot exec -p "$jail_name" pkg install -y postgresql14-server postgresql14-contrib postgis3
 
       # Stop PostgreSQL (Nomad will manage it)
-      pot exec "$jail_name" sysrc postgresql_enable=NO
+      pot exec -p "$jail_name" sysrc postgresql_enable=NO
       ;;
     "api")
       log "Configuring API (Rails) jail..."
-      pot exec "$jail_name" pkg update -f
-      pot exec "$jail_name" pkg install -y ruby32 ruby32-gems git gmake readline-library
+      pot exec -p "$jail_name" pkg update -f
+      pot exec -p "$jail_name" pkg install -y ruby32 ruby32-gems git gmake readline-library
       ;;
     "web")
       log "Configuring Web (Next.js) jail..."
-      pot exec "$jail_name" pkg update -f
-      pot exec "$jail_name" pkg install -y node npm
+      pot exec -p "$jail_name" pkg update -f
+      pot exec -p "$jail_name" pkg install -y node npm
       ;;
     "nginx")
       log "Configuring Nginx (Reverse Proxy) jail..."
-      pot exec "$jail_name" pkg update -f
-      pot exec "$jail_name" pkg install -y nginx certbot python3
+      pot exec -p "$jail_name" pkg update -f
+      pot exec -p "$jail_name" pkg install -y nginx certbot python3
 
       # Stop Nginx (Nomad will manage it)
-      pot exec "$jail_name" sysrc nginx_enable=NO
+      pot exec -p "$jail_name" sysrc nginx_enable=NO
       ;;
   esac
 
