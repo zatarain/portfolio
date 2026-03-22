@@ -24,7 +24,7 @@ job "nginx" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p reverse-proxy nginx -g 'daemon off;'"
+          "exec pot exec -p reverse-proxy nginx -g 'daemon off;'"
         ]
       }
 

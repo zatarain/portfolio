@@ -22,7 +22,7 @@ job "portfolio-api" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p portfolio-api sh -c 'cd /var/app && bundle config set deployment true && bundle install --path vendor/bundle --without test development && bundle exec rake db:create 2>/dev/null || true && bundle exec rake db:migrate 2>/dev/null || true && bundle exec puma -b tcp://0.0.0.0:3000'"
+          "exec pot exec -p portfolio-api sh -c 'cd /var/app && bundle config set deployment true && bundle install --path vendor/bundle --without test development && bundle exec rake db:create 2>/dev/null || true && bundle exec rake db:migrate 2>/dev/null || true && bundle exec puma -b tcp://0.0.0.0:3000'"
         ]
       }
 

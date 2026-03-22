@@ -20,7 +20,7 @@ job "postgres" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p databases /usr/local/bin/postgres-nomad-start"
+          "exec pot exec -p databases /usr/local/bin/postgres-nomad-start"
         ]
       }
 
