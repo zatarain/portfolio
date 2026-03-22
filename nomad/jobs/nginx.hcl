@@ -1,4 +1,4 @@
-job "portfolio-nginx" {
+job "nginx" {
   datacenters = ["dc1"]
   type        = "service"
   priority    = 100  # High priority - starts first

@@ -152,7 +152,7 @@ nomad/
 
 # Check service status
 nomad job status                          # All jobs
-nomad job status portfolio-postgres       # Specific job
+nomad job status postgres                 # Specific job
 nomad alloc status <allocation-id>        # Specific allocation
 
 # View logs
@@ -170,10 +170,10 @@ nomad job run jobs/api.hcl
 
 ```sh
 pot list                    # Show all jails
-pot show portfolio-db       # Show jail details
-pot start portfolio-db      # Start jail
-pot stop portfolio-db       # Stop jail
-pot exec portfolio-db ls    # Run command in jail
+pot show databases       # Show jail details
+pot start databases      # Start jail
+pot stop databases       # Stop jail
+pot exec databases ls    # Run command in jail
 ```
 
 ### Verify Services
@@ -198,7 +198,7 @@ Edit `~/.env.nomad` to configure:
 
 ```sh
 # Database credentials (change from defaults!)
-POSTGRES_HOST=portfolio-db
+POSTGRES_HOST=databases
 POSTGRES_PORT=5432
 POSTGRES_USERNAME=portfolio
 POSTGRES_PASSWORD=YOUR_SECURE_PASSWORD
@@ -217,12 +217,12 @@ AWS_SECRET_ACCESS_KEY=your_secret_here
 ```
 FreeBSD Host
 ├── Nomad Agent (orchestrator)
-│   ├── portfolio-postgres jail (5432)
-│   ├── portfolio-api jail (3000)
-│   └── portfolio-web jail (5000)
+│   ├── postgres job (5432)
+│   ├── portfolio-api job (3000)
+│   └── portfolio-web job (5000)
 │
 └── Persistent Storage
-    └── /data/portfolio-db (ZFS dataset)
+    └── /data/databases (ZFS dataset)
 ```
 
 Each service:
@@ -269,7 +269,7 @@ nomad job plan jobs/postgres.hcl  # Validate job file
 ### Database connection issues
 ```sh
 # Check PostgreSQL is running
-pot exec portfolio-db ps aux | grep postgres
+pot exec databases ps aux | grep postgres
 
 # Test connection
 psql -h localhost -U portfolio -d portfolio

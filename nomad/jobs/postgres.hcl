@@ -1,4 +1,4 @@
-job "portfolio-postgres" {
+job "postgres" {
   datacenters = ["dc1"]
   type        = "service"
 

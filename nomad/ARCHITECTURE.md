@@ -34,7 +34,7 @@ graph TB
 
         subgraph db_group["Database Jail<br/>172.16.x.w"]
             db_svc["PostgreSQL + PostGIS<br/>Port 5432"]
-            db_vol["Volume: /data/portfolio-db"]
+            db_vol["Volume: /data/databases"]
         end
 
         nomad --> nginx_svc
@@ -248,8 +248,8 @@ Static files copied to appropriate locations:
 
 | File | Destination | Purpose |
 |------|-------------|---------|
-| `postgresql.conf` | `/data/portfolio-db/pgdata/postgresql.conf` | PostgreSQL settings |
-| `pg_hba.conf` | `/data/portfolio-db/pgdata/pg_hba.conf` | Connection auth rules |
+| `postgresql.conf` | `/data/databases/pgdata/postgresql.conf` | PostgreSQL settings |
+| `pg_hba.conf` | `/data/databases/pgdata/pg_hba.conf` | Connection auth rules |
 
 ### Environment Templates (`scripts/*.env`)
 Nomad-aware templates with variable substitution:
@@ -315,7 +315,7 @@ Initial jail configuration and setup:
 graph TD
     A["🎯 ZFS Pool<br/>zroot"]
 
-    B["📦 portfolio-db<br/>Mount: /data/portfolio-db"]
+    B["📦 databases<br/>Mount: /data/databases"]
     C["📦 portfolio-api<br/>Mount: /data/portfolio-api"]
     D["📦 portfolio-web<br/>Mount: /data/portfolio-web"]
 
@@ -382,16 +382,16 @@ To scale to multiple nodes:
 ### Data Backups (ZFS Snapshots)
 ```sh
 # Manual snapshot
-zfs snapshot zroot/portfolio-db@backup-$(date +%s)
+zfs snapshot zroot/databases@backup-$(date +%s)
 
 # Automated snapshot (add to cron)
-*/6 * * * * zfs snapshot zroot/portfolio-db@auto-$(/bin/date +\%s)
+*/6 * * * * zfs snapshot zroot/databases@auto-$(/bin/date +\%s)
 
 # List snapshots
 zfs list -t snapshot
 
 # Restore from snapshot
-zfs rollback zroot/portfolio-db@backup-123456789
+zfs rollback zroot/databases@backup-123456789
 ```
 
 ### Application Backups
@@ -401,10 +401,10 @@ zfs rollback zroot/portfolio-db@backup-123456789
 ### Full System Backup
 ```sh
 # ZFS send to file
-zfs send -R zroot/portfolio-db | gzip > /backup/portfolio-db.zfs.gz
+zfs send -R zroot/databases | gzip > /backup/databases.zfs.gz
 
 # Send to remote (with ssh)
-zfs send -R zroot/portfolio-db | ssh remote "zfs recv tank/backups/..."
+zfs send -R zroot/databases | ssh remote "zfs recv tank/backups/..."
 ```
 
 ## ⚡ Performance Tuning
@@ -455,11 +455,11 @@ Consider adding:
 
 #### Database Corruption
 1. Stop API/Web jobs: `nomad job stop portfolio-api portfolio-web`
-2. Rollback ZFS snapshot: `zfs rollback zroot/portfolio-db@backup-123456789`
+2. Rollback ZFS snapshot: `zfs rollback zroot/databases@backup-123456789`
 3. Restart jobs: `nomad job run jobs/*.hcl`
 
 #### Complete Jail Failure
-1. Destroy failed jail: `pot destroy portfolio-db`
+1. Destroy failed jail: `pot destroy databases`
 2. Recreate from scratch: `sudo sh nomad/pot/setup-jails.sh`
 3. Resubmit Nomad job (data persists in ZFS)
 

@@ -26,17 +26,17 @@ client {
 
   # Host volumes for persistence
   host_volume "nginx_config" {
-    path      = "/data/portfolio-nginx/conf.d"
+    path      = "/data/reverse-proxy/conf.d"
     read_only = false
   }
 
   host_volume "letsencrypt" {
-    path      = "/data/portfolio-nginx/letsencrypt"
+    path      = "/data/reverse-proxy/letsencrypt"
     read_only = false
   }
 
   host_volume "db_data" {
-    path      = "/data/portfolio-db"
+    path      = "/data/databases"
     read_only = false
   }
 

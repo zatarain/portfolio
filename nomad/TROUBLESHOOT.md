@@ -31,13 +31,13 @@ tail -f /var/log/nomad/nomad.log
 #### Database connection refused in API
 ```sh
 # Check PostgreSQL is running in jail
-pot exec portfolio-db ps aux | grep postgres
+pot exec databases ps aux | grep postgres
 
 # Check PostgreSQL is listening
-pot exec portfolio-db netstat -an | grep 5432
+pot exec databases netstat -an | grep 5432
 
 # Check database connectivity from API jail
-pot exec portfolio-api psql -h portfolio-db -U portfolio -d portfolio -c "SELECT 1;"
+pot exec portfolio-api psql -h databases -U portfolio -d portfolio -c "SELECT 1;"
 
 # Check credentials
 echo $POSTGRES_PASSWORD
@@ -45,10 +45,10 @@ echo $POSTGRES_USERNAME
 ```
 
 **Solution:**
-- Ensure `POSTGRES_HOST` environment variable is correct (likely `portfolio-db` for jail hostname)
+- Ensure `POSTGRES_HOST` environment variable is correct (likely `databases` for jail hostname)
 - Verify credentials in `env.sh` match database initialization
 - Check database permissions: `psql -U postgres -c "SELECT * FROM pg_user;"`
-- Initialize database if not done: `nomad job restart portfolio-postgres`
+- Initialize database if not done: `nomad job restart postgres`
 
 #### Frontend can't reach API
 ```sh
@@ -72,7 +72,7 @@ pot exec portfolio-web env | grep API_URL
 ```sh
 # List jails and check network
 pot list
-pot show portfolio-db
+pot show databases
 
 # Check jail routing
 netstat -rn | grep 172.16
@@ -94,19 +94,19 @@ pfctl -s rules | head -20
 #### "psql: error: could not connect to server"
 ```sh
 # Check PostgreSQL data directory permissions
-ls -la /data/portfolio-db/
+ls -la /data/databases/
 
 # Check PostgreSQL is initialized
-pot exec portfolio-db ls -la /var/lib/postgresql/data/pgdata/
+pot exec databases ls -la /var/lib/postgresql/data/pgdata/
 
 # Check PostgreSQL configuration
-pot exec portfolio-db cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep listen_addresses
+pot exec databases cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep listen_addresses
 ```
 
 **Solution:**
-- Ensure `/data/portfolio-db` has correct permissions (700 for postgres user)
-- Re-initialize if corrupted: `pot exec portfolio-db rm -rf /var/lib/postgresql/data/pgdata/*`
-- Then restart job: `nomad job restart portfolio-postgres`
+- Ensure `/data/databases` has correct permissions (700 for postgres user)
+- Re-initialize if corrupted: `pot exec databases rm -rf /var/lib/postgresql/data/pgdata/*`
+- Then restart job: `nomad job restart postgres`
 
 #### Database won't initialize
 ```sh
@@ -114,14 +114,14 @@ pot exec portfolio-db cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep
 nomad alloc logs <postgres-allocation-id>
 
 # Check if initialization script ran
-pot exec portfolio-db ls -la /tmp/init-postgres.sh
+pot exec databases ls -la /tmp/init-postgres.sh
 
 # Manually initialize
-pot exec portfolio-db su - postgres -c "initdb -D /var/lib/postgresql/data/pgdata"
+pot exec databases su - postgres -c "initdb -D /var/lib/postgresql/data/pgdata"
 ```
 
 **Solution:**
-- Check that PostgreSQL package installed correctly: `pot exec portfolio-db pkg list | grep postgresql`
+- Check that PostgreSQL package installed correctly: `pot exec databases pkg list | grep postgresql`
 - Verify initialization script in postgres.hcl template section
 - Manual initialization may be needed for first setup
 
@@ -175,7 +175,7 @@ nomad job inspect portfolio-api | grep -A5 volume_mount
 #### Rails migrations fail
 ```sh
 # Check database connection first
-pot exec portfolio-api psql -h portfolio-db -U portfolio -d portfolio -c "\dt"
+pot exec portfolio-api psql -h databases -U portfolio -d portfolio -c "\dt"
 
 # Run migrations manually
 pot exec portfolio-api /bin/sh -c "cd /api && bundle exec rake db:migrate"
@@ -290,15 +290,15 @@ cat /etc/nomad.d/nomad.hcl | grep -A5 host_volume
 ```
 
 **Solution:**
-- Create missing ZFS datasets: `zfs create zroot/portfolio-db`
-- Make sure mountpoints exist: `mkdir -p /data/portfolio-db`
+- Create missing ZFS datasets: `zfs create zroot/databases`
+- Make sure mountpoints exist: `mkdir -p /data/databases`
 - Ensure Nomad client has been restarted after config changes
 
 #### Data disappears after restart
 ```sh
 # Check if data persists in ZFS
 zfs list -s creation -r zroot/portfolio
-zfs get mounted zroot/portfolio-db
+zfs get mounted zroot/databases
 
 # Check if ZFS snapshot exists
 zfs list -t snapshot | grep portfolio
@@ -331,13 +331,13 @@ nomad alloc status -verbose <allocation-id>
 #### Slow database queries
 ```sh
 # Check PostgreSQL slow query log
-pot exec portfolio-db tail -f /var/log/postgresql/postgresql.log
+pot exec databases tail -f /var/log/postgresql/postgresql.log
 
 # Check table statistics
-pot exec portfolio-api /bin/sh -c "psql -h portfolio-db -U portfolio -d portfolio -c 'ANALYZE;'"
+pot exec portfolio-api /bin/sh -c "psql -h databases -U portfolio -d portfolio -c 'ANALYZE;'"
 
 # Create indexes if needed
-pot exec portfolio-api /bin/sh -c "psql -h portfolio-db -U portfolio -d portfolio -c 'CREATE INDEX ...'"
+pot exec portfolio-api /bin/sh -c "psql -h databases -U portfolio -d portfolio -c 'CREATE INDEX ...'"
 ```
 
 **Solution:**
@@ -381,18 +381,18 @@ cat /tmp/diagnostics.txt
 #### "Connection refused" from external access
 ```sh
 # Check Nginx is running in jail
-nomad job status portfolio-nginx
-pot exec portfolio-nginx ps aux | grep nginx
+nomad job status nginx
+pot exec reverse-proxy ps aux | grep nginx
 
 # Check ports are listening
-pot exec portfolio-nginx sockstat -l | grep -E '80|443'
+pot exec reverse-proxy sockstat -l | grep -E '80|443'
 
 # Test Nginx configuration
-pot exec portfolio-nginx nginx -t
+pot exec reverse-proxy nginx -t
 
 # Check Nginx logs
-pot exec portfolio-nginx tail -f /var/log/nginx/access.log
-pot exec portfolio-nginx tail -f /var/log/nginx/error.log
+pot exec reverse-proxy tail -f /var/log/nginx/access.log
+pot exec reverse-proxy tail -f /var/log/nginx/error.log
 ```
 
 **Solution:**
@@ -404,13 +404,13 @@ pot exec portfolio-nginx tail -f /var/log/nginx/error.log
 #### SSL certificate errors
 ```sh
 # Check certificate files exist
-pot exec portfolio-nginx ls -la /etc/letsencrypt/live/zatara.duckdns.org/
+pot exec reverse-proxy ls -la /etc/letsencrypt/live/zatara.duckdns.org/
 
 # Check certificate expiration
-pot exec portfolio-nginx openssl x509 -in /etc/letsencrypt/live/zatara.duckdns.org/fullchain.pem -text -noout | grep -i valid
+pot exec reverse-proxy openssl x509 -in /etc/letsencrypt/live/zatara.duckdns.org/fullchain.pem -text -noout | grep -i valid
 
 # Renew certificate manually
-pot exec portfolio-nginx certbot renew --standalone --non-interactive
+pot exec reverse-proxy certbot renew --standalone --non-interactive
 ```
 
 **Solution:**
@@ -429,10 +429,10 @@ pot exec portfolio-api netstat -an | grep 3000
 pot exec portfolio-web netstat -an | grep 5000
 
 # Check Nginx logs for errors
-pot exec portfolio-nginx tail -f /var/log/nginx/error.log
+pot exec reverse-proxy tail -f /var/log/nginx/error.log
 
 # Verify Nginx backend configuration
-pot exec portfolio-nginx cat /etc/nginx/conf.d/default.conf | grep upstream
+pot exec reverse-proxy cat /etc/nginx/conf.d/default.conf | grep upstream
 ```
 
 **Solution:**

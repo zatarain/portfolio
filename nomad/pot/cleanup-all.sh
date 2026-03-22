@@ -19,8 +19,8 @@ log ""
 
 # Stop Nomad jobs
 log "Stopping Nomad jobs..."
-nomad job stop portfolio-postgres 2>/dev/null || warn "portfolio-postgres job not running"
-nomad job stop portfolio-nginx 2>/dev/null || warn "portfolio-nginx job not running"
+nomad job stop postgres 2>/dev/null || warn "postgres job not running"
+nomad job stop nginx 2>/dev/null || warn "nginx job not running"
 nomad job stop portfolio-api 2>/dev/null || warn "portfolio-api job not running"
 nomad job stop portfolio-web 2>/dev/null || warn "portfolio-web job not running"
 sleep 2

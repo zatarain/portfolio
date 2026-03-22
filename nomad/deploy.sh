@@ -59,7 +59,7 @@ nomad job status
 
 log ""
 log "Check specific job status:"
-log "  nomad job status portfolio-postgres"
+log "  nomad job status postgres"
 log "  nomad job status portfolio-api"
 log "  nomad job status portfolio-web"
 log ""
