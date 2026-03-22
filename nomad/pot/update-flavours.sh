@@ -32,7 +32,7 @@ mkdir -p "$FLAVOURS_DST" || error "Cannot create $FLAVOURS_DST"
 
 # Copy flavour files (including .d directories)
 log "Copying flavour files..."
-cp -R -v "$FLAVOURS_SRC"/* "$FLAVOURS_DST/" || error "Failed to copy flavours"
+find "$FLAVOURS_SRC" -type f -exec cp -v {} "$FLAVOURS_DST/" \; || error "Failed to copy flavours"
 
 # Set proper permissions
 log "Setting permissions..."

@@ -1,5 +1,0 @@
-set-attribute -A no-rc-script -V YES
-set-attribute -A persistent -V YES
-copy-in -s /usr/local/etc/pot/flavours/postgresql.conf -d /var/lib/postgresql/data/pgdata/postgresql.conf
-copy-in -s /usr/local/etc/pot/flavours/pg_hba.conf -d /var/lib/postgresql/data/pgdata/pg_hba.conf
-copy-in -s /usr/local/etc/pot/flavours/postgres-start.sh -d /usr/local/bin/postgres-nomad-start
