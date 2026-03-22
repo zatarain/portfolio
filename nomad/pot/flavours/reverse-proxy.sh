@@ -11,33 +11,11 @@ sysrc nginx_enable="NO" 2>/dev/null || true
 # Create custom Nginx configuration directory
 mkdir -p /usr/local/etc/nginx/conf.d
 
-# Configure Nginx as reverse proxy placeholder
-cat > /usr/local/etc/nginx/nginx.conf <<'EOF'
-user www;
-worker_processes auto;
-error_log /var/log/nginx/error.log;
-pid /var/run/nginx.pid;
-
-events {
-    worker_connections 1024;
-}
-
-http {
-    include /usr/local/etc/nginx/mime.types;
-    default_type application/octet-stream;
-
-    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
-                    '$status $body_bytes_sent "$http_referer" '
-                    '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log /var/log/nginx/access.log main;
-    sendfile on;
-    tcp_nopush on;
-    keepalive_timeout 65;
-    gzip on;
-
-    include /usr/local/etc/nginx/conf.d/*.conf;
-}
-EOF
+# Copy nginx configuration (created by bootstrap, not heredoc)
+if [ -f "/usr/local/etc/pot/flavours/nginx.conf" ]; then
+  cp /usr/local/etc/pot/flavours/nginx.conf /usr/local/etc/nginx/nginx.conf
+  chown root:wheel /usr/local/etc/nginx/nginx.conf
+  chmod 644 /usr/local/etc/nginx/nginx.conf
+fi
 
 echo "✓ Nginx reverse proxy configuration ready"

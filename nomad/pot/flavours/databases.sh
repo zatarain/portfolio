@@ -23,28 +23,18 @@ if [ ! -f "$PGDATA/PG_VERSION" ]; then
   su postgres -c "/usr/local/bin/initdb -D $PGDATA" || true
 fi
 
-# Configure PostgreSQL for network access and application needs
-cat > "$PGDATA/postgresql.conf" <<'EOF'
-listen_addresses = '0.0.0.0'
-port = 5432
-max_connections = 200
-shared_buffers = 256MB
-log_statement = 'all'
-log_duration = off
-EOF
+# Copy configuration files (created by bootstrap)
+if [ -f "/usr/local/etc/pot/flavours/postgresql.conf" ]; then
+  cp /usr/local/etc/pot/flavours/postgresql.conf "$PGDATA/postgresql.conf"
+  chown postgres:postgres "$PGDATA/postgresql.conf"
+  chmod 600 "$PGDATA/postgresql.conf"
+fi
 
-# Configure host-based authentication
-cat > "$PGDATA/pg_hba.conf" <<'EOF'
-local   all             all                                     trust
-host    all             all             127.0.0.1/32            md5
-host    all             all             ::1/128                 md5
-host    all             all             0.0.0.0/0               md5
-EOF
-
-chown postgres:postgres "$PGDATA/postgresql.conf"
-chown postgres:postgres "$PGDATA/pg_hba.conf"
-chmod 600 "$PGDATA/postgresql.conf"
-chmod 600 "$PGDATA/pg_hba.conf"
+if [ -f "/usr/local/etc/pot/flavours/pg_hba.conf" ]; then
+  cp /usr/local/etc/pot/flavours/pg_hba.conf "$PGDATA/pg_hba.conf"
+  chown postgres:postgres "$PGDATA/pg_hba.conf"
+  chmod 600 "$PGDATA/pg_hba.conf"
+fi
 
 # Ensure postgres-start.sh exists (bootstrap runs before update-flavours.sh copies it)
 # Copy from Potluck flavours or create if missing
