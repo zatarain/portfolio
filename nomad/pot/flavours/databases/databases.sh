@@ -23,7 +23,8 @@ if [ ! -f "$PGDATA/PG_VERSION" ]; then
   su postgres -c "/usr/local/bin/initdb -D $PGDATA" || true
 fi
 
-# Copy configuration files staged by copy-in
+# Installing configuration files staged by copy-in
+mv /root/*.conf $PGDATA/ 2>/dev/null || true
 if [ -f "$PGDATA/postgresql.conf" ]; then
   chown postgres:postgres "$PGDATA/postgresql.conf"
   chmod 600 "$PGDATA/postgresql.conf"
