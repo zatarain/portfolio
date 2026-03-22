@@ -24,20 +24,17 @@ if [ ! -f "$PGDATA/PG_VERSION" ]; then
 fi
 
 # Copy configuration files staged by copy-in
-if [ -f "/root/postgresql.conf" ]; then
-  cp /root/postgresql.conf "$PGDATA/postgresql.conf"
+if [ -f "$PGDATA/postgresql.conf" ]; then
   chown postgres:postgres "$PGDATA/postgresql.conf"
   chmod 600 "$PGDATA/postgresql.conf"
 fi
 
-if [ -f "/root/pg_hba.conf" ]; then
-  cp /root/pg_hba.conf "$PGDATA/pg_hba.conf"
+if [ -f "$PGDATA/pg_hba.conf" ]; then
   chown postgres:postgres "$PGDATA/pg_hba.conf"
   chmod 600 "$PGDATA/pg_hba.conf"
 fi
 
-if [ -f "/root/postgres-start.sh" ]; then
-  cp /root/postgres-start.sh /usr/local/bin/postgres-nomad-start
+if [ -f "/usr/local/bin/postgres-nomad-start" ]; then
   chmod 755 /usr/local/bin/postgres-nomad-start
 fi
 
