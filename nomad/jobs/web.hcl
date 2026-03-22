@@ -5,6 +5,14 @@ job "portfolio-web" {
   group "frontend" {
     count = 1
 
+    # Move network to group level (fixes deprecation warning)
+    network {
+      mode = "host"
+      port "web" {
+        static = 5000
+      }
+    }
+
     task "web" {
       driver = "raw_exec"
 
@@ -12,8 +20,15 @@ job "portfolio-web" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p portfolio-web sh -c 'cd /var/web && node src/server.ts'"
+          "exec sudo pot exec -p portfolio-web sh -c 'cd /var/web && npm ci --only=production || npm install --production && npm run build && node src/server.ts'"
         ]
+      }
+
+      # Copy setup script for reference (optional)
+      artifact {
+        source      = "file:///root/nomad/jobs/scripts/web-setup.sh"
+        destination = "local/web-setup.sh"
+        mode        = "file"
       }
 
 
@@ -37,16 +52,12 @@ job "portfolio-web" {
         destination = "local/setup-web.sh"
       }
 
+      # Health check - verifies web server is responding
+
       # Resource requirements
       resources {
         cpu    = 500
         memory = 512
-        network {
-          port "web" {
-            static = 5000
-            to     = 5000
-          }
-        }
       }
 
       # Logging

@@ -1,27 +1,43 @@
 #!/bin/sh
-# Nginx Reverse Proxy Jail Bootstrap
+# Nginx Reverse Proxy Jail Bootstrap - Potluck-based
+# Potluck nginx-nomad base already has Nginx installed
+# This script configures Nginx for our reverse proxy needs
 
 set -e
 
-# Disable SSL verification for initial pkg bootstrap (will be fixed after ca_root_nss install)
-export SSL_NO_VERIFY_PEER=1
-export SSL_NO_VERIFY_HOST=1
+# Disable rc.d startup for Nginx (will be managed by Nomad)
+sysrc nginx_enable="NO" 2>/dev/null || true
 
-# Update package manager
-[ -w /etc/pkg/FreeBSD.conf ] && sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
-ASSUME_ALWAYS_YES=yes pkg bootstrap
+# Create custom Nginx configuration directory
+mkdir -p /usr/local/etc/nginx/conf.d
 
-# Install CA certificates (fixes SSL verification)
-ASSUME_ALWAYS_YES=yes pkg install -y ca_root_nss
+# Configure Nginx as reverse proxy placeholder
+cat > /usr/local/etc/nginx/nginx.conf <<'EOF'
+user www;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /var/run/nginx.pid;
 
-# Unset SSL bypass - now we have proper certs
-unset SSL_NO_VERIFY_PEER SSL_NO_VERIFY_HOST
+events {
+    worker_connections 1024;
+}
 
-# Install Nginx
-pkg install -y nginx
+http {
+    include /usr/local/etc/nginx/mime.types;
+    default_type application/octet-stream;
 
-# Disable rc.d startup (will be managed by Nomad)
-sysrc nginx_enable="NO"
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
 
-# Clean up
-pkg clean -y
+    access_log /var/log/nginx/access.log main;
+    sendfile on;
+    tcp_nopush on;
+    keepalive_timeout 65;
+    gzip on;
+
+    include /usr/local/etc/nginx/conf.d/*.conf;
+}
+EOF
+
+echo "✓ Nginx reverse proxy configuration ready"

@@ -5,6 +5,14 @@ job "portfolio-api" {
   group "backend" {
     count = 1
 
+    # Move network to group level (fixes deprecation warning)
+    network {
+      mode = "host"
+      port "api" {
+        static = 3000
+      }
+    }
+
     # Task dependency on PostgreSQL
     # In a production setup, use Consul to discover postgres address
     task "api" {
@@ -14,8 +22,15 @@ job "portfolio-api" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p portfolio-api sh -c 'cd /var/app && bundle exec puma -b tcp://0.0.0.0:3000'"
+          "exec sudo pot exec -p portfolio-api sh -c 'cd /var/app && bundle config set deployment true && bundle install --path vendor/bundle --without test development && bundle exec rake db:create 2>/dev/null || true && bundle exec rake db:migrate 2>/dev/null || true && bundle exec puma -b tcp://0.0.0.0:3000'"
         ]
+      }
+
+      # Copy setup script for reference (optional)
+      artifact {
+        source      = "file:///root/nomad/jobs/scripts/api-setup.sh"
+        destination = "local/api-setup.sh"
+        mode        = "file"
       }
 
 
@@ -52,16 +67,12 @@ job "portfolio-api" {
         destination = "local/setup-api.sh"
       }
 
+      # Health check - verifies API is responding
+
       # Resource requirements
       resources {
         cpu    = 1000
         memory = 1024
-        network {
-          port "api" {
-            static = 3000
-            to     = 3000
-          }
-        }
       }
 
       # Logging

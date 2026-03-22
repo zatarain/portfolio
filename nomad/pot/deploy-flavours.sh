@@ -31,7 +31,7 @@ error() {
 check_jails() {
   log "Verifying jails exist..."
   for jail in reverse-proxy databases portfolio-api portfolio-web; do
-    if ! pot list | grep -q "^$jail$"; then
+    if ! pot show -qp "$jail" >/dev/null 2>&1; then
       error "Jail $jail does not exist. Run setup-jails-flavours.sh first."
     fi
   done
@@ -60,54 +60,26 @@ copy_code() {
   log "✓ Application code deployed"
 }
 
-# Initialize Rails API (bundle install, migrations)
-init_api() {
-  log "Initializing Rails API..."
-
-  # Run bundle install and prepare database
-  pot exec -p portfolio-api sh -c "cd /var/app && bundle install --deployment" \
-    || error "Failed to install Rails dependencies"
-
-  pot exec -p portfolio-api sh -c "cd /var/app && bundle exec rake db:create db:migrate" \
-    || warn "Database migrations may have issues (this is OK if DB doesn't exist yet)"
-
-  log "✓ Rails API initialized"
-}
-
-# Initialize Next.js Web (npm install, build)
-init_web() {
-  log "Initializing Next.js Web..."
-
-  # Run npm install and build
-  pot exec -p portfolio-web sh -c "cd /var/web && npm install" \
-    || error "Failed to install Web dependencies"
-
-  pot exec -p portfolio-web sh -c "cd /var/web && npm run build" \
-    || warn "Next.js build may have issues"
-
-  log "✓ Next.js Web initialized"
-}
+# Note: Initialization (bundle install, npm install, migrations) is delegated to Nomad jobs
+# This keeps deployment separate from orchestration concerns
 
 # Final summary
 print_summary() {
   log "=========================================="
-  log "✓ Application Deployment Complete!"
+  log "✓ Application Code Deployed!"
   log "=========================================="
   log ""
-  log "All services ready:"
-  log "  • Nginx reverse-proxy: Ready"
-  log "  • PostgreSQL databases: Ready"
-  log "  • Rails API: Code deployed, dependencies installed"
-  log "  • Next.js Web: Code deployed, dependencies installed"
+  log "Application code ready in:"
+  log "  • /data/portfolio-api (Rails)"
+  log "  • /data/portfolio-web (Next.js)"
   log ""
   log "Next steps:"
-  log "  1. Verify jails are running: pot list"
-  log "  2. Deploy with Nomad:"
+  log "  1. Run Nomad jobs (they will initialize on first start):"
   log "     nomad job run nomad/jobs/postgres.hcl"
   log "     nomad job run nomad/jobs/nginx.hcl"
   log "     nomad job run nomad/jobs/api.hcl"
   log "     nomad job run nomad/jobs/web.hcl"
-  log "  3. Monitor: nomad status"
+  log "  2. Monitor: nomad status"
   log "=========================================="
 }
 
@@ -118,8 +90,6 @@ main() {
 
   check_jails
   copy_code
-  init_api
-  init_web
 
   print_summary
 }

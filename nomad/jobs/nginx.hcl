@@ -6,6 +6,17 @@ job "portfolio-nginx" {
   group "reverse-proxy" {
     count = 1
 
+    # Move network to group level (fixes deprecation warning)
+    network {
+      mode = "host"
+      port "http" {
+        static = 80
+      }
+      port "https" {
+        static = 443
+      }
+    }
+
     task "nginx" {
       driver = "raw_exec"
 
@@ -27,14 +38,6 @@ job "portfolio-nginx" {
       resources {
         cpu    = 250
         memory = 256
-        network {
-          port "http" {
-            static = 80
-          }
-          port "https" {
-            static = 443
-          }
-        }
       }
 
       # Logging
@@ -51,6 +54,12 @@ job "portfolio-nginx" {
         mode     = "fail"
       }
     }
+  }
+
+  # Constraint: Must run on FreeBSD
+  constraint {
+    attribute = "${attr.kernel.name}"
+    value     = "freebsd"
   }
 
   # Note: Config and certificates are managed within the Pot jail filesystem

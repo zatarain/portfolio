@@ -1,17 +1,11 @@
 #!/bin/sh
-# Next.js Web Jail Bootstrap
+# Next.js Web Jail Bootstrap - Potluck-based
+# Using ssl-bootstrap base (Node.js installed here)
+# This script prepares the application environment
 
 set -e
 
-# Update package manager
-[ -w /etc/pkg/FreeBSD.conf ] && sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
-ASSUME_ALWAYS_YES=yes pkg bootstrap
-
-# Install CA certificates (fixes SSL verification)
-ASSUME_ALWAYS_YES=yes pkg install -y ca_root_nss
-
 # Install Node.js
-pkg install -y node npm
+ASSUME_ALWAYS_YES=yes pkg install -y node
 
-# Clean up
-pkg clean -y
+echo "✓ Next.js application environment ready - waiting for code deployment"

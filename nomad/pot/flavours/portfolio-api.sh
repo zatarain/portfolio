@@ -1,17 +1,11 @@
 #!/bin/sh
-# Rails API Jail Bootstrap
+# Rails API Jail Bootstrap - Potluck-based
+# Using ssl-bootstrap base (Node.js and Ruby installed here)
+# This script installs Rails dependencies
 
 set -e
 
-# Update package manager
-[ -w /etc/pkg/FreeBSD.conf ] && sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
-ASSUME_ALWAYS_YES=yes pkg bootstrap
+# Install Node.js, Ruby, PostgreSQL client, and build tools
+ASSUME_ALWAYS_YES=yes pkg install -y node ruby32 git gmake readline postgresql15-client
 
-# Install CA certificates (fixes SSL verification)
-ASSUME_ALWAYS_YES=yes pkg install -y ca_root_nss
-
-# Install Ruby and dependencies
-pkg install -y ruby32 git gmake readline postgresql14-client
-
-# Clean up
-pkg clean -y
+echo "✓ Rails API environment ready - waiting for code deployment"

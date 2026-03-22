@@ -5,6 +5,14 @@ job "portfolio-postgres" {
   group "database" {
     count = 1
 
+    # Move network to group level (fixes deprecation warning)
+    network {
+      mode = "host"
+      port "db" {
+        static = 5432
+      }
+    }
+
     task "postgres" {
       driver = "raw_exec"
 
@@ -12,7 +20,7 @@ job "portfolio-postgres" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec sudo pot exec -p databases su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"
+          "exec sudo pot exec -p databases /usr/local/bin/postgres-nomad-start"
         ]
       }
 
@@ -29,26 +37,10 @@ job "portfolio-postgres" {
         env         = true
       }
 
-      # Host initialization script
-      # This sets up the database on first run
-      template {
-        data        = file("nomad/jobs/scripts/postgres-init.sh")
-        destination = "local/init-postgres.sh"
-      }
-
-      # Pre-start script to initialize database
-      # Note: this runs on the Nomad client, not inside the jail
-      # You may need to run initialization manually or adjust for jail context
-
       # Resource allocation
       resources {
         cpu    = 500
         memory = 512
-        network {
-          port "db" {
-            static = 5432
-          }
-        }
       }
 
       # Logging
@@ -65,6 +57,12 @@ job "portfolio-postgres" {
         mode     = "fail"
       }
     }
+  }
+
+  # Constraint: Must run on FreeBSD (only one node available anyway)
+  constraint {
+    attribute = "${attr.kernel.name}"
+    value     = "freebsd"
   }
 
   # Note: Data persistence is handled by ZFS datasets configured in Pot during jail setup
