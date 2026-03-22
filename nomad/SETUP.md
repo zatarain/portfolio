@@ -9,7 +9,7 @@ This document describes the architecture and setup of portfolio services on Free
 ### Jails & Services
 
 ```
-FreeBSD Host (14.3+)
+FreeBSD Host (14.4+)
 ├── ZFS Pool (zroot)
 ├── Nomad Orchestrator (running on host)
 │
@@ -89,7 +89,7 @@ nomad/
 
 ## ✅ Prerequisites
 
-- **FreeBSD 14.3+**
+- **FreeBSD 14.4+**
 - **Pot 0.15.0+**: `pkg install pot`
 - **Nomad 1.9.6+**: `pkg install nomad`
 - **ZFS pool**: Verify with `zfs list`

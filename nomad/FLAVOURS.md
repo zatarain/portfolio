@@ -190,7 +190,7 @@ pot exec -p databases cat /var/log/manifest.log
 # Re-run bootstrap (if needed)
 pot stop databases
 pot destroy databases
-pot create -p databases -b 14.3 -t multi -f databases -f databases-cmd
+pot create -p databases -b base-14_4 -t multi -f databases -f databases-cmd
 ```
 
 ## Future Enhancements

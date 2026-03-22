@@ -1,4 +1,4 @@
 set-attribute -A no-rc-script -V YES
 set-attribute -A persistent -V YES
-set-env -e NODE_ENV=production
-set-env -e NEXT_TELEMETRY_DISABLED=1
+set-env -E NODE_ENV=production
+set-env -E NEXT_TELEMETRY_DISABLED=1

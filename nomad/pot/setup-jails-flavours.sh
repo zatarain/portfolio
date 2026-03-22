@@ -44,6 +44,25 @@ check_pot_init() {
   log "✓ Pot framework initialized"
 }
 
+# Create base FreeBSD distribution if needed
+ensure_base_image() {
+  local base_version="14_4"
+  local base_release="14.4"
+
+  log "Checking for base-$base_version..."
+
+  if pot list -b | grep -q "^bases: $base_release$"; then
+    log "✓ base-$base_version already exists"
+    return
+  fi
+
+  log "Creating base-$base_version from FreeBSD $base_release..."
+  pot create-base -r "$base_release" || \
+    error "Failed to create base-$base_version. Try: sudo pot create-base -r $base_release"
+
+  log "✓ base-$base_version created successfully"
+}
+
 # Create ZFS datasets for persistent storage
 create_zfs_datasets() {
   log "Creating ZFS datasets for application volumes..."
@@ -88,9 +107,9 @@ create_jail_with_flavour() {
   log "Creating $jail_type jail: $jail_name"
 
   # Create jail using multi-layer type (like Docker layers)
-  # Base freedsd 14.3, with two flavours: config + cmd
+  # Base freedsd 14.4, with two flavours: config + cmd
   pot create -p "$jail_name" \
-    -b 14.3 \
+    -b 14.4 \
     -t multi \
     -N inherit \
     -f "$flavour_base" \
@@ -151,6 +170,7 @@ main() {
 
   check_prerequisites
   check_pot_init
+  ensure_base_image
   create_zfs_datasets
   create_jails
   print_summary

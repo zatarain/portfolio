@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- FreeBSD 14.3 server with Pot 0.15.0+ installed
+- FreeBSD 14.4 server with Pot 0.15.0+ installed
 - ZFS pool initialized (`zfs list`)
 - Nomad 1.9.6+ running
 - SSH access to FreeBSD server
