@@ -30,9 +30,9 @@ log "Destination: $FLAVOURS_DST"
 # Create destination if needed
 mkdir -p "$FLAVOURS_DST" || error "Cannot create $FLAVOURS_DST"
 
-# Copy flavour files
+# Copy flavour files (including .d directories)
 log "Copying flavour files..."
-cp -v "$FLAVOURS_SRC"/* "$FLAVOURS_DST/" || error "Failed to copy flavours"
+cp -R -v "$FLAVOURS_SRC"/* "$FLAVOURS_DST/" || error "Failed to copy flavours"
 
 # Set proper permissions
 log "Setting permissions..."

@@ -62,7 +62,6 @@ sudo rm -f /usr/local/etc/pot/flavours/databases* 2>/dev/null || warn "Could not
 sudo rm -f /usr/local/etc/pot/flavours/portfolio-api* 2>/dev/null || warn "Could not remove portfolio-api flavour"
 sudo rm -f /usr/local/etc/pot/flavours/portfolio-web* 2>/dev/null || warn "Could not remove portfolio-web flavour"
 sudo rm -f /usr/local/etc/pot/flavours/*.conf 2>/dev/null || warn "Could not remove config files"
-sudo rm -f /usr/local/etc/pot/flavours/postgres-start.sh 2>/dev/null || warn "Could not remove postgres-start.sh"
 
 log ""
 log "========================================"

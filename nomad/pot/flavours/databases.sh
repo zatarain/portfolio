@@ -23,23 +23,21 @@ if [ ! -f "$PGDATA/PG_VERSION" ]; then
   su postgres -c "/usr/local/bin/initdb -D $PGDATA" || true
 fi
 
-# Copy configuration files (created by bootstrap)
-if [ -f "/usr/local/etc/pot/flavours/postgresql.conf" ]; then
-  cp /usr/local/etc/pot/flavours/postgresql.conf "$PGDATA/postgresql.conf"
+# Copy configuration files staged by copy-in
+if [ -f "/usr/local/etc/postgres/postgresql.conf" ]; then
+  cp /usr/local/etc/postgres/postgresql.conf "$PGDATA/postgresql.conf"
   chown postgres:postgres "$PGDATA/postgresql.conf"
   chmod 600 "$PGDATA/postgresql.conf"
 fi
 
-if [ -f "/usr/local/etc/pot/flavours/pg_hba.conf" ]; then
-  cp /usr/local/etc/pot/flavours/pg_hba.conf "$PGDATA/pg_hba.conf"
+if [ -f "/usr/local/etc/postgres/pg_hba.conf" ]; then
+  cp /usr/local/etc/postgres/pg_hba.conf "$PGDATA/pg_hba.conf"
   chown postgres:postgres "$PGDATA/pg_hba.conf"
   chmod 600 "$PGDATA/pg_hba.conf"
 fi
 
-# Ensure postgres-start.sh exists (bootstrap runs before update-flavours.sh copies it)
-# Copy from Potluck flavours or create if missing
-if [ -f "/usr/local/etc/pot/flavours/postgres-start.sh" ]; then
-  cp /usr/local/etc/pot/flavours/postgres-start.sh /usr/local/bin/postgres-nomad-start
+if [ -f "/usr/local/etc/postgres/postgres-start.sh" ]; then
+  cp /usr/local/etc/postgres/postgres-start.sh /usr/local/bin/postgres-nomad-start
   chmod 755 /usr/local/bin/postgres-nomad-start
 fi
 

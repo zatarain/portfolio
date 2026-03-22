@@ -2,3 +2,4 @@ set-attribute -A no-rc-script -V YES
 set-attribute -A persistent -V YES
 set-env -E NGINX_WORKER_PROCESSES=auto
 set-env -E NGINX_WORKER_CONNECTIONS=1024
+copy-in -s /usr/local/etc/pot/flavours/nginx.conf -d /usr/local/etc/nginx/nginx.conf

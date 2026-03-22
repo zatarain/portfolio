@@ -11,9 +11,8 @@ sysrc nginx_enable="NO" 2>/dev/null || true
 # Create custom Nginx configuration directory
 mkdir -p /usr/local/etc/nginx/conf.d
 
-# Copy nginx configuration (created by bootstrap, not heredoc)
-if [ -f "/usr/local/etc/pot/flavours/nginx.conf" ]; then
-  cp /usr/local/etc/pot/flavours/nginx.conf /usr/local/etc/nginx/nginx.conf
+# Ensure permissions on nginx configuration staged by copy-in
+if [ -f "/usr/local/etc/nginx/nginx.conf" ]; then
   chown root:wheel /usr/local/etc/nginx/nginx.conf
   chmod 644 /usr/local/etc/nginx/nginx.conf
 fi
