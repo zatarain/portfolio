@@ -11,7 +11,8 @@
 
 ```bash
 cd /path/to/portfolio
-./nomad/pot/install-flavours.sh root@your-freebsd-server
+# On FreeBSD server:
+sudo ./nomad/pot/update-flavours.sh
 ```
 
 Verifies and copies all flavours to `/usr/local/etc/pot/flavours/` on the server.
@@ -125,7 +126,8 @@ pot exec -p portfolio-web tail -f /var/web/.next/...
 ssh root@server ls /usr/local/etc/pot/flavours/portfolio-*
 
 # Re-install if needed
-./nomad/pot/install-flavours.sh root@server
+# On FreeBSD server:
+sudo ./nomad/pot/update-flavours.sh
 ```
 
 **Q: Jail creation fails**

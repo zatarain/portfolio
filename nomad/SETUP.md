@@ -75,7 +75,7 @@ nomad/
 │   ├── flavours/                          ← Service definitions
 │   ├── setup-jails-flavours.sh            ← Infrastructure creation
 │   ├── deploy-flavours.sh                 ← Code deployment
-│   ├── install-flavours.sh                ← Flavour installation
+│   ├── update-flavours.sh                 ← Update flavours from repo
 │   └── health-checks/                     ← Monitoring
 ├── jobs/
 │   ├── postgres.hcl
@@ -101,7 +101,8 @@ nomad/
 ### Phase 1: Prepare Flavours
 ```bash
 # From Linux machine
-./nomad/pot/install-flavours.sh root@freebsd-server
+# On FreeBSD server (after cloning repo):
+sudo ./nomad/pot/update-flavours.sh
 ```
 
 ### Phase 2: Create Infrastructure

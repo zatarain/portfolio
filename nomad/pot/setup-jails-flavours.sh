@@ -62,7 +62,24 @@ ensure_base_image() {
 
   log "✓ base-$base_version created successfully"
 }
+# Ensure CA certificates in base jail (required for pkg bootstrap)
+ensure_base_certs() {
+  local base_name="base-14_4"
 
+  log "Installing CA certificates in $base_name..."
+
+  # Start base jail temporarily
+  pot start "$base_name" 2>/dev/null || true
+
+  # Install CA certificates
+  ASSUME_ALWAYS_YES=yes pot exec -p "$base_name" pkg install -y ca_root_nss 2>/dev/null || \
+    warn "Could not install ca_root_nss in base (may already be installed)"
+
+  # Stop base jail
+  pot stop "$base_name" 2>/dev/null || true
+
+  log "✓ CA certificates checked in base jail"
+}
 # Create ZFS datasets for persistent storage
 create_zfs_datasets() {
   log "Creating ZFS datasets for application volumes..."
@@ -171,6 +188,7 @@ main() {
   check_prerequisites
   check_pot_init
   ensure_base_image
+  ensure_base_certs
   create_zfs_datasets
   create_jails
   print_summary

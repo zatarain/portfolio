@@ -81,7 +81,8 @@ set-cmd -c "su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"
 ### Phase 1: Install Flavours
 ```bash
 # From Linux machine
-./nomad/pot/install-flavours.sh root@freebsd-server
+# On FreeBSD server (after git pull):
+sudo ./nomad/pot/update-flavours.sh
 
 # Verifies: ls -la /usr/local/etc/pot/flavours/portfolio-*
 ```
@@ -139,7 +140,7 @@ nomad/
 │   │   └── reverse-proxy-cmd
 │   ├── setup-jails-flavours.sh      ← Infrastructure setup
 │   ├── deploy-flavours.sh            ← Code deployment
-│   └── install-flavours.sh           ← Flavour installation
+│   └── update-flavours.sh            ← Update flavours from repo
 ├── jobs/
 │   ├── postgres.hcl
 │   ├── api.hcl
@@ -195,7 +196,7 @@ pot create -p databases -b base-14_4 -t multi -f databases -f databases-cmd
 
 ## Future Enhancements
 
-- **Update flavours**: Modify files in `nomad/pot/flavours/`, re-run `install-flavours.sh`
+- **Update flavours**: Modify files in `nomad/pot/flavours/`, push to repo, run `update-flavours.sh` on FreeBSD
 - **Create new services**: Add new flavour triplet for new service type
 - **Export jails as images**: `pot export -p databases -t 1.0` → distribute as container image
 - **Multi-region**: Deploy same flavours to multiple FreeBSD servers
