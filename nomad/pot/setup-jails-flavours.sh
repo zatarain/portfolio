@@ -187,10 +187,6 @@ create_jail_with_flavour() {
   # Execute pot create
   eval "$cmd" || error "Failed to create jail $jail_name"
 
-  # Mount ZFS dataset for persistent data
-  log "Mounting ZFS dataset for $jail_name..."
-  pot mount-in -p "$jail_name" -z "zroot/$zfs_dataset" -m "/var/db" 2>/dev/null || true
-
   log "✓ Jail $jail_name created successfully"
 }
 

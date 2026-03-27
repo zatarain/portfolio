@@ -4,3 +4,4 @@ set-env -E RAILS_ENV=production
 set-env -E RAILS_LOG_TO_STDOUT=true
 set-env -E RAILS_MAX_THREADS=5
 set-env -E RAILS_MIN_THREADS=2
+mount-in -p portfolio-api -z zroot/portfolio-api -m /var/api
