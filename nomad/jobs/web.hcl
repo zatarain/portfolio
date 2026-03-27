@@ -20,7 +20,7 @@ job "portfolio-web" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec /usr/local/bin/pot exec -p portfolio-web sh -c 'cd /var/web && npm ci --only=production || npm install --production && npm run build && node src/server.ts'"
+          "exec /usr/local/bin/pot exec -p portfolio-web sh -c 'cd /opt/custom/var/web && npm ci --only=production || npm install --production && npm run build && node src/server.ts'"
         ]
       }
 

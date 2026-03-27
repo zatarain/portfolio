@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-WEB_DIR="/var/web"
+WEB_DIR="/opt/custom/var/web"
 cd "$WEB_DIR"
 
 # Install Node dependencies

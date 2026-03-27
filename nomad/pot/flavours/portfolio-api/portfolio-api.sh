@@ -6,6 +6,6 @@
 set -e
 
 # Install Node.js, Ruby, PostgreSQL client, and build tools
-ASSUME_ALWAYS_YES=yes pkg install -y node ruby32 git gmake readline postgresql15-client
+ASSUME_ALWAYS_YES=yes pkg install -y node ruby32 rubygem-bundler git gmake readline postgresql15-client
 
 echo "✓ Rails API environment ready - waiting for code deployment"
