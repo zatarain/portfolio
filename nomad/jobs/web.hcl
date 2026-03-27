@@ -24,14 +24,6 @@ job "portfolio-web" {
         ]
       }
 
-      # Copy setup script for reference (optional)
-      artifact {
-        source      = "file:///root/nomad/jobs/scripts/web-setup.sh"
-        destination = "local/web-setup.sh"
-        mode        = "file"
-      }
-
-
       # Environment variables for Next.js
       env {
         NODE_ENV                = "production"

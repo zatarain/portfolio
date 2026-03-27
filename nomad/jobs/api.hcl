@@ -26,14 +26,6 @@ job "portfolio-api" {
         ]
       }
 
-      # Copy setup script for reference (optional)
-      artifact {
-        source      = "file:///root/nomad/jobs/scripts/api-setup.sh"
-        destination = "local/api-setup.sh"
-        mode        = "file"
-      }
-
-
       # Environment variables for Rails
       env {
         RAILS_ENV           = "production"
