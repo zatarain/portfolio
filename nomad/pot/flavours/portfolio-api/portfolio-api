@@ -5,3 +5,4 @@ set-env -E RAILS_LOG_TO_STDOUT=true
 set-env -E RAILS_MAX_THREADS=5
 set-env -E RAILS_MIN_THREADS=2
 mount-in -p portfolio-api -z zroot/portfolio-api -m /var/api
+copy-in -c -s /usr/local/etc/pot/flavours/portfolio-api-run.sh -d /usr/local/bin/portfolio-api-run
