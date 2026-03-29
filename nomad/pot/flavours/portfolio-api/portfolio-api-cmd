@@ -1,1 +1,1 @@
-set-cmd -c "sh -c 'cd /var/api && bundle exec puma -b tcp://0.0.0.0:3000'"
+set-cmd -c "portfolio-api-run"

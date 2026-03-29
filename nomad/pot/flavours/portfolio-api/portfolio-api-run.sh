@@ -4,6 +4,13 @@ set -e
 API_DIR="/opt/custom/var/api"
 cd "$API_DIR"
 
+# Load Nomad-rendered environment file if present
+if [ -f "$API_DIR/.env" ]; then
+	set -a
+	. "$API_DIR/.env"
+	set +a
+fi
+
 # Ensure puma pid directory exists
 mkdir -p tmp/pids
 

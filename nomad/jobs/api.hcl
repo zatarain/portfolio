@@ -22,34 +22,14 @@ job "portfolio-api" {
         command = "/bin/sh"
         args = [
           "-c",
-          "exec /usr/local/bin/pot exec -p portfolio-api /usr/local/bin/portfolio-api-run"
+          "exec pot exec -p portfolio-api portfolio-api-run"
         ]
-      }
-
-      # Environment variables for Rails
-      env {
-        RAILS_ENV           = "production"
-        RAILS_LOG_TO_STDOUT = "true"
-        RAILS_MAX_THREADS   = "5"
-        RAILS_MIN_THREADS   = "2"
-
-        # Database configuration
-        POSTGRES_PORT     = "5432"
-        POSTGRES_USERNAME = "portfolio"
-        # POSTGRES_PASSWORD set via template below
-        # POSTGRES_HOST set in constraint or discovered via Consul
-
-        # AWS credentials (for CV/resume upload)
-        AWS_ENVIRONMENT = "production"
-        AWS_SESSION_NAME = "api-download-yaml-cv"
-
-        # API Port (will be set via PORT env var)
       }
 
       # Template for sensitive environment variables
       template {
         data        = file("nomad/jobs/scripts/api.env")
-        destination = "secrets/api.env"
+        destination = "/data/portfolio-api/.env"
         env         = true
       }
 
