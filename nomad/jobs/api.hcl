@@ -15,6 +15,37 @@ job "portfolio-api" {
 
     # Task dependency on PostgreSQL
     # In a production setup, use Consul to discover postgres address
+    task "setup" {
+      driver = "raw_exec"
+      config {
+        command = "ln"
+        args = [
+          "-sf",
+          "$NOMAD_SECRETS_DIR/api.env",
+          "/data/portfolio-api/.env"
+        ]
+      }
+
+      # Template for sensitive environment variables
+      template {
+        data        = file("nomad/jobs/scripts/api.env")
+        destination = "secrets/api.env"
+        env         = true
+      }
+
+      # Run setup only once at startup
+      lifecycle {
+        hook    = "prestart"
+        sidecar = false
+      }
+
+      # Resource allocation for setup task
+      resources {
+        cpu    = 250
+        memory = 256
+      }
+    }
+
     task "api" {
       driver = "raw_exec"
 
@@ -25,15 +56,6 @@ job "portfolio-api" {
           "exec pot exec -p portfolio-api portfolio-api-run"
         ]
       }
-
-      # Template for sensitive environment variables
-      template {
-        data        = file("nomad/jobs/scripts/api.env")
-        destination = "/data/portfolio-api/.env"
-        env         = true
-      }
-
-      # Health check - verifies API is responding
 
       # Resource requirements
       resources {
