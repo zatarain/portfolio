@@ -13,22 +13,46 @@ job "portfolio-web" {
       }
     }
 
+    # In a production setup, use Consul to discover API address
+    task "setup" {
+      driver = "raw_exec"
+      config {
+        command = "sh"
+        args = [
+          "-c",
+          "exec cp -f $NOMAD_SECRETS_DIR/web.env /data/portfolio-web/.env"
+        ]
+      }
+
+      # Template for sensitive environment variables
+      template {
+        data        = file("nomad/jobs/scripts/web.env")
+        destination = "secrets/web.env"
+        env         = true
+      }
+
+      # Run setup only once at startup
+      lifecycle {
+        hook    = "prestart"
+        sidecar = false
+      }
+
+      # Resource allocation for setup task
+      resources {
+        cpu    = 250
+        memory = 256
+      }
+    }
+
     task "web" {
       driver = "raw_exec"
 
       config {
-        command = "/bin/sh"
+        command = "sh"
         args = [
           "-c",
-          "exec /usr/local/bin/pot exec -p portfolio-web sh -c 'cd /opt/custom/var/web && npm ci --only=production || npm install --production && npm run build && node src/server.ts'"
+          "exec pot exec -p portfolio-web portfolio-web-run"
         ]
-      }
-
-      # Environment variables for Next.js
-      env {
-        NODE_ENV                = "production"
-        NODE_OPTIONS            = "--max-old-space-size=512"
-        NEXT_TELEMETRY_DISABLED = "1"
       }
 
       # Template for API URL and runtime configuration
@@ -37,14 +61,6 @@ job "portfolio-web" {
         destination = "secrets/web.env"
         env         = true
       }
-
-      # Pre-start setup script
-      template {
-        data        = file("nomad/jobs/scripts/web-setup.sh")
-        destination = "local/setup-web.sh"
-      }
-
-      # Health check - verifies web server is responding
 
       # Resource requirements
       resources {

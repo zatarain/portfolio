@@ -25,4 +25,5 @@ bundle install
 bundle exec rake db:create 2>/dev/null || true
 bundle exec rake db:migrate 2>/dev/null || true
 
+# Run application server
 exec bundle exec puma -b tcp://0.0.0.0:3000

@@ -6,6 +6,6 @@
 set -e
 
 # Install Node.js
-ASSUME_ALWAYS_YES=yes pkg install -y node
+ASSUME_ALWAYS_YES=yes pkg install -y node25 npm-node25
 
 echo "✓ Next.js application environment ready - waiting for code deployment"

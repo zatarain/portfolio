@@ -2,4 +2,5 @@ set-attribute -A no-rc-script -V YES
 set-attribute -A persistent -V YES
 set-env -E NODE_ENV=production
 set-env -E NEXT_TELEMETRY_DISABLED=1
+copy-in -c -s /usr/local/etc/pot/flavours/portfolio-web-run.sh -d /usr/local/bin/portfolio-web-run
 mount-in -p portfolio-web -z zroot/portfolio-web -m /var/web
