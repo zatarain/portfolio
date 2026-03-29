@@ -18,11 +18,10 @@ job "portfolio-api" {
     task "setup" {
       driver = "raw_exec"
       config {
-        command = "ln"
+        command = "sh"
         args = [
-          "-sf",
-          "$NOMAD_SECRETS_DIR/api.env",
-          "/data/portfolio-api/.env"
+          "-c",
+          "cp -f $NOMAD_SECRETS_DIR/api.env /data/portfolio-api/.env"
         ]
       }
 
