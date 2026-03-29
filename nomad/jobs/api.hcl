@@ -21,7 +21,7 @@ job "portfolio-api" {
         command = "sh"
         args = [
           "-c",
-          "cp -f $NOMAD_SECRETS_DIR/api.env /data/portfolio-api/.env"
+          "exec cp -f $NOMAD_SECRETS_DIR/api.env /data/portfolio-api/.env"
         ]
       }
 
@@ -49,7 +49,7 @@ job "portfolio-api" {
       driver = "raw_exec"
 
       config {
-        command = "/bin/sh"
+        command = "sh"
         args = [
           "-c",
           "exec pot exec -p portfolio-api portfolio-api-run"
