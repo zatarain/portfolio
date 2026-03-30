@@ -39,8 +39,8 @@ job "portfolio-web" {
 
       # Resource allocation for setup task
       resources {
-        cpu    = 250
-        memory = 256
+        cpu    = 50
+        memory = 64
       }
     }
 
