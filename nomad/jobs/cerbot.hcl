@@ -1,4 +1,4 @@
-job "certbot-renew" {
+job "certbot" {
   datacenters = ["dc1"]
   type        = "batch"
 
@@ -8,7 +8,7 @@ job "certbot-renew" {
     time_zone        = "Europe/London"
   }
 
-  group "certbot" {
+  group "ssl-certificates" {
 		task "setup" {
 			driver = "raw_exec"
 			config {
