@@ -21,10 +21,10 @@ job "nginx" {
       driver = "raw_exec"
 
       config {
-        command = "/bin/sh"
+        command = "sh"
         args = [
           "-c",
-          "exec /usr/local/bin/pot exec -p reverse-proxy nginx -g 'daemon off;'"
+          "exec pot exec -p reverse-proxy nginx -g 'daemon off;'"
         ]
       }
 

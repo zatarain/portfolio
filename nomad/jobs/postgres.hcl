@@ -17,10 +17,10 @@ job "postgres" {
       driver = "raw_exec"
 
       config {
-        command = "/bin/sh"
+        command = "sh"
         args = [
           "-c",
-          "exec /usr/local/bin/pot exec -p databases /usr/local/bin/postgres-nomad-start"
+          "exec pot exec -p databases /usr/local/bin/postgres-nomad-start"
         ]
       }
 

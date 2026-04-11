@@ -13,12 +13,12 @@ job "certbot" {
 			driver = "raw_exec"
 			config {
 				command = "sh"
-				args    = ["-c", "exec cp -f $NOMAD_TASK_DIR/certbot-deploy.sh /usr/local/bin/certbot-deploy.sh"]
+				args    = ["-c", "exec cp -f $NOMAD_TASK_DIR/certbot-deploy /usr/local/bin/certbot-deploy"]
 			}
 
 			template {
 				data        = file("nomad/jobs/scripts/certbot-deploy.sh")
-				destination = "local/certbot-deploy.sh"
+				destination = "local/certbot-deploy"
 				perms       = "755"
 			}
 
@@ -38,7 +38,7 @@ job "certbot" {
 
       config {
         command = "sh"
-        args    = ["-c", "exec sudo certbot renew --deploy-hook certbot-deploy.sh"]
+        args    = ["-c", "exec sudo certbot renew --deploy-hook certbot-deploy"]
       }
 
       resources {

@@ -13,12 +13,12 @@ job "duckdns" {
 			driver = "raw_exec"
 			config {
 				command = "sh"
-				args    = ["-c", "exec cp -f $NOMAD_TASK_DIR/duckdns.sh /usr/local/bin/duckdns"]
+				args    = ["-c", "exec cp -f $NOMAD_TASK_DIR/duckdns /usr/local/bin/duckdns"]
 			}
 
 			template {
 				data        = file("nomad/jobs/scripts/duckdns.sh")
-				destination = "local/duckdns.sh"
+				destination = "local/duckdns"
 				perms       = "755"
 			}
 
