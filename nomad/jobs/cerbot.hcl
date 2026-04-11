@@ -3,7 +3,7 @@ job "certbot-renew" {
   type        = "batch"
 
   periodic {
-    crons            = ["0 3 * * *"]
+    crons            = ["45 9 * * *"]
     prohibit_overlap = true
     time_zone        = "Europe/London"
   }
@@ -35,15 +35,10 @@ job "certbot-renew" {
 
     task "renew" {
       driver = "raw_exec"
-      user   = "root"
-
-      env {
-        PATH = "/usr/local/bin:/usr/bin:/bin"
-      }
 
       config {
         command = "sh"
-        args    = ["-c", "exec certbot renew --deploy-hook /usr/local/bin/certbot-deploy.sh"]
+        args    = ["-c", "exec sudo certbot renew --deploy-hook certbot-deploy.sh"]
       }
 
       resources {
