@@ -30,8 +30,12 @@ describe('<PageLayout ...>...</PageLayout>', () => {
 			</Provider>
 		)
 
-		expect(head).toBeCalled()
-		head.mock.lastCall?.map((tag) => tag.children && render(tag.children, { container: document.head }))
+		expect(head).toHaveBeenCalled()
+		head.mock.calls.forEach(([props]) => {
+			if (props?.children) {
+				render(props.children, { container: document.head })
+			}
+		})
 
 		expect(document.title).toBe('My Name - Test title')
 		expect(getByText('My Name')).toBeInTheDocument()
@@ -50,8 +54,12 @@ describe('<PageLayout ...>...</PageLayout>', () => {
 			</Provider>
 		)
 
-		expect(head).toBeCalled()
-		head.mock.lastCall?.map((tag) => tag.children && render(tag.children, { container: document.head }))
+		expect(head).toHaveBeenCalled()
+		head.mock.calls.forEach(([props]) => {
+			if (props?.children) {
+				render(props.children, { container: document.head })
+			}
+		})
 
 		expect(document.title).toBe('My Name - Test title')
 		expect(getByText('My Name')).toBeInTheDocument()
@@ -70,8 +78,12 @@ describe('<PageLayout ...>...</PageLayout>', () => {
 			</Provider>
 		)
 
-		expect(head).toBeCalled()
-		head.mock.lastCall?.map((tag) => tag.children && render(tag.children, { container: document.head }))
+		expect(head).toHaveBeenCalled()
+		head.mock.calls.forEach(([props]) => {
+			if (props?.children) {
+				render(props.children, { container: document.head })
+			}
+		})
 
 		expect(document.title).toBe('Test title')
 		expect(getByText('Test title')).toBeInTheDocument()
