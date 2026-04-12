@@ -196,7 +196,7 @@ describe('<MapForm ...>...</MapForm>', () => {
 		expect(headers).toEqual(expect.objectContaining({
 			'Content-Type': 'application/json',
 		}))
-		expect(console.error).toBeCalledTimes(1)
+		expect(console.error).toHaveBeenCalledTimes(1)
 		const [[message]] = console.error.mock.calls
 		expect(message).toMatch(/Internal Server Error/)
 	})

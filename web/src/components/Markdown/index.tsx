@@ -1,12 +1,11 @@
 import MarkdownIt from 'markdown-it'
+import katex from '@vscode/markdown-it-katex'
 import styles from './index.module.css'
 
 interface Properties {
 	className?: string
 	content?: string
 }
-
-const katex = require('@vscode/markdown-it-katex')
 
 const Markdown = ({ content, className }: Properties) => {
 	const markdown = MarkdownIt()

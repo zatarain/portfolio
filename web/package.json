@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "start": "node src/server.ts",
     "type-check": "tsc",
-    "test": "jest",
+    "test": "COLUMNS=120 jest",
     "storybook": "storybook dev -p 5001",
     "build-storybook": "storybook build"
   },

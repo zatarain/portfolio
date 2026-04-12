@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<PageLayout ...>...</PageLayout> renders name same as title when data is missing 1`] = `
 <DocumentFragment>
@@ -16,12 +16,8 @@ exports[`<PageLayout ...>...</PageLayout> renders name same as title when data i
       >
         <img
           alt="logo"
-          data-nimg="1"
-          decoding="async"
           height="48"
-          loading="lazy"
           src="/logo.svg"
-          style="color: transparent;"
           width="48"
         />
         Test title
@@ -406,12 +402,8 @@ exports[`<PageLayout ...>...</PageLayout> renders only NavigationBar and Footer 
       >
         <img
           alt="logo"
-          data-nimg="1"
-          decoding="async"
           height="48"
-          loading="lazy"
           src="/logo.svg"
-          style="color: transparent;"
           width="48"
         />
         My Name
@@ -796,12 +788,8 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
       >
         <img
           alt="logo"
-          data-nimg="1"
-          decoding="async"
           height="48"
-          loading="lazy"
           src="/logo.svg"
-          style="color: transparent;"
           width="48"
         />
         My Name

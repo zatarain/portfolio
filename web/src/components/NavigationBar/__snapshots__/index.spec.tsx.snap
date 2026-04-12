@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<NavigationBar /> renders the component correctly with passed name 1`] = `
 <DocumentFragment>
@@ -13,12 +13,8 @@ exports[`<NavigationBar /> renders the component correctly with passed name 1`] 
     >
       <img
         alt="logo"
-        data-nimg="1"
-        decoding="async"
         height="48"
-        loading="lazy"
         src="/logo.svg"
-        style="color: transparent;"
         width="48"
       />
       My Name
