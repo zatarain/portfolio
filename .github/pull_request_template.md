@@ -1,5 +1,3 @@
-# PORT-###: Pull Request Title
-
 ## 👨🏽‍💻 Description
 
 Describe what are your changes and why they are needed.
