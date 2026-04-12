@@ -1,0 +1,1 @@
+set-cmd -c "su postgres -c 'postgres -D /var/lib/postgresql/data/pgdata'"

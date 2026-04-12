@@ -250,6 +250,7 @@ GEM
 
 PLATFORMS
   x86_64-linux
+  amd64-freebsd-14
 
 DEPENDENCIES
   activerecord-postgis-adapter

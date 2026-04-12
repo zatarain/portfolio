@@ -1,0 +1,7 @@
+set-attribute -A no-rc-script -V YES
+set-attribute -A persistent -V YES
+set-env -E NGINX_WORKER_PROCESSES=auto
+set-env -E NGINX_WORKER_CONNECTIONS=1024
+copy-in -c -s /usr/local/etc/pot/flavours/nginx.conf -d /usr/local/etc/nginx/nginx.conf
+copy-in -c -s /usr/local/etc/pot/flavours/zatara.in.conf -d /usr/local/etc/nginx/conf.d/zatara.in.conf
+mount-in -p reverse-proxy -z zroot/reverse-proxy -m /var/db
