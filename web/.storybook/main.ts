@@ -1,6 +1,7 @@
 // This file has been automatically migrated to valid ESM format by Storybook.
 import { fileURLToPath } from "node:url";
-import * as path, { dirname } from 'path';
+import { dirname } from "node:path";
+import * as path from "node:path";
 import type { StorybookConfig } from '@storybook/nextjs'
 
 const __filename = fileURLToPath(import.meta.url);
