@@ -61,6 +61,7 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Build Next App
         run: cd web && npm ci && npm run build
+      - run: ls -la web/.next
       - uses: actions/upload-artifact@v7
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
