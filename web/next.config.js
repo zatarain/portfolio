@@ -5,11 +5,11 @@ const nextConfig = {
 		'react-leaflet-cluster',
 	],
 	images: {
-		domains: [
-			'cdn.instagram.com',
-			'i.gifer.com',
-		],
 		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'i.gifer.com',
+			},
 			{
 				protocol: 'https',
 				hostname: '**.cdninstagram.com',
