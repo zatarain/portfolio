@@ -27,7 +27,7 @@ module GeoLocalisable
     end
 
     def within_box(south_west, north_east)
-      box_envelope = <<-POSTGIS.squish
+      box_envelope = <<~POSTGIS.squish
         location && ST_MakeEnvelope(
           :south_west_longitude, :south_west_latitude,
           :north_east_longitude, :north_east_latitude,

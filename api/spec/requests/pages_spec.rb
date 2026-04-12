@@ -4,30 +4,32 @@ require 'rails_helper'
 
 describe 'Pages' do
   describe 'GET /' do
-    data = {
-      name: 'My Test Name',
-      statement: 'This is a dummy statement paragraph',
-      'work-experience': [
-        {
-          role: 'Dummy Role',
-          type: 'full-time',
-          company: 'Dummy Company',
-          city: 'Dummy City',
-          country: 'Dummy Country',
-        },
-        {
-          role: 'Dummy Role Inter',
-          type: 'part-time',
-          company: 'Dummy Company',
-          city: 'Another City',
-          country: 'Same Country',
-        },
-      ],
-      awards: [
-        'dummy award one',
-        'dummy award two',
-      ],
-    }
+    let(:data) do
+      {
+        name: 'My Test Name',
+        statement: 'This is a dummy statement paragraph',
+        'work-experience': [
+          {
+            role: 'Dummy Role',
+            type: 'full-time',
+            company: 'Dummy Company',
+            city: 'Dummy City',
+            country: 'Dummy Country',
+          },
+          {
+            role: 'Dummy Role Inter',
+            type: 'part-time',
+            company: 'Dummy Company',
+            city: 'Another City',
+            country: 'Same Country',
+          },
+        ],
+        awards: [
+          'dummy award one',
+          'dummy award two',
+        ],
+      }
+    end
 
     it 'responses with JSON curriculum data on body' do
       curriculum = instance_double(Curriculum, find: data)

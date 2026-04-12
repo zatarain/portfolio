@@ -125,13 +125,11 @@ describe Curriculum do
 
   describe 'download' do
     before do
-      allow(Rails.configuration).to receive(:sections).and_return('db/dummy.yml')
-      allow(Rails.configuration).to receive(:pictures).and_return('db/dummy.json')
-      allow(Rails.configuration).to receive(:aws).and_return({
+      allow(Rails.configuration).to receive_messages(sections: 'db/dummy.yml', pictures: 'db/dummy.json', aws: {
         s3_bucket: 'test-cv',
         s3_object: 'dummy.yml',
         assume_role: nil,
-      })
+      },)
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
       allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
@@ -155,14 +153,12 @@ describe Curriculum do
 
     context 'when file exists, but file is too old' do
       before do
-        allow(File).to receive(:exist?).and_return(true)
-        allow(File).to receive(:mtime).and_return(2.days.ago)
         response = instance_double(InstagramBasicDisplay::Response)
         json = { data: pictures }
         payload = Struct.new(*json.keys).new(*json.values)
         allow(response).to receive(:payload).and_return(payload)
         allow(instagram_client).to receive(:media_feed).and_return(response)
-        allow(File).to receive(:write).and_return(true)
+        allow(File).to receive_messages(exist?: true, mtime: 2.days.ago, write: true)
       end
 
       it 'downloads the file from Instagram' do
@@ -178,8 +174,7 @@ describe Curriculum do
 
     context 'when file exists, but file is enough recent' do
       before do
-        allow(File).to receive(:exist?).and_return(true)
-        allow(File).to receive(:mtime).and_return(14.hours.ago)
+        allow(File).to receive_messages(exist?: true, mtime: 14.hours.ago)
         allow(s3_client).to receive(:get_object)
         allow(Rails.logger).to receive(:info)
       end
@@ -228,26 +223,21 @@ describe Curriculum do
     end
 
     before do
-      allow(Rails.configuration).to receive(:sections).and_return('db/dummy.yml')
-      allow(Rails.configuration).to receive(:pictures).and_return('db/dummy.json')
-      allow(Rails.configuration).to receive(:aws).and_return({
+      allow(Rails.configuration).to receive_messages(sections: 'db/dummy.yml', pictures: 'db/dummy.json', aws: {
         s3_bucket: 'test-cv',
         s3_object: 'dummy.yml',
         assume_role: nil,
-      })
-      allow(Rails.configuration).to receive(:instagram).and_return({
+      }, instagram: {
         client_id: '1010101',
         client_secret: 'dummy-instagram-secret',
         access_token: 'dummy-instagram-token',
         redirect_uri: 'https://dummy.com',
-      })
+      },)
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
-      allow(File).to receive(:exist?).and_return(true)
-      allow(File).to receive(:mtime).and_return(1.hour.ago)
       allow(YAML).to receive(:load_file).and_return(sections)
-      allow(File).to receive(:read).and_return(pictures.to_json)
+      allow(File).to receive_messages(exist?: true, mtime: 1.hour.ago, read: pictures.to_json)
     end
 
     context 'when sensitive argument is false' do
