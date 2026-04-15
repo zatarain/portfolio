@@ -22,4 +22,4 @@ npm run build
 echo "Web application build complete"
 
 # Run the Next.js server
-node src/server.ts
+npm run start
