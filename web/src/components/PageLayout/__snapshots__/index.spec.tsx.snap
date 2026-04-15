@@ -849,9 +849,6 @@ exports[`<PageLayout ...>...</PageLayout> renders the component correctly with p
         </li>
       </ul>
     </nav>
-    <header
-      class="header"
-    />
     <main>
       <p>
         Hello World

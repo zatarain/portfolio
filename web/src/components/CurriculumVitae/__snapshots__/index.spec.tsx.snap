@@ -230,6 +230,38 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       </ul>
     </section>
     <section
+      id="open-source"
+    >
+      <h2>
+        Open Source & Personal Projects
+      </h2>
+      <div
+        class="markdown contributions"
+      >
+        <p>
+          Test leadership paragraph
+        </p>
+        
+
+      </div>
+    </section>
+    <section
+      id="leadership"
+    >
+      <h2>
+        Leadership & Volunteering Activities
+      </h2>
+      <div
+        class="markdown contributions"
+      >
+        <p>
+          Test leadership paragraph
+        </p>
+        
+
+      </div>
+    </section>
+    <section
       id="awards"
     >
       <h2>
@@ -245,38 +277,6 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
           Dummy Award 02
         </li>
       </ul>
-    </section>
-    <section
-      id="leadership"
-    >
-      <h2>
-        Leadership
-      </h2>
-      <div
-        class="markdown undefined"
-      >
-        <p>
-          Test leadership paragraph
-        </p>
-        
-
-      </div>
-    </section>
-    <section
-      id="volunteering"
-    >
-      <h2>
-        Volunteering Activities
-      </h2>
-      <div
-        class="markdown undefined"
-      >
-        <p>
-          Test volunteering paragraph
-        </p>
-        
-
-      </div>
     </section>
   </div>
 </DocumentFragment>

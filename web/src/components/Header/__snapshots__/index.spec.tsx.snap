@@ -1,9 +1,84 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`<Header /> renders the component correctly with passed name 1`] = `
+exports[`<Header /> renders the component correctly with passed name and not-defined pictures 1`] = `<DocumentFragment />`;
+
+exports[`<Header /> renders the component correctly with passed name and pictures 1`] = `
 <DocumentFragment>
   <header
     class="header"
-  />
+  >
+    <div
+      class="carousel-root hero"
+    >
+      <div
+        class="carousel carousel-slider"
+        style="width: 100%;"
+      >
+        <ul
+          class="control-dots"
+        >
+          <li
+            aria-label="slide item 1"
+            class="dot selected"
+            role="button"
+            tabindex="0"
+            value="0"
+          />
+        </ul>
+        <button
+          aria-label="previous slide / item"
+          class="control-arrow control-prev control-disabled"
+          type="button"
+        />
+        <div
+          class="slider-wrapper axis-horizontal"
+        >
+          <ul
+            class="slider animated"
+          >
+            <li
+              class="slide selected previous"
+              style="position: relative; display: block; z-index: -2; min-height: 100%; opacity: 1; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+            >
+              <figure>
+                <img
+                  alt="Test Caption"
+                  height="768"
+                  src="test.jpg"
+                  width="1440"
+                />
+                <figcaption>
+                  Test Caption
+                </figcaption>
+              </figure>
+            </li>
+            <li
+              class="slide selected previous"
+              style="position: relative; display: block; z-index: -2; min-height: 100%; opacity: 1; top: 0px; right: 0px; left: 0px; bottom: 0px; transition-timing-function: ease-in-out; transition-duration: 1000ms;"
+            >
+              <figure>
+                <img
+                  alt="Test Caption"
+                  height="768"
+                  src="test.jpg"
+                  width="1440"
+                />
+                <figcaption>
+                  Test Caption
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
+        <button
+          aria-label="next slide / item"
+          class="control-arrow control-next control-disabled"
+          type="button"
+        />
+      </div>
+    </div>
+  </header>
 </DocumentFragment>
 `;
+
+exports[`<Header /> renders the component correctly with passed name, but no pictures 1`] = `<DocumentFragment />`;
