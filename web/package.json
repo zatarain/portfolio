@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next --port 5000",
+    "dev": "next dev --port 5000",
     "build": "next build --webpack",
     "lint": "eslint .",
     "start": "next start -p 5000",
