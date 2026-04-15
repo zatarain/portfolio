@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "dev": "node src/server.ts",
+    "dev": "next --port 5000",
     "build": "next build --webpack",
     "lint": "eslint .",
-    "start": "node src/server.ts",
+    "start": "next start -p 5000",
     "type-check": "tsc",
     "test": "COLUMNS=120 jest",
     "storybook": "storybook dev -p 5001",
