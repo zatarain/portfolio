@@ -112,19 +112,19 @@ const CurriculumVitae = ({ data }: Properties) => {
 					)}
 				</ul>
 			</section>
+			<section id="open-source">
+				<h2>Open Source &amp; Personal Projects</h2>
+				<Markdown className={styles.contributions} content={data.leadership} />
+			</section>
+			<section id="leadership">
+				<h2>Leadership &amp; Volunteering Activities</h2>
+				<Markdown className={styles.contributions} content={data.leadership} />
+			</section>
 			<section id="awards" className={styles.awards}>
 				<h2>Awards</h2>
 				<ul className={styles.ticks}>
 					{data.awards?.map((award: string, index: number) => <li key={index}>{award}</li>)}
 				</ul>
-			</section>
-			<section id="leadership">
-				<h2>Leadership</h2>
-				<Markdown content={data.leadership} />
-			</section>
-			<section id="volunteering">
-				<h2>Volunteering Activities</h2>
-				<Markdown content={data.volunteering} />
 			</section>
 		</div>
 	)

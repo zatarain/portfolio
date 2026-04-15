@@ -47,11 +47,11 @@
 	text-align: center;
 }
 
-.experiences .contributions ul {
+.contributions ul {
 	padding-left: 1.5rem;
 }
 
-.experiences .contributions li {
+.contributions li {
 	display: list-item;
 	margin: 0;
 }
@@ -95,7 +95,7 @@
 }
 
 @media screen {
-	.ticks li::before, .experiences .contributions li::before {
+	.ticks li::before, .contributions li::before {
 		content: '';
 		display: inline-block;
 		background: url('/tick.svg') no-repeat;
@@ -118,7 +118,8 @@
 	position: relative;
 }
 
-.experiences .contributions li {
+.contributions li {
+	list-style: none;
 	position: relative;
 }
 
@@ -211,6 +212,10 @@
 	.experiences dl {
 		font-size: 0.8em;
 		width: 9.5em;
+	}
+
+	.education {
+		page-break-before: always;
 	}
 
 	.education > ul {
