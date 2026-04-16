@@ -5,13 +5,15 @@
 .curriculum h2 {
 	font-size: 1.75rem;
 	font-family: var(--headings-font);
+	font-weight: 500;
 	color: var(--heading-2);
 	margin: 1rem 0 0.5rem;
 }
 
 .curriculum h3 {
-	font-size: 1.2rem;
+	font-size: 1.25rem;
 	font-family: var(--headings-font);
+	font-weight: 400;
 	color: var(--heading-3);
 	margin: 0;
 }
@@ -89,9 +91,28 @@
 .education dd {
 	display: inline-block;
 }
+.education dt.duration {
+	display: none;
+}
 
-.education .subjects {
-	display: block;
+.education dt.duration + dd::after {
+	content: '|';
+	margin: 0 0.5rem;
+	display: inline-block;
+}
+
+.education dt.gpa + dd::after {
+	content: '/100';
+	display: inline-block;
+}
+
+.education dt.subjects {
+	display: flex;
+	font-weight: 500;
+}
+
+.education .subjects+dd {
+	display: flex;
 }
 
 .ticks {
@@ -130,7 +151,7 @@ dl.ticks {
 }
 
 dl.ticks dt {
-	font-weight: bold;
+	font-weight: 500;
 	padding-left: 1.25rem;
 }
 
@@ -191,14 +212,16 @@ dl.ticks dt {
 	.curriculum h2 {
 		font-size: 1.2em;
 		font-family: var(--headings-font);
-		color: var(--heading-2);
+		font-weight: 400;
+		color: var(--heading-2-printer);
 		margin: 0.5em 0 0.05em;
 	}
 
 	.curriculum h3 {
 		font-size: 1em;
 		font-family: var(--headings-font);
-		color: var(--heading-3);
+		font-weight: 400;
+		color: var(--heading-3-printer);
 		margin: 0.2em 0 0;
 	}
 

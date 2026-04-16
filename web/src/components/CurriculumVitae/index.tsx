@@ -92,13 +92,12 @@ const CurriculumVitae = ({ data }: Properties) => {
 				<ul>
 					{data.education?.map((education: Education, index: number) =>
 						<li key={index}>
-							<h3>{`${education.school}`}</h3>
-							<p>{`${education.grade} (${education.start} - ${education.end})`}</p>
+							<h3>{`${education.grade} @ ${education.school}`}</h3>
 							<dl>
 								{education.thesis && <><dt>Thesis:</dt><dd>{education.thesis}</dd></>}
-								<dt>Cumulative GPA:</dt><dd>{education.gpa}/100</dd>
-								<dt className={styles.subjects}>Most relevant subjects and courses:</dt>
-								<dd><ul className={styles.ticks}>{education.subjects?.map((subject, key) => <li key={key}>{subject}</li>)}</ul></dd>
+								<dt className={styles.duration}>Duration:</dt><dd>{`${education.start} - ${education.end}`}</dd>
+								<dt className={styles.gpa}>GPA</dt><dd>{education.gpa}</dd>
+								<dt className={styles.subjects}>Key modules:</dt><dd>{education.subjects?.join(', ')}</dd>
 							</dl>
 						</li>
 					)}

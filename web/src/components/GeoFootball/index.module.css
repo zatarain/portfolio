@@ -20,7 +20,7 @@
 
 .popup dt {
 	display: inline-block;
-	font-weight: bold;
+	font-weight: 500;
 	margin: 0;
 	text-align: right;
 }

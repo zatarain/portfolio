@@ -10,6 +10,7 @@
   --bg-secondary: #151b28;
   --bg-action: #f40;
   --bg-action-hover: #f60;
+  --link-printer: #4472c4;
   --link-secondary: #a5acba;
   --highlight-secondary: #5cdeac;
   --fg-secondary: #fff;
@@ -20,16 +21,18 @@
   --ldn: #50e3c2;
   --heading-2: var(--ldn-dark);
   --heading-3: var(--ldn-dark);
-  --headings-font: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  --heading-2-printer: #2F5496;
+  --heading-3-printer: var(--heading-2-printer);
+  --headings-font: var(--font-fira-sans), 'Fira Sans', Helvetica, sans-serif;
 }
 
 @media screen {
   html, body {
     padding: 0;
     margin: 0;
-    font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    font-size: 14px;
+    font-family: var(--font-fira-sans), 'Fira Sans', Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
     scroll-behavior: smooth;
   }
 
@@ -52,6 +55,10 @@ a:link, a:visited {
 
 a:hover, a:hover:visited {
   color: var(--bg-action);
+}
+
+strong {
+  font-weight: 400;
 }
 
 .carousel ul.control-dots {
