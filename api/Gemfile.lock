@@ -193,7 +193,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    puma (6.6.1)
+    puma (8.0.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -338,7 +338,7 @@ DEPENDENCIES
   debug
   instagram_basic_display
   pg
-  puma (~> 6.4)
+  puma (~> 8.0)
   rack-cors
   rails (~> 7.2.0)
   rgeo
