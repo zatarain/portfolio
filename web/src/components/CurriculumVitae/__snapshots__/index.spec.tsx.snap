@@ -91,44 +91,39 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <ul>
         <li>
           <h3>
-            dummy school
+            BSc Dummy Career @ dummy school
           </h3>
-          <p>
-            BSc Dummy Career (2019 - 2021)
-          </p>
           <dl>
-            <dt>
-              Cumulative GPA:
+            <dt
+              class="duration"
+            >
+              Duration:
             </dt>
             <dd>
-              90/100
+              2019 - 2021
+            </dd>
+            <dt
+              class="gpa"
+            >
+              GPA
+            </dt>
+            <dd>
+              90
             </dd>
             <dt
               class="subjects"
             >
-              Most relevant subjects and courses:
+              Key modules:
             </dt>
             <dd>
-              <ul
-                class="ticks"
-              >
-                <li>
-                  hello
-                </li>
-                <li>
-                  world
-                </li>
-              </ul>
+              hello, world
             </dd>
           </dl>
         </li>
         <li>
           <h3>
-            dummy research centre
+            MSc Dummy Career @ dummy research centre
           </h3>
-          <p>
-            MSc Dummy Career (2021 - 2023)
-          </p>
           <dl>
             <dt>
               Thesis:
@@ -136,28 +131,29 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             <dd>
               Dummy Thesis Topic
             </dd>
-            <dt>
-              Cumulative GPA:
+            <dt
+              class="duration"
+            >
+              Duration:
             </dt>
             <dd>
-              95/100
+              2021 - 2023
+            </dd>
+            <dt
+              class="gpa"
+            >
+              GPA
+            </dt>
+            <dd>
+              95
             </dd>
             <dt
               class="subjects"
             >
-              Most relevant subjects and courses:
+              Key modules:
             </dt>
             <dd>
-              <ul
-                class="ticks"
-              >
-                <li>
-                  hello master
-                </li>
-                <li>
-                  world master
-                </li>
-              </ul>
+              hello master, world master
             </dd>
           </dl>
         </li>

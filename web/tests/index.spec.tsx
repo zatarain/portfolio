@@ -2,12 +2,14 @@ import { Provider } from 'react-redux'
 import store from '#store'
 import { render } from '@testing-library/react'
 import IndexPage, { getServerSideProps } from '#pages'
+import { Fira_Sans } from 'next/font/google'
 
 jest.mock('react-responsive-carousel/lib/styles/carousel.min.css', () => ({}))
 
 jest.mock('next/font/google', () => ({
-	Inter: () => ({
-		className: 'inter-font-class'
+	Fira_Sans: () => ({
+		className: 'fira-sans-font-class',
+		variable: 'fira-sans-variable',
 	})
 }))
 

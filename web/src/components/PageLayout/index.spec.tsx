@@ -8,9 +8,10 @@ import Head from 'next/head'
 jest.mock('next/font/google', () => {
 	return {
 		__esModule: true,
-		Inter: jest.fn(() => {
+		Fira_Sans: jest.fn(() => {
 			return {
-				className: 'my-font',
+				className: 'fira-sans-font-class',
+				variable: 'fira-sans-variable',
 			}
 		}),
 	}
