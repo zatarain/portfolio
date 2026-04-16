@@ -20,7 +20,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       id="work-experience"
     >
       <h2>
-        Work Experience
+        Professional Experience
       </h2>
       <ul>
         <li>
@@ -91,44 +91,39 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <ul>
         <li>
           <h3>
-            dummy school
+            BSc Dummy Career @ dummy school
           </h3>
-          <p>
-            BSc Dummy Career (2019 - 2021)
-          </p>
           <dl>
-            <dt>
-              Cumulative GPA:
+            <dt
+              class="duration"
+            >
+              Duration:
             </dt>
             <dd>
-              90/100
+              2019 - 2021
+            </dd>
+            <dt
+              class="gpa"
+            >
+              GPA
+            </dt>
+            <dd>
+              90
             </dd>
             <dt
               class="subjects"
             >
-              Most relevant subjects and courses:
+              Key modules:
             </dt>
             <dd>
-              <ul
-                class="ticks"
-              >
-                <li>
-                  hello
-                </li>
-                <li>
-                  world
-                </li>
-              </ul>
+              hello, world
             </dd>
           </dl>
         </li>
         <li>
           <h3>
-            dummy research centre
+            MSc Dummy Career @ dummy research centre
           </h3>
-          <p>
-            MSc Dummy Career (2021 - 2023)
-          </p>
           <dl>
             <dt>
               Thesis:
@@ -136,28 +131,29 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             <dd>
               Dummy Thesis Topic
             </dd>
-            <dt>
-              Cumulative GPA:
+            <dt
+              class="duration"
+            >
+              Duration:
             </dt>
             <dd>
-              95/100
+              2021 - 2023
+            </dd>
+            <dt
+              class="gpa"
+            >
+              GPA
+            </dt>
+            <dd>
+              95
             </dd>
             <dt
               class="subjects"
             >
-              Most relevant subjects and courses:
+              Key modules:
             </dt>
             <dd>
-              <ul
-                class="ticks"
-              >
-                <li>
-                  hello master
-                </li>
-                <li>
-                  world master
-                </li>
-              </ul>
+              hello master, world master
             </dd>
           </dl>
         </li>
@@ -168,7 +164,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       id="academic-projects"
     >
       <h2>
-        Major Academic Projects
+        Selected Academic Work
       </h2>
       <ul>
         <li>
@@ -190,7 +186,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown undefined"
+            class="markdown project-description"
           >
             <p>
               Dummy description paragraph 01
@@ -218,7 +214,7 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
             </dd>
           </dl>
           <div
-            class="markdown undefined"
+            class="markdown project-description"
           >
             <p>
               Dummy description paragraph 02
@@ -235,15 +231,34 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Open Source & Personal Projects
       </h2>
-      <div
-        class="markdown contributions"
+      <dl
+        class="ticks"
       >
-        <p>
-          Test leadership paragraph
-        </p>
-        
-
-      </div>
+        <dt>
+          <a
+            href="https://github.com/dummy/dummy-project-01"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Dummy Open Source Project 01
+          </a>
+        </dt>
+        <dd>
+          Dummy description paragraph 01
+        </dd>
+        <dt>
+          <a
+            href="https://github.com/dummy/dummy-project-02"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Dummy Open Source Project 02
+          </a>
+        </dt>
+        <dd>
+          Dummy description paragraph 02
+        </dd>
+      </dl>
     </section>
     <section
       id="leadership"

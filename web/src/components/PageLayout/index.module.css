@@ -1,4 +1,5 @@
 .container {
+	font-family: var(--font-fira-sans), 'Fira Sans', Helvetica, sans-serif;
 	max-width: 1440px;
 	margin: 0 auto;
 	text-align: left;

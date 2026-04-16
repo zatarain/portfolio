@@ -53,7 +53,7 @@ describe('<CurriculumVitae />', () => {
 					contributions: 'dummy contributions paragraph as intern',
 				},
 			],
-			projects: [
+			academicProjects: [
 				{
 					title: 'Dummy Project 01',
 					type: 'thesis',
@@ -66,6 +66,18 @@ describe('<CurriculumVitae />', () => {
 					type: 'personal',
 					duration: 'Spring 2023',
 					description: 'Dummy description paragraph 02',
+				},
+			],
+			openSourceProjects: [
+				{
+					title: 'Dummy Open Source Project 01',
+					description: 'Dummy description paragraph 01',
+					url: 'https://github.com/dummy/dummy-project-01',
+				},
+				{
+					title: 'Dummy Open Source Project 02',
+					description: 'Dummy description paragraph 02',
+					url: 'https://github.com/dummy/dummy-project-02',
 				},
 			],
 			awards: [
@@ -81,9 +93,9 @@ describe('<CurriculumVitae />', () => {
 					caption: 'Dummy caption 01',
 				},
 				{
-					id: '1001',
-					media_url: 'https://cdn.instagram.com/dummy-01.jpg',
-					caption: 'Dummy caption 01',
+					id: '1002',
+					media_url: 'https://cdn.instagram.com/dummy-02.jpg',
+					caption: 'Dummy caption 02',
 				},
 			],
 		}

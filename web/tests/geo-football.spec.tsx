@@ -101,9 +101,10 @@ jest.mock('next/font/google', () => {
 				className: 'my-font',
 			}
 		}),
-		Inter: () => ({
-			className: 'inter-font-class'
-		}),
+		Fira_Sans: () => ({
+			className: 'fira-sans-font-class',
+			variable: 'fira-sans-variable',
+		})
 	}
 })
 

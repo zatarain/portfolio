@@ -26,7 +26,8 @@ export async function getServerSideProps() {
             subjects,
           }
         }),
-        projects: data['academic-projects'] || [],
+        academicProjects: data['academic-projects'] || [],
+        openSourceProjects: data['open-source-projects'] || [],
         skills: data['technical-skills'] || [],
       },
     },

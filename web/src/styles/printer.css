@@ -20,7 +20,10 @@
     margin: 0;
 		padding: 0;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-      Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
  	}
+
+	a:link, a:visited {
+		color: var(--link-printer);
+		text-decoration: underline;
+	}
 }
