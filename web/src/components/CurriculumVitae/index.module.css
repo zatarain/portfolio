@@ -60,6 +60,10 @@
 	display: none;
 }
 
+.experiences .project-description p {
+	margin: 0;
+}
+
 .education > ul {
 	list-style-type: none;
 	display: grid;
@@ -108,9 +112,26 @@
 		top: 0.25rem;
 	}
 
+	dl.ticks dt {
+		background: url('/tick.svg') no-repeat;
+		background-position: 0 .5rem;
+		background-size: 1rem;
+	}
+
 	.experiences .contributions ul {
 		margin-top: -1rem;
 	}
+}
+
+dl.ticks {
+	display: grid;
+	grid-template-columns: 3fr 9fr;
+	column-gap: 1rem;
+}
+
+dl.ticks dt {
+	font-weight: bold;
+	padding-left: 1.25rem;
 }
 
 .ticks li {
@@ -195,7 +216,7 @@
 		font-size: 0.95em;
 	}
 
-	.ticks li {
+	.ticks li, .contributions li {
 		list-style-type: disc;
 	}
 
@@ -220,5 +241,9 @@
 
 	.education > ul {
 		gap: 0;
+	}
+
+	dl.ticks dt {
+		padding-left: 0;
 	}
 }

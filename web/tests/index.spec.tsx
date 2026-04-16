@@ -139,7 +139,8 @@ describe('getServerSideProps', () => {
 							contributions: 'dummy contributions paragraph as intern',
 						},
 					],
-					projects: [],
+					academicProjects: [],
+					openSourceProjects: [],
 					skills: [],
 					social: [],
 				}

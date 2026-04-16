@@ -73,7 +73,7 @@ const CurriculumVitae = ({ data }: Properties) => {
 				<p>{data.statement}</p>
 			</section>
 			<section id="work-experience" className={styles.experiences}>
-				<h2>Work Experience</h2>
+				<h2>Professional Experience</h2>
 				<ul>
 					{data.experience?.map((job: Job, index: number) =>
 						<li key={index}>
@@ -105,23 +105,29 @@ const CurriculumVitae = ({ data }: Properties) => {
 				</ul>
 			</section>
 			<section id="academic-projects" className={styles.experiences}>
-				<h2>Major Academic Projects</h2>
+				<h2>Selected Academic Work</h2>
 				<ul>
-					{data.projects?.map((project: AcademicProject, index: number) =>
+					{data.academicProjects?.map((project: AcademicProject, index: number) =>
 						<li key={index}>
 							<h3>{project.title}</h3>
 							<dl>
 								<dt>Type:</dt><dd>{project.type}</dd>
 								<dt>Duration:</dt><dd>{project.duration && project.duration || `${project.start} - ${project.end}`}</dd>
 							</dl>
-							<Markdown content={project.description} />
+							<Markdown content={project.description} className={styles['project-description']} />
 						</li>
 					)}
 				</ul>
 			</section>
-			<section id="open-source">
+			<section id="open-source" className={styles['open-source']}>
 				<h2>Open Source &amp; Personal Projects</h2>
-				<Markdown className={styles.contributions} content={data.leadership} />
+				<dl className={styles.ticks}>
+					{data.openSourceProjects?.map((project: OpenSourceProject) =>
+						<>
+							<dt><a href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a></dt><dd>{project.description}</dd>
+						</>
+					)}
+				</dl>
 			</section>
 			<section id="leadership">
 				<h2>Leadership &amp; Volunteering Activities</h2>
