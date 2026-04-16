@@ -36,6 +36,12 @@ export interface Picture {
 	caption: string
 }
 
+export interface OpenSourceProject {
+	title: string
+	description: string
+	url: string
+}
+
 export interface CurriculumVitaeProperties {
 	name: string
 	email?: string[]
@@ -45,7 +51,8 @@ export interface CurriculumVitaeProperties {
 	statement?: string
 	experience?: Job[]
 	education?: Education[]
-	projects?: AcademicProject[]
+	academicProjects?: AcademicProject[]
+	openSourceProjects?: OpenSourceProject[]
 	skills?: object[]
 	awards?: string[]
 	leadership?: string
