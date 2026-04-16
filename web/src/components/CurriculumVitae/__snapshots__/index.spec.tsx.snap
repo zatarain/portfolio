@@ -166,7 +166,64 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       <h2>
         Selected Academic Work
       </h2>
-      <ul />
+      <ul>
+        <li>
+          <h3>
+            Dummy Project 01
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              thesis
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              08/2013 - 11/2014
+            </dd>
+          </dl>
+          <div
+            class="markdown project-description"
+          >
+            <p>
+              Dummy description paragraph 01
+            </p>
+            
+
+          </div>
+        </li>
+        <li>
+          <h3>
+            Dummy Project 02
+          </h3>
+          <dl>
+            <dt>
+              Type:
+            </dt>
+            <dd>
+              personal
+            </dd>
+            <dt>
+              Duration:
+            </dt>
+            <dd>
+              Spring 2023
+            </dd>
+          </dl>
+          <div
+            class="markdown project-description"
+          >
+            <p>
+              Dummy description paragraph 02
+            </p>
+            
+
+          </div>
+        </li>
+      </ul>
     </section>
     <section
       id="open-source"
@@ -176,7 +233,32 @@ exports[`<CurriculumVitae /> renders the component 1`] = `
       </h2>
       <dl
         class="ticks"
-      />
+      >
+        <dt>
+          <a
+            href="https://github.com/dummy/dummy-project-01"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Dummy Open Source Project 01
+          </a>
+        </dt>
+        <dd>
+          Dummy description paragraph 01
+        </dd>
+        <dt>
+          <a
+            href="https://github.com/dummy/dummy-project-02"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Dummy Open Source Project 02
+          </a>
+        </dt>
+        <dd>
+          Dummy description paragraph 02
+        </dd>
+      </dl>
     </section>
     <section
       id="leadership"
