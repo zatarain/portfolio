@@ -45,7 +45,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-redux": "^7.1.34",
     "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.3",
+    "eslint-config-next": "^16.2.4",
     "eslint-plugin-storybook": "^10.3.5",
     "jest": "^30.3.0",
     "jest-css-modules-transform": "^4.4.2",
