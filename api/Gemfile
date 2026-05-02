@@ -56,7 +56,7 @@ group :development, :test do
   gem 'rspec-core', '~> 3.12'
   gem 'rspec-expectations', '~> 3.12'
   gem 'rspec-mocks', '~> 3.12'
-  gem 'rspec-rails', '~> 6.0.3'
+  gem 'rspec-rails', '~> 8.0.4'
   gem 'rubocop', '~> 1.86.1', require: false
   gem 'rubocop-rails', '~> 2.34.3'
   gem 'rubocop-rspec', '~> 3.9.0'
