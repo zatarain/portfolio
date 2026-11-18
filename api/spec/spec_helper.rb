@@ -15,6 +15,9 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+# Bootsnap's instruction-sequence cache cannot compile while SimpleCov coverage is active.
+ENV['DISABLE_BOOTSNAP_COMPILE_CACHE'] ||= '1'
+
 require 'simplecov'
 SimpleCov.start 'rails'
 
