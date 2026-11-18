@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'tempfile'
 
 describe Curriculum do
   let(:assume_role_credentials) { instance_double(Aws::AssumeRoleCredentials) }
@@ -236,8 +237,36 @@ describe Curriculum do
       allow(Aws::S3::Client).to receive(:new).and_return(s3_client)
       allow(Aws::ECSCredentials).to receive(:new).and_return(ecs_credentials)
       allow(InstagramBasicDisplay::Client).to receive(:new).and_return(instagram_client)
-      allow(YAML).to receive(:load_file).and_return(sections)
+      allow(YAML).to receive(:safe_load_file).and_return(sections)
       allow(File).to receive_messages(exist?: true, mtime: 1.hour.ago, read: pictures.to_json)
+    end
+
+    context 'when sections are loaded from YAML' do
+      let(:sections_file) { Tempfile.new(['curriculum', '.yml']) }
+
+      before do
+        sections_file.write(sections.to_yaml)
+        sections_file.flush
+        allow(Rails.configuration).to receive(:sections).and_return(sections_file.path)
+        allow(YAML).to receive(:safe_load_file).and_call_original
+      end
+
+      after do
+        sections_file.close!
+      end
+
+      it 'loads curriculum data using the YAML parser' do
+        data = described_class.new.find(sensitive: true)
+
+        expect(data).to include(sections)
+        expect(data['pictures']).to eq(hero.map(&:stringify_keys))
+      end
+
+      it 'rejects Ruby object deserialization' do
+        File.write(Rails.configuration.sections, "--- !ruby/object:Object {}\n")
+
+        expect { described_class.new.find }.to raise_error(Psych::DisallowedClass)
+      end
     end
 
     context 'when sensitive argument is false' do

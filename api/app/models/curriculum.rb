@@ -2,7 +2,7 @@
 
 require 'aws-sdk-s3'
 require 'instagram_basic_display'
-require 'safe_yaml'
+require 'yaml'
 
 class Curriculum
   include ActiveModel::Model
@@ -39,7 +39,7 @@ class Curriculum
 
   def find(sensitive: false)
     download :sections
-    data = YAML.load_file(Rails.configuration.sections, safe: true)
+    data = YAML.safe_load_file(Rails.configuration.sections)
     download :pictures
     pictures = JSON.parse(File.read(Rails.configuration.pictures))
     data['pictures'] = pictures.select { |picture| Rails.configuration.hashtag =~ picture['caption'] }
