@@ -39,15 +39,15 @@ class StationsController < ApplicationController
   private
 
   def fields
-    params.require(:station).permit(
-      :name,
-      :slug,
-      :latitude,
-      :longitude,
-      :country,
-      :time_zone,
-      :info_en,
-      :info_es,
+    params.expect(
+      station: %i[name
+                  slug
+                  latitude
+                  longitude
+                  country
+                  time_zone
+                  info_en
+                  info_es],
     )
   end
 end
