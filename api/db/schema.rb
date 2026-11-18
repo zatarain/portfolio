@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_174811) do
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgis_raster"
+  create_schema "tiger"
   enable_extension "postgis_tiger_geocoder"
   enable_extension "postgis_topology"
 
