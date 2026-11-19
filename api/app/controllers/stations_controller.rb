@@ -25,7 +25,7 @@ class StationsController < ApplicationController
   end
 
   def destroy
-    @station = TrainStation.find(params[:id])
+    @station = TrainStation.find(params.expect(:id))
     raise StandardError, 'Unknown error' unless @station.destroy
 
     render status: :ok
