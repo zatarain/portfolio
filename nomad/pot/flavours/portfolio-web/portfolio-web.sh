@@ -7,6 +7,12 @@ set -e
 
 # Install Node.js
 ASSUME_ALWAYS_YES=yes pkg install -y node26 npm-node26
+
+# Install pnpm globally
 npm install --global pnpm@12.21.0
+
+# Clean up unnecessary packages
+pkg delete -y npm-node26
+pkg autoremove -y
 
 echo "✓ Next.js application environment ready - waiting for code deployment"
