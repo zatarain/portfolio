@@ -11,6 +11,13 @@ echo "DEFAULT_VERSIONS+=ruby=4.0" >> /etc/make.conf
 # Install Ruby, PostgreSQL client, and build tools
 ASSUME_ALWAYS_YES=yes pkg install -y ruby40 git gmake readline postgresql15-client
 
+# Create unversioned symlinks for the Ruby 4.0 binaries
+for bin in erb irb racc rbs rdbg ri ruby typeprof; do
+  if [ -x "/usr/local/bin/${bin}40" ]; then
+    ln -sf "/usr/local/bin/${bin}40" "/usr/local/bin/${bin}"
+  fi
+done
+
 # Clone ports into /tmp since /usr is read-only on multi-type pots
 git clone --depth=1 --branch 2026Q4 https://git.freebsd.org/ports.git /tmp/ports
 
@@ -20,6 +27,9 @@ make -C /tmp/ports/devel/ruby-gems \
   DISTDIR=/tmp/distfiles \
   BATCH=yes \
   install clean
+
+# Install Bundler (places /usr/local/bin/bundle and /usr/local/bin/bundler)
+gem install bundler --no-document
 
 # Clean up
 rm -rf /tmp/ports /tmp/distfiles
