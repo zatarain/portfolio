@@ -7,6 +7,9 @@ import userEvent from '@testing-library/user-event'
 import GeoFootball from '.'
 import type { GroupedStations, Station } from './types'
 
+const fetchMock = jest.fn<typeof fetch>()
+global.fetch = fetchMock
+
 const events = {
 	dblclick: jest.fn()
 }
@@ -129,7 +132,7 @@ describe('<GeoFootball ...>...</GeoFootball>', () => {
 			],
 		} as GroupedStations
 
-		global.fetch = jest.fn(() => Promise.resolve({ ok: true }))
+		fetchMock.mockResolvedValue({ ok: true } as Response)
 
 		const { getByRole, getByText } = render(
 			<Provider store={store}>
@@ -142,9 +145,10 @@ describe('<GeoFootball ...>...</GeoFootball>', () => {
 
 		const deleteMarker = getByText('Delete')
 		await user.click(deleteMarker)
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 
-		const [[url, { headers, method }]] = fetch.mock.calls
+		const [[url, request]] = fetchMock.mock.calls
+		const { headers, method } = request!
 		expect(url).toMatch(/\/stations\/1/)
 		expect(method).toBe('DELETE')
 		expect(headers).toEqual(expect.objectContaining({

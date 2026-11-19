@@ -103,7 +103,7 @@ You can follow the test coverage reports of this project in the [CodeCov website
 This project has Storybook to test react components in isolated way. It can be locally executed using following command in your terminal:
 
 ```sh
-npm run storybook
+pnpm run storybook
 ```
 
 That command will run a Storybook server locally on port `5001` and then open a new tab in the browser as following:

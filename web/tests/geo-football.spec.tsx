@@ -54,15 +54,16 @@ const testClusters = {
 	],
 }
 
-global.fetch = jest.fn(() =>
-	Promise.resolve({
+
+const fetchMock = jest.fn<ReturnType<typeof fetch>, Parameters<typeof fetch>>()
+global.fetch = fetchMock
+fetchMock.mockResolvedValue({
 		ok: true,
 		json: () => Promise.resolve(testData),
-	})
-)
+} as unknown as Response)
 
 beforeEach(() => {
-	fetch.mockClear()
+	fetchMock.mockClear()
 })
 
 jest.mock('react-leaflet', () => {
@@ -124,7 +125,7 @@ describe('getServerSideProps', () => {
 	it('fetches spatial data properly from API', async () => {
 		const result = await getServerSideProps()
 
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(result).toEqual({
 			props: {
 				stationsByCountry: testClusters

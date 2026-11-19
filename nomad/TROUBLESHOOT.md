@@ -195,15 +195,15 @@ pot exec portfolio-api /bin/sh -c "cd /api && bundle exec rake db:migrate:status
 ```sh
 # Check Node installation
 pot exec portfolio-web node --version
-pot exec portfolio-web npm --version
+pot exec portfolio-web pnpm --version
 
 # Check if next is installed
-pot exec portfolio-web npm list next
+pot exec portfolio-web pnpm list next
 ```
 
 **Solution:**
 - Reinstall Node: `pot exec portfolio-web pkg install -y node`
-- Install npm dependencies: `pot exec portfolio-web npm ci --only=production`
+- Install pnpm dependencies: `pot exec portfolio-web pnpm install --frozen-lockfile --prod`
 
 #### Frontend shows 404 for API calls
 ```sh
@@ -219,7 +219,7 @@ pot exec portfolio-web ls -la /web/.next/
 
 **Solution:**
 - Ensure `NEXT_PUBLIC_API_URL` is set in web.hcl template
-- Rebuild Next.js: `npm run build`
+- Rebuild Next.js: `pnpm run build`
 - Check API is actually accessible at that URL
 
 ### 🚀 Nomad Job Submission Issues

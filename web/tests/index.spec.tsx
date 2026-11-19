@@ -64,14 +64,14 @@ const testData = {
 	],
 }
 
-global.fetch = jest.fn(() =>
-	Promise.resolve({
+const fetchMock = jest.fn<ReturnType<typeof fetch>, Parameters<typeof fetch>>()
+global.fetch = fetchMock
+fetchMock.mockResolvedValue({
 		json: () => Promise.resolve(testData),
-	})
-)
+} as unknown as Response)
 
 beforeEach(() => {
-	fetch.mockClear()
+	fetchMock.mockClear()
 })
 
 describe('<IndexPage />', () => {
@@ -89,7 +89,7 @@ describe('getServerSideProps', () => {
 	it('fetches the curriculum data properly from API', async () => {
 		const result = await getServerSideProps()
 
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(result).toEqual({
 			props: {
 				data: {

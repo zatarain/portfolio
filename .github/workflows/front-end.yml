@@ -8,7 +8,8 @@ on:
     paths: ['web/**', '.github/workflows/front-end.yml']
 
 env:
-  NODE_VERSION: '25.9.0'
+  NODE_VERSION: '26.13.1'
+  PNPM_VERSION: '12.21.0'
 
 jobs:
   setup:
@@ -31,13 +32,19 @@ jobs:
           fi
           echo environment=$environment >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
       - name: Install dependencies
-        run: cd web && npm ci
+        run: cd web && pnpm install --frozen-lockfile
+      - name: Audit dependencies
+        run: cd web && pnpm audit --audit-level high
 
   lint:
     needs: setup
@@ -46,28 +53,34 @@ jobs:
       NODE_ENV: development
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
       - name: Lint source code
-        run: cd web && npm ci && npm run lint
+        run: cd web && pnpm install --frozen-lockfile && pnpm run lint
 
   build:
     needs: setup
     runs-on: ubuntu-latest
-    env:
-      NPM_CONFIG_PRODUCTION: "false"
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
       - name: Build Next App
-        run: cd web && npm ci && npm run build
+        run: cd web && pnpm install --frozen-lockfile && pnpm run build
       - uses: actions/upload-artifact@v7
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
@@ -82,17 +95,21 @@ jobs:
       CI: 1
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
       - uses: actions/download-artifact@v8
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           path: web/.next
       - name: Run unit tests
-        run: cd web && npm ci && npm test -- --coverage --coveragePathIgnorePatterns='.*\.css'
+        run: cd web && pnpm install --frozen-lockfile && pnpm test --coverage --coveragePathIgnorePatterns='.*\.css'
       - name: Upload coverage report to CodeCov
         uses: codecov/codecov-action@v6
         with:

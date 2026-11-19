@@ -5,10 +5,10 @@ import userEvent from '@testing-library/user-event'
 import NavigationBar from '.'
 import styles from './index.module.css'
 
-window.print = jest.fn()
+const printMock = jest.spyOn(window, 'print').mockImplementation(() => {})
 
 beforeEach(() => {
-	window.print.mockClear()
+	printMock.mockClear()
 });
 
 describe('<NavigationBar />', () => {

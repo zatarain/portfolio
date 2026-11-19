@@ -11,15 +11,19 @@ if [ -f "$WEB_DIR/.env" ]; then
 	set +a
 fi
 
-# Install Node dependencies
+# Install Node dependencies. Use the committed lockfile; fail rather than
+# silently resolving a different dependency graph.
 echo "Installing Node dependencies..."
-npm ci --omit=dev || npm install --omit=dev
+pnpm install --frozen-lockfile
 
 # Build Next.js application
 echo "Building Next.js application..."
-npm run build
+pnpm run build
+
+# Keep only runtime dependencies for the production server.
+pnpm prune --prod
 
 echo "Web application build complete"
 
 # Run the Next.js server
-npm run start
+exec pnpm run start

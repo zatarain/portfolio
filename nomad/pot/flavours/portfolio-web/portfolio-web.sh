@@ -7,5 +7,6 @@ set -e
 
 # Install Node.js
 ASSUME_ALWAYS_YES=yes pkg install -y node26 npm-node26
+npm install --global pnpm@12.21.0
 
 echo "✓ Next.js application environment ready - waiting for code deployment"

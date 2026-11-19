@@ -1,4 +1,4 @@
-FROM node:19.9.0-slim
+FROM node:26.13.1-slim
 EXPOSE 5000
 
 RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
@@ -12,9 +12,8 @@ ENV LANG=C.UTF-8 \
 	NODE_ENV=development \
 	NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 WORKDIR /web
-RUN npm config set fund false -g \
-	&& npm config set audit false -g
+RUN npm install --global pnpm@12.21.0
 COPY . .
-RUN npm ci && npm run build
+RUN pnpm install --frozen-lockfile && pnpm run build
 ENTRYPOINT ["bin/entrypoint"]
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "run", "start"]

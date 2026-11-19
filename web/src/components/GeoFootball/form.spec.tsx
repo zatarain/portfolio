@@ -7,6 +7,13 @@ import userEvent from '@testing-library/user-event'
 import MapForm from './form'
 import type { GroupedStations, Station } from './types'
 
+const fetchMock = jest.fn<typeof fetch>()
+global.fetch = fetchMock
+
+beforeEach(() => {
+	fetchMock.mockClear()
+})
+
 jest.mock('react-leaflet', () => {
 	return {
 		__esModule: true,
@@ -100,10 +107,10 @@ describe('<MapForm ...>...</MapForm>', () => {
 			longitude: 0.00000,
 			info_en: 'London Underground Station',
 		}
-		global.fetch = jest.fn(() => Promise.resolve({
+		fetchMock.mockResolvedValue({
 			ok: true,
 			json: jest.fn(() => Promise.resolve({ id: 2, ...data }))
-		}))
+		} as unknown as Response)
 
 		const { getByLabelText, getByText } = render(
 			<Provider store={store}>
@@ -117,16 +124,17 @@ describe('<MapForm ...>...</MapForm>', () => {
 
 		const save = getByText('Save')
 		await user.click(save)
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(setClusters).toHaveBeenCalledTimes(1)
 
-		const [[url, { body, headers, method }]] = fetch.mock.calls
+		const [[url, request]] = fetchMock.mock.calls
+		const { body, headers, method } = request!
 		expect(url).toMatch(/\/stations/)
 		expect(method).toBe('POST')
 		expect(headers).toEqual(expect.objectContaining({
 			'Content-Type': 'application/json',
 		}))
-		expect(JSON.parse(body)).toEqual(expect.objectContaining(data))
+		expect(JSON.parse(body as string)).toEqual(expect.objectContaining(data))
 		const [[newClusters]] = setClusters.mock.calls
 		expect(newClusters).toEqual({ GB: [...clusters.GB, { id: 2, ...data }] })
 	})
@@ -136,11 +144,11 @@ describe('<MapForm ...>...</MapForm>', () => {
 		const clusters = { GB: [] } as GroupedStations
 
 		const setClusters = jest.fn()
-		global.fetch = jest.fn(() => Promise.resolve({
+		fetchMock.mockResolvedValue({
 			ok: false,
 			status: 400,
 			json: jest.fn(() => Promise.resolve({ name: 'can not be blank' }))
-		}))
+		} as unknown as Response)
 
 		const { getByLabelText, getByText } = render(
 			<Provider store={store}>
@@ -152,10 +160,11 @@ describe('<MapForm ...>...</MapForm>', () => {
 
 		const save = getByText('Save')
 		await user.click(save)
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(setClusters).not.toHaveBeenCalled()
 
-		const [[url, { headers, method }]] = fetch.mock.calls
+		const [[url, request]] = fetchMock.mock.calls
+		const { headers, method } = request!
 		expect(url).toMatch(/\/stations/)
 		expect(method).toBe('POST')
 		expect(headers).toEqual(expect.objectContaining({
@@ -169,13 +178,13 @@ describe('<MapForm ...>...</MapForm>', () => {
 		const clusters = { GB: [] } as GroupedStations
 
 		const setClusters = jest.fn()
-		global.fetch = jest.fn(() => Promise.resolve({
+		fetchMock.mockResolvedValue({
 			ok: false,
 			status: 500,
 			text: jest.fn(() => Promise.resolve('Internal Server Error'))
-		}))
+		} as unknown as Response)
 
-		console.error = jest.fn()
+		const errorMock = jest.spyOn(console, 'error').mockImplementation(() => {})
 
 		const { getByLabelText, getByText } = render(
 			<Provider store={store}>
@@ -187,17 +196,18 @@ describe('<MapForm ...>...</MapForm>', () => {
 
 		const save = getByText('Save')
 		await user.click(save)
-		expect(fetch).toHaveBeenCalledTimes(1)
+		expect(fetchMock).toHaveBeenCalledTimes(1)
 		expect(setClusters).not.toHaveBeenCalled()
 
-		const [[url, { headers, method }]] = fetch.mock.calls
+		const [[url, request]] = fetchMock.mock.calls
+		const { headers, method } = request!
 		expect(url).toMatch(/\/stations/)
 		expect(method).toBe('POST')
 		expect(headers).toEqual(expect.objectContaining({
 			'Content-Type': 'application/json',
 		}))
-		expect(console.error).toHaveBeenCalledTimes(1)
-		const [[message]] = console.error.mock.calls
+		expect(errorMock).toHaveBeenCalledTimes(1)
+		const [[message]] = errorMock.mock.calls
 		expect(message).toMatch(/Internal Server Error/)
 	})
 })
