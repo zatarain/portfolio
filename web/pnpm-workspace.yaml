@@ -1,5 +1,5 @@
 ignoreScripts: true
-strictDepBuilds: false
+strictDepBuilds: true
 
 overrides:
   '@storybook/builder-webpack5>webpack-dev-middleware': ^7.4.5
