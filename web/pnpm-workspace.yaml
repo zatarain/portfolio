@@ -3,6 +3,10 @@ strictDepBuilds: true
 
 overrides:
   '@storybook/builder-webpack5>webpack-dev-middleware': ^7.4.5
-  '@vscode/markdown-it-katex>katex': ^0.18.2
+  '@vscode/markdown-it-katex>katex': ^0.19.1
   glob: ^14.0.2
   minimatch: ^11.0.1
+minimumReleaseAgeExclude:
+  - '@reduxjs/toolkit@2.15.0'
+  - '@testing-library/jest-dom@8.0.0'
+  - '@testing-library/user-event@14.6.13'
