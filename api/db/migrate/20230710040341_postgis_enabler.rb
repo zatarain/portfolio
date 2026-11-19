@@ -7,6 +7,7 @@ class PostgisEnabler < ActiveRecord::Migration[7.0]
     enable_extension 'postgis_raster'
     enable_extension 'address_standardizer'
     enable_extension 'address_standardizer_data_us'
+    create_schema 'tiger'
     enable_extension 'postgis_tiger_geocoder'
   end
 end

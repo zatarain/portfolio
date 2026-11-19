@@ -108,7 +108,7 @@ sudo ./nomad/pot/deploy-flavours.sh
 # Deploys:
 # ✓ API code to /data/portfolio-api
 # ✓ Web code to /data/portfolio-web
-# ✓ Runs bundle install, npm install
+# ✓ Runs bundle install, pnpm install
 # ✓ Creates databases, runs migrations
 ```
 

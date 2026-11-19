@@ -241,7 +241,7 @@ These execute during task startup:
 |--------|---------|---------|
 | `postgres-init.sh` | Create database, user, enable PostGIS | PostgreSQL jail |
 | `api-setup.sh` | Install gems, run migrations | API jail |
-| `web-setup.sh` | Install npm deps, build Next.js | Web jail |
+| `web-setup.sh` | Install pnpm deps, build Next.js | Web jail |
 
 ### Configuration Templates (`scripts/templates/`)
 Static files copied to appropriate locations:

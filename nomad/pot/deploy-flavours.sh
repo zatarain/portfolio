@@ -60,7 +60,7 @@ copy_code() {
   log "✓ Application code deployed"
 }
 
-# Note: Initialization (bundle install, npm install, migrations) is delegated to Nomad jobs
+# Note: Initialization (bundle install, pnpm install, migrations) is delegated to Nomad jobs
 # This keeps deployment separate from orchestration concerns
 
 # Final summary
