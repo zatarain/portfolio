@@ -7,6 +7,9 @@ on:
     types: [opened, synchronize]
     paths: ['web/**', '.github/workflows/front-end.yml']
 
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: '26.13.1'
   PNPM_VERSION: '12.21.0'
